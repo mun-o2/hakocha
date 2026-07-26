@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class TopScreen extends StatelessWidget {
-  const TopScreen({super.key});
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,11 +12,11 @@ class TopScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: const [
             Text(
-              'トップ画面',
+              'ホーム画面',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 16),
-            Text('プロフィール情報をここに表示します。'),
+            Text('ここはホーム画面です。下部のタブで他の画面へ切り替えられます。'),
           ],
         ),
       ),

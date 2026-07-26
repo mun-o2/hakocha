@@ -13,8 +13,8 @@ void main() {
   testWidgets('app shows bottom navigation tabs', (WidgetTester tester) async {
     await tester.pumpWidget(const HakochaApp());
 
-    expect(find.text('トップ画面'), findsOneWidget);
-    expect(find.text('トップ'), findsNWidgets(2));
+    expect(find.text('ホーム画面'), findsOneWidget);
+    expect(find.text('ホーム'), findsNWidgets(2));
     expect(find.text('交換'), findsOneWidget);
     expect(find.text('プロフィール帳'), findsOneWidget);
   });
