@@ -9,12 +9,12 @@ class TopScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundPink, // ← AppColorsに変更
+      backgroundColor: AppColors.backgroundPink,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.settings, color: AppColors.textSecondary, size: 30), // ← AppColorsに変更
+          icon: const Icon(Icons.settings, color: AppColors.textSecondary, size: 30),
           onPressed: () {
             Navigator.push(
               context,
@@ -30,37 +30,38 @@ class TopScreen extends StatelessWidget {
           children: [
             const SizedBox(height: 16),
             
+            // --- 1. プロフィールカード ---
             Container(
               padding: const EdgeInsets.all(20.0),
               decoration: BoxDecoration(
                 color: Colors.white,
-                border: Border.all(color: AppColors.pink4, width: 2), // ← AppColorsに変更
+                border: Border.all(color: AppColors.pink4, width: 2),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Row(
                 children: [
                   const CircleAvatar(
                     radius: 35,
-                    backgroundColor: AppColors.textTertiary, // ← AppColorsに変更
+                    backgroundColor: AppColors.textTertiary,
                   ),
                   const SizedBox(width: 24),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        DummyHomeData.userName, // ダミーデータを使用
+                        DummyHomeData.userName,
                         style: const TextStyle(
                           fontSize: 20, 
                           fontWeight: FontWeight.bold,
-                          color: AppColors.textPrimary, // ← AppColorsに変更
+                          color: AppColors.textPrimary,
                         ),
                       ),
                       const SizedBox(height: 8),
                       OutlinedButton(
                         onPressed: () {},
                         style: OutlinedButton.styleFrom(
-                          foregroundColor: AppColors.purple4, // ← AppColorsに変更
-                          side: const BorderSide(color: AppColors.purple4), // ← AppColorsに変更
+                          foregroundColor: AppColors.purple4,
+                          side: const BorderSide(color: AppColors.purple4),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
@@ -76,11 +77,12 @@ class TopScreen extends StatelessWidget {
             
             const SizedBox(height: 24),
 
+            // --- 2. 交換人数＆ページ数カード ---
             Container(
               padding: const EdgeInsets.symmetric(vertical: 20.0),
               decoration: BoxDecoration(
                 color: Colors.white,
-                border: Border.all(color: AppColors.pink4, width: 2), // ← AppColorsに変更
+                border: Border.all(color: AppColors.pink4, width: 2),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Row(
@@ -91,37 +93,71 @@ class TopScreen extends StatelessWidget {
                   Container(
                     width: 1,
                     height: 50,
-                    color: AppColors.textTertiary, // ← AppColorsに変更
+                    color: AppColors.textTertiary,
                   ),
                   
                   _buildStatItem('プロフィール帳', DummyHomeData.profilePageCount, 'ページ'),
                 ],
               ),
             ),
+
+            const SizedBox(height: 32),
+
+            // --- 3. お知らせセクション ---
+            const Text(
+              'お知らせ',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: AppColors.textPrimary,
+              ),
+            ),
+            const SizedBox(height: 16),
+            
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(vertical: 40.0, horizontal: 16.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(color: AppColors.pink4, width: 2),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                DummyHomeData.notification,
+                textAlign: TextAlign.center,
+                style: const TextStyle( // （Text全体からconstが外れたので、styleに付け直しています）
+                  fontSize: 16,
+                  color: AppColors.textPrimary,
+                  height: 1.5,
+                ),
+              ),
+            ),
+            
           ],
         ),
       ),
     );
   }
 
+  // 数字の部分を作るための専用部品
   Widget _buildStatItem(String title, String number, String unit) {
     return Column(
       children: [
-        Text(title, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.textPrimary)), // ← AppColorsに変更
+        Text(title, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.textPrimary)),
         const SizedBox(height: 8),
         Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Text(number, style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold, height: 1.0, color: AppColors.textPrimary)), // ← AppColorsに変更
+            Text(number, style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold, height: 1.0, color: AppColors.textPrimary)),
             const SizedBox(width: 2),
-            Text(unit, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.textPrimary)), // ← AppColorsに変更
+            Text(unit, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.textPrimary)),
           ],
         ),
         const SizedBox(height: 4),
         Container(
           width: 60,
           height: 2,
-          color: AppColors.pink4, // ← AppColorsに変更
+          color: AppColors.pink4,
         ),
       ],
     );
