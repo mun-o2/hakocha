@@ -106,9 +106,10 @@ class AppTextStyles {
 
   // プロフィール帳の見出しフォント
   static TextStyle get profileTitle =>
-      GoogleFonts.moul(fontSize: 32, color: Colors.white);
+      GoogleFonts.moul(fontSize: 35, color: AppColors.white);
 
-  //プロフィール帳メインのフォント1（ピンク文字白縁）
+  //テキストスタイル系　時間あったらリファクタリングします！
+  //プロフィール帳メインのフォント1（ピンク文字白縁大）
   static final TextStyle profileFormatText1 = GoogleFonts.zenMaruGothic(
     fontSize: 18,
     fontWeight: FontWeight.w700,
@@ -119,7 +120,7 @@ class AppTextStyles {
   static final TextStyle profileFormatText2 = GoogleFonts.zenMaruGothic(
     fontSize: 13,
     fontWeight: FontWeight.w700,
-    color: Colors.white,
+    color: AppColors.white,
   );
 
   //プロフィール帳メインのフォント3（紫文字白縁）
@@ -129,11 +130,18 @@ class AppTextStyles {
     color: AppColors.purple4,
   );
 
+  //プロフィール帳メインのフォント４（ピンク文字白縁小）
+  static final TextStyle profileFormatText4 = GoogleFonts.zenMaruGothic(
+    fontSize: 13,
+    fontWeight: FontWeight.w700,
+    color: AppColors.pink4,
+  );
+
   //プロフィール帳SNS部分の見出しフォント
   static final TextStyle profileSNSLabel = GoogleFonts.zenMaruGothic(
     fontSize: 17,
     fontWeight: FontWeight.w700,
-    color: Colors.white,
+    color: AppColors.white,
   );
 
   //プロフィール帳ユーザ入力部分のフォント

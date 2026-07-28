@@ -70,7 +70,7 @@ class ProfileCardLeft extends StatelessWidget {
                 child: OutlinedText(
                   text: "理想のタイプは？",
                   style: AppTextStyles.profileFormatText3,
-                  outlineColor: Colors.white,
+                  outlineColor: AppColors.white,
                   strokeWidth: 2.5,
                 ),
               ),

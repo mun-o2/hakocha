@@ -54,4 +54,10 @@ class AppColors {
   // Splash Screen
   /// スプラッシュスクリーンの背景
   static const Color splashBackground = Color(0xFFFDF7FB);
+
+  //プロフィール帳のカードベース色
+  static const Color profileCardBackground = Color(0xFFFFE7F1);
+
+  //ホワイト
+  static const Color white = Color(0xFFFFFFFF);
 }
