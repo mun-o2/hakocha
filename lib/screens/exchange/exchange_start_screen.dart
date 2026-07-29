@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hakocha/constants/app_colors.dart';
-// app_text_styles not used in this layout; keep for future use if needed
-// removed unused app_text_styles import
-import 'package:hakocha/providers/exchange_provider.dart';
-import 'package:provider/provider.dart';
+import 'package:hakocha/screens/exchange/exchange_code_input_screen.dart';
 
 class ExchangeStartScreen extends StatelessWidget {
   const ExchangeStartScreen({super.key});
@@ -101,6 +98,12 @@ class ExchangeStartScreen extends StatelessWidget {
                 ),
                 onPressed: () {
                   // コード入力画面へ
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ExchangeCodeInputScreen(),
+                    ),
+                  );
                 },
                 child: const Text(
                   'コードを入力する',

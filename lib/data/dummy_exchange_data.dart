@@ -1,9 +1,19 @@
 import 'package:hakocha/models/exchange.dart';
 import 'package:hakocha/models/user_profile.dart';
 
-const dummyCurrentUser = UserProfile(id: 'user_001', name: 'みう', iconUrl: '');
+const dummyCurrentUser = UserProfile(
+  id: 'user_001',
+  name: 'みう',
+  iconUrl: '',
+  exchangeCode: 'EXC-2026-001',
+);
 
-const dummyExchangeUser = UserProfile(id: 'user_002', name: 'あかり', iconUrl: '');
+const dummyExchangeUser = UserProfile(
+  id: 'user_002',
+  name: 'あかり',
+  iconUrl: '',
+  exchangeCode: 'EXC-2026-002',
+);
 
 final dummyExchanges = [
   Exchange(
