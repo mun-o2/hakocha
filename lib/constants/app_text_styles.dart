@@ -149,4 +149,20 @@ class AppTextStyles {
     fontSize: 16,
     color: AppColors.pink4,
   );
+
+  //画像選択ボトムシートのテキスト
+  static const TextStyle imagePickerText = TextStyle(
+    fontSize: 13,
+    color: AppColors.navUnselectedText,
+    fontFamily: _fontFamilyDefault,
+    fontWeight: FontWeight.w700,
+  );
+
+  //画像選択ボトムシートのタイトルテキスト
+  static const TextStyle imagePickerTextTitle = TextStyle(
+    fontSize: 24,
+    color: AppColors.navUnselectedText,
+    fontFamily: _fontFamilyDefault,
+    fontWeight: FontWeight.w700,
+  );
 }

@@ -60,4 +60,10 @@ class AppColors {
 
   //ホワイト
   static const Color white = Color(0xFFFFFFFF);
+
+  //画像選択のボトムシートメインカラー
+  static const Color imapePickerBottomSheet = Color(0xFFFFBCE9);
+
+  //画像選択時のボトムシートサブカラー
+  static const Color imapePickerBottomSheetSub = Color(0xFFFEEFF8);
 }

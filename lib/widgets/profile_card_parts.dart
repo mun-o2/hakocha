@@ -8,6 +8,10 @@ import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/ant_design.dart';
 import 'package:iconify_flutter/icons/bxl.dart';
 
+import 'profile_edit_parts.dart';
+import '../dummy/dummy_profile.dart';
+import 'image_picker_sheet.dart';
+
 // カード全体
 class ProfileCardBody extends StatelessWidget {
   final bool isLeft;
@@ -216,34 +220,42 @@ class ProfileHeader extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // にがおえ
-            Stack(
-              clipBehavior: Clip.none,
-              alignment: Alignment.bottomCenter,
-              children: [
-                Container(
-                  width: 95,
-                  height: 110,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFFEEFF8),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Color(0xFFFEEFF8).withValues(alpha: 0.8),
-                        blurRadius: 8,
-                        spreadRadius: 2,
-                      ),
-                    ],
+            InkWell(
+              borderRadius: BorderRadius.circular(8),
+              onTap: () {
+                showImagePickerSheet(context);
+              },
+              child: Stack(
+                clipBehavior: Clip.none,
+                alignment: Alignment.bottomCenter,
+                children: [
+                  Container(
+                    width: 95,
+                    height: 110,
+                    decoration: BoxDecoration(
+                      color: AppColors.profileCardBackground,
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.profileCardBackground.withValues(
+                            alpha: 0.8,
+                          ),
+                          blurRadius: 8,
+                          spreadRadius: 2,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
 
-                Positioned(
-                  bottom: -10,
-                  child: OutlinedText(
-                    text: "にがおえ",
-                    style: AppTextStyles.profileFormatText1,
-                    outlineColor: AppColors.white,
+                  Positioned(
+                    bottom: -10,
+                    child: OutlinedText(
+                      text: "にがおえ",
+                      style: AppTextStyles.profileFormatText1,
+                      outlineColor: AppColors.white,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
 
             const SizedBox(width: 55),
@@ -272,7 +284,14 @@ class ProfileHeader extends StatelessWidget {
                         size: 26,
                       ),
                       const SizedBox(width: 23),
-                      Text(instagramId, style: AppTextStyles.profileText),
+                      Expanded(
+                        child: ProfileEditableText(
+                          value: instagramId,
+                          onChanged: (text) {
+                            dummyProfile.instagramId = text;
+                          },
+                        ),
+                      ),
                     ],
                   ),
 
@@ -282,7 +301,14 @@ class ProfileHeader extends StatelessWidget {
                     children: [
                       Iconify(Bxl.twitter, color: AppColors.pink4, size: 26),
                       const SizedBox(width: 23),
-                      Text(xId, style: AppTextStyles.profileText),
+                      Expanded(
+                        child: ProfileEditableText(
+                          value: xId,
+                          onChanged: (text) {
+                            dummyProfile.xId = text;
+                          },
+                        ),
+                      ),
                     ],
                   ),
                 ],
@@ -321,7 +347,14 @@ class ProfileMainDescription extends StatelessWidget {
 
                   const SizedBox(width: 20),
 
-                  ProfileInputBox(width: 100, height: 25),
+                  ProfileInputBox(
+                    width: 100,
+                    height: 25,
+                    value: dummyProfile.name,
+                    onChanged: (text) {
+                      dummyProfile.name = text;
+                    },
+                  ),
 
                   const SizedBox(width: 20),
 
@@ -339,7 +372,14 @@ class ProfileMainDescription extends StatelessWidget {
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  ProfileInputBox(width: 80, height: 25),
+                  ProfileInputBox(
+                    width: 80,
+                    height: 25,
+                    value: dummyProfile.birthYear,
+                    onChanged: (text) {
+                      dummyProfile.birthYear = text;
+                    },
+                  ),
 
                   const SizedBox(width: 4),
 
@@ -350,7 +390,14 @@ class ProfileMainDescription extends StatelessWidget {
                   ),
 
                   const SizedBox(width: 4),
-                  ProfileInputBox(width: 50, height: 25),
+                  ProfileInputBox(
+                    width: 50,
+                    height: 25,
+                    value: dummyProfile.birthMonth,
+                    onChanged: (text) {
+                      dummyProfile.birthMonth = text;
+                    },
+                  ),
 
                   OutlinedText(
                     text: "月",
@@ -359,7 +406,14 @@ class ProfileMainDescription extends StatelessWidget {
                   ),
 
                   const SizedBox(width: 4),
-                  ProfileInputBox(width: 50, height: 25),
+                  ProfileInputBox(
+                    width: 50,
+                    height: 25,
+                    value: dummyProfile.birthDay,
+                    onChanged: (text) {
+                      dummyProfile.birthDay = text;
+                    },
+                  ),
 
                   OutlinedText(
                     text: "日生まれの",
@@ -375,7 +429,14 @@ class ProfileMainDescription extends StatelessWidget {
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  ProfileInputBox(width: 70, height: 25),
+                  ProfileInputBox(
+                    width: 70,
+                    height: 25,
+                    value: dummyProfile.zodiacSign,
+                    onChanged: (text) {
+                      dummyProfile.zodiacSign = text;
+                    },
+                  ),
                   const SizedBox(width: 4),
 
                   OutlinedText(
@@ -393,7 +454,14 @@ class ProfileMainDescription extends StatelessWidget {
                   ),
 
                   const SizedBox(width: 4),
-                  ProfileInputBox(width: 50, height: 25),
+                  ProfileInputBox(
+                    width: 50,
+                    height: 25,
+                    value: dummyProfile.bloodType,
+                    onChanged: (text) {
+                      dummyProfile.bloodType = text;
+                    },
+                  ),
                   const SizedBox(width: 4),
 
                   OutlinedText(
@@ -418,7 +486,14 @@ class ProfileMainDescription extends StatelessWidget {
 
                   const SizedBox(width: 4),
 
-                  ProfileInputBox(width: 70, height: 25),
+                  ProfileInputBox(
+                    width: 70,
+                    height: 25,
+                    value: dummyProfile.mbti,
+                    onChanged: (text) {
+                      dummyProfile.mbti = text;
+                    },
+                  ),
 
                   const SizedBox(width: 4),
 
@@ -444,7 +519,14 @@ class ProfileMainDescription extends StatelessWidget {
 
                   const SizedBox(width: 4),
 
-                  ProfileInputBox(width: 80, height: 25),
+                  ProfileInputBox(
+                    width: 80,
+                    height: 25,
+                    value: dummyProfile.nickname,
+                    onChanged: (text) {
+                      dummyProfile.nickname = text;
+                    },
+                  ),
 
                   const SizedBox(width: 4),
 
@@ -470,7 +552,14 @@ class ProfileMainDescription extends StatelessWidget {
 
                   const SizedBox(width: 4),
 
-                  ProfileInputBox(width: 150, height: 25),
+                  ProfileInputBox(
+                    width: 150,
+                    height: 25,
+                    value: dummyProfile.personality,
+                    onChanged: (text) {
+                      dummyProfile.personality = text;
+                    },
+                  ),
 
                   const SizedBox(width: 4),
 
@@ -504,7 +593,14 @@ class ProfileMainDescription extends StatelessWidget {
 
                   const SizedBox(width: 8),
 
-                  ProfileInputBox(width: 150, height: 25),
+                  ProfileInputBox(
+                    width: 150,
+                    height: 25,
+                    value: dummyProfile.holidayLife,
+                    onChanged: (text) {
+                      dummyProfile.holidayLife = text;
+                    },
+                  ),
                 ],
               ),
               const SizedBox(height: 11),
@@ -541,16 +637,32 @@ class ProfileCardDetail extends StatelessWidget {
           bottom: 5,
           child: Column(
             children: [
-              ProfileDetailItem(title: "出身地", boxLeft: 20),
+              ProfileDetailItem(
+                title: "出身地",
+                boxLeft: 20,
+                value: dummyProfile.birthplace,
+              ),
               const SizedBox(width: 20),
 
-              ProfileDetailItem(title: "兄弟構成", boxLeft: 20),
+              ProfileDetailItem(
+                title: "兄弟構成",
+                boxLeft: 20,
+                value: dummyProfile.brothers,
+              ),
               const SizedBox(width: 20),
 
-              ProfileDetailItem(title: "身長", boxLeft: 20),
+              ProfileDetailItem(
+                title: "身長",
+                boxLeft: 20,
+                value: dummyProfile.height,
+              ),
               const SizedBox(width: 20),
 
-              ProfileDetailItem(title: "靴のサイズ", boxLeft: 20),
+              ProfileDetailItem(
+                title: "靴のサイズ",
+                boxLeft: 20,
+                value: dummyProfile.shoeSize,
+              ),
               const SizedBox(width: 20),
             ],
           ),
@@ -564,25 +676,34 @@ class ProfileCardDetail extends StatelessWidget {
 class ProfileDetailItem extends StatelessWidget {
   final String title;
   final double boxLeft;
+  final String value;
 
   const ProfileDetailItem({
     super.key,
     required this.title,
     required this.boxLeft,
+    required this.value,
   });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: 160,
-      height: 50,
+      height: 53,
       child: Stack(
         clipBehavior: Clip.none,
         children: [
           Positioned(
             left: boxLeft,
-            top: 10,
-            child: ProfileInputBox(width: 100, height: 25),
+            top: 20,
+            child: ProfileInputBox(
+              width: 100,
+              height: 25,
+              value: value,
+              onChanged: (text) {
+                dummyProfile.zodiacSign = text;
+              },
+            ),
           ),
 
           Positioned(
@@ -975,7 +1096,7 @@ class ProfileWhichOneContents extends StatelessWidget {
       "自分は【   犬   ・   猫   】派",
       "休日は【   インドア  ・   アウトドア   】派",
       "自分は【  犬   ・   猫   】派",
-      "【  きのこの山  ・  たけのこ里   】派",
+      "【  きのこの山  ・  たけのこの里   】派",
       "返信は【  すぐ返信する   ・   溜めがち   】",
     ];
 

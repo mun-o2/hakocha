@@ -3,6 +3,10 @@ import '../constants/app_text_styles.dart';
 import '../constants/app_colors.dart';
 import 'outlined_text.dart';
 import 'profile_card_parts.dart';
+import 'profile_edit_parts.dart';
+
+//ダミーデータの読み込み
+import '../dummy/dummy_profile.dart';
 
 class ProfileCardLeft extends StatelessWidget {
   const ProfileCardLeft({super.key});
@@ -35,7 +39,10 @@ class ProfileCardLeft extends StatelessWidget {
               ),
 
               // 似顔絵・SNS
-              const ProfileHeader(instagramId: "@akarin", xId: "@akarin"),
+              ProfileHeader(
+                instagramId: dummyProfile.instagramId,
+                xId: dummyProfile.xId,
+              ),
               // メインプロフィール文
               const ProfileMainDescription(),
               // 左下詳細プロフィール
@@ -72,6 +79,16 @@ class ProfileCardLeft extends StatelessWidget {
                   style: AppTextStyles.profileFormatText3,
                   outlineColor: AppColors.white,
                   strokeWidth: 2.5,
+                ),
+              ),
+              Positioned(
+                right: -8,
+                bottom: 30,
+                child: ProfileHeartInput(
+                  value: dummyProfile.idealType,
+                  onChanged: (text) {
+                    dummyProfile.idealType = text;
+                  },
                 ),
               ),
 
