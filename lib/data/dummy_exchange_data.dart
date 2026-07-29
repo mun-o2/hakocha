@@ -23,7 +23,7 @@ final dummyExchanges = [
   Exchange(
     id: 'exchange_003',
     senderId: 'user_001',
-    receinghverId: 'user_002',
+    receiverId: 'user_002',
     freeSpace: '夏も遊ぼ〜！',
     exchangedAt: DateTime(2026, 6, 15),
   ),

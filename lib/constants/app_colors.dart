@@ -12,7 +12,7 @@ class AppColors {
   static const Color backgroundWhite = Color(0xFFFDF8FB);
 
   /// ピンク5（非常に薄いピンク系）
-  static const Color backgroundPink = Color(0xFFFEF8FA);
+  static const Color backgroundPink = Color(0xFFFCF9FF);
 
   // Accent Colors - Pink
   /// ピンク4（選択時のメイン色）
@@ -23,7 +23,8 @@ class AppColors {
 
   // Accent Colors - Purple & Blue
   /// パープル4（アクセント色）
-  static const Color purple4 = Color(0xFF9B7CF5);
+  static const Color purple4 = Color(0xFFF3E9FD);
+  static const Color purple5 = Color(0xFF9B7CF5);
 
   /// ブルー4（アクセント色）
   static const Color blue4 = Color(0xFF2563EB);
