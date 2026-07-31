@@ -8,9 +8,14 @@ import 'profile_edit_parts.dart';
 //ダミーデータの読み込み
 import '../dummy/dummy_profile.dart';
 
-class ProfileCardLeft extends StatelessWidget {
+class ProfileCardLeft extends StatefulWidget {
   const ProfileCardLeft({super.key});
 
+  @override
+  State<ProfileCardLeft> createState() => _ProfileCardLeftState();
+}
+
+class _ProfileCardLeftState extends State<ProfileCardLeft> {
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -84,7 +89,7 @@ class ProfileCardLeft extends StatelessWidget {
               Positioned(
                 right: -8,
                 bottom: 30,
-                child: ProfileHeartInput(
+                child: ProfileInputHeart(
                   value: dummyProfile.idealType,
                   onChanged: (text) {
                     dummyProfile.idealType = text;

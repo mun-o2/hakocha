@@ -22,6 +22,21 @@ class ProfileData {
 
   String idealType;
 
+  String ifMagicWish;
+  String ifNextLife;
+
+  String freeSpace;
+
+  YesNoAnswer confessed;
+  YesNoAnswer beenConfessed;
+  YesNoAnswer hasCrush;
+
+  WhichOneAnswer dogOrCat;
+  WhichOneAnswer indoorOrOutdoor;
+  WhichOneAnswer thrill;
+  WhichOneAnswer kinokoOrTakenoko;
+  WhichOneAnswer reply;
+
   ProfileData({
     this.instagramId = "",
     this.xId = "",
@@ -45,5 +60,24 @@ class ProfileData {
     this.shoeSize = "",
 
     this.idealType = "",
+
+    this.ifMagicWish = "",
+    this.ifNextLife = "",
+
+    this.freeSpace = "",
+
+    this.confessed = YesNoAnswer.unknown,
+    this.beenConfessed = YesNoAnswer.unknown,
+    this.hasCrush = YesNoAnswer.unknown,
+
+    this.dogOrCat = WhichOneAnswer.unknown,
+    this.indoorOrOutdoor = WhichOneAnswer.unknown,
+    this.thrill = WhichOneAnswer.unknown,
+    this.kinokoOrTakenoko = WhichOneAnswer.unknown,
+    this.reply = WhichOneAnswer.unknown,
   });
 }
+
+enum YesNoAnswer { yes, no, unknown }
+
+enum WhichOneAnswer { left, center, right, unknown }

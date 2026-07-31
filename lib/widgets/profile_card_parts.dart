@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hakocha/models/profile_data.dart';
 import '../constants/app_text_styles.dart';
 import '../constants/app_colors.dart';
 import 'outlined_text.dart';
@@ -722,85 +723,163 @@ class ProfileDetailItem extends StatelessWidget {
 }
 
 //LoveTalk
-class ProfileLoveTalk extends StatelessWidget {
+class ProfileLoveTalk extends StatefulWidget {
   const ProfileLoveTalk({super.key});
+  @override
+  State<ProfileLoveTalk> createState() => _ProfileLoveTalkState();
+}
 
+class _ProfileLoveTalkState extends State<ProfileLoveTalk> {
   @override
   Widget build(BuildContext context) {
     return (Stack(
       children: [
         Positioned(
-          left: 165,
+          left: 142,
           bottom: 110,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              //1行目
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  OutlinedText(
-                    text: " 告白したことある？  YES",
-                    style: AppTextStyles.profileFormatText2,
-                    outlineColor: AppColors.pink4,
-                    strokeWidth: 2.5,
-                  ),
-                  const SizedBox(width: 8),
-                  OutlinedText(
-                    text: "NO",
-                    style: AppTextStyles.profileFormatText2,
-                    outlineColor: AppColors.purple4,
-                    strokeWidth: 2.5,
-                  ),
-                ],
+              ProfileYesNoSelector(
+                question: "告白したことある？",
+                value: dummyProfile.confessed,
+                onChanged: (v) {
+                  setState(() {
+                    dummyProfile.confessed = v;
+                  });
+                },
               ),
               const SizedBox(height: 10),
 
-              //2行目
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  OutlinedText(
-                    text: "告白されたことある？YES",
-                    style: AppTextStyles.profileFormatText2,
-                    outlineColor: AppColors.pink4,
-                    strokeWidth: 2.5,
-                  ),
-                  const SizedBox(width: 8),
-                  OutlinedText(
-                    text: "NO",
-                    style: AppTextStyles.profileFormatText2,
-                    outlineColor: AppColors.purple4,
-                    strokeWidth: 2.5,
-                  ),
-                ],
+              ProfileYesNoSelector(
+                question: "告白されたことある？",
+                value: dummyProfile.beenConfessed,
+                onChanged: (v) {
+                  setState(() {
+                    dummyProfile.beenConfessed = v;
+                  });
+                },
               ),
               const SizedBox(height: 10),
 
-              //3行目
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  OutlinedText(
-                    text: " 今好きな人はいる？  YES",
-                    style: AppTextStyles.profileFormatText2,
-                    outlineColor: AppColors.pink4,
-                    strokeWidth: 2.5,
-                  ),
-                  const SizedBox(width: 8),
-                  OutlinedText(
-                    text: "NO",
-                    style: AppTextStyles.profileFormatText2,
-                    outlineColor: AppColors.purple4,
-                    strokeWidth: 2.5,
-                  ),
-                ],
+              ProfileYesNoSelector(
+                question: "今好きな人はいる？",
+                value: dummyProfile.hasCrush,
+                onChanged: (v) {
+                  setState(() {
+                    dummyProfile.hasCrush = v;
+                  });
+                },
               ),
             ],
           ),
         ),
       ],
     ));
+  }
+}
+
+//YES・NO質問のフォーマット
+class ProfileYesNoSelector extends StatelessWidget {
+  final String question;
+  final YesNoAnswer value;
+  final ValueChanged<YesNoAnswer> onChanged;
+
+  const ProfileYesNoSelector({
+    super.key,
+    required this.question,
+    required this.value,
+    required this.onChanged,
+  });
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        SizedBox(
+          width: 150, // 全質問共通
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: OutlinedText(
+              text: question,
+              style: AppTextStyles.profileFormatText2,
+              outlineColor: AppColors.pink4,
+              strokeWidth: 2.5,
+            ),
+          ),
+        ),
+
+        const SizedBox(width: 3),
+
+        YesNoButton(
+          label: "YES",
+          value: value,
+          myValue: YesNoAnswer.yes,
+          onChanged: onChanged,
+        ),
+
+        const SizedBox(width: 8),
+
+        YesNoButton(
+          label: "NO",
+          value: value,
+          myValue: YesNoAnswer.no,
+          onChanged: onChanged,
+        ),
+      ],
+    );
+  }
+}
+
+//二択のボタンフォーマット
+class YesNoButton extends StatelessWidget {
+  final String label;
+  final YesNoAnswer value;
+  final YesNoAnswer myValue;
+  final ValueChanged<YesNoAnswer> onChanged;
+
+  const YesNoButton({
+    super.key,
+    required this.label,
+    required this.value,
+    required this.myValue,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final selected = value == myValue;
+
+    return InkWell(
+      onTap: () {
+        // もう一度押したら解除
+        if (selected) {
+          onChanged(YesNoAnswer.unknown);
+        } else {
+          onChanged(myValue);
+        }
+      },
+      child: Stack(
+        alignment: Alignment.center,
+        clipBehavior: Clip.none,
+        children: [
+          OutlinedText(
+            text: label,
+            style: AppTextStyles.profileFormatText2,
+            outlineColor: myValue == YesNoAnswer.yes
+                ? AppColors.pink4
+                : AppColors.purple4,
+            strokeWidth: 2.5,
+          ),
+          selected
+              ? const Icon(
+                  Icons.circle_outlined,
+                  size: 22,
+                  color: AppColors.circleOutlined,
+                )
+              : const SizedBox(),
+        ],
+      ),
+    );
   }
 }
 
@@ -910,7 +989,14 @@ class ProfileEllipse extends StatelessWidget {
 
 //もしもコーナー
 class ProfileIfCorner extends StatelessWidget {
-  const ProfileIfCorner({super.key});
+  final String ifMagicWish;
+  final String ifNextLife;
+
+  const ProfileIfCorner({
+    super.key,
+    required this.ifMagicWish,
+    required this.ifNextLife,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -945,9 +1031,37 @@ class ProfileIfCorner extends StatelessWidget {
         Row(
           children: [
             const SizedBox(width: 30),
-            const ProfileEllipse(title: "魔法がつかえたら…"),
+            ProfileEllipse(
+              title: "魔法がつかえたら…",
+              child: Padding(
+                padding: const EdgeInsets.only(top: 18),
+                child: Center(
+                  child: ProfileEllipseInput(
+                    width: 120,
+                    value: ifMagicWish,
+                    onChanged: (text) {
+                      dummyProfile.ifMagicWish = text;
+                    },
+                  ),
+                ),
+              ),
+            ),
             const SizedBox(width: 30),
-            const ProfileEllipse(title: "生まれ変わるなら…"),
+            ProfileEllipse(
+              title: "生まれ変わるなら…",
+              child: Padding(
+                padding: const EdgeInsets.only(top: 18),
+                child: Center(
+                  child: ProfileEllipseInput(
+                    width: 120,
+                    value: ifNextLife,
+                    onChanged: (text) {
+                      dummyProfile.ifNextLife = text;
+                    },
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ],
@@ -1087,34 +1201,200 @@ class _ProfileWhichOnePainter extends CustomPainter {
 }
 
 //Which One?質問内容
-class ProfileWhichOneContents extends StatelessWidget {
+class ProfileWhichOneContents extends StatefulWidget {
   const ProfileWhichOneContents({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    const questions = [
-      "自分は【   犬   ・   猫   】派",
-      "休日は【   インドア  ・   アウトドア   】派",
-      "自分は【  犬   ・   猫   】派",
-      "【  きのこの山  ・  たけのこの里   】派",
-      "返信は【  すぐ返信する   ・   溜めがち   】",
-    ];
+  State<ProfileWhichOneContents> createState() =>
+      _ProfileWhichOneContentsState();
+}
 
+class _ProfileWhichOneContentsState extends State<ProfileWhichOneContents> {
+  @override
+  Widget build(BuildContext context) {
     return SizedBox(
       width: 230,
       child: Padding(
-        padding: const EdgeInsets.only(left: 12),
+        padding: const EdgeInsets.only(left: 10, top: 15),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: questions
-              .map(
-                (q) => Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: Text(q, style: AppTextStyles.profileFormatText4),
-                ),
-              )
-              .toList(),
+          children: [
+            ProfileWhichOneSelector(
+              prefix: "自分は【",
+              leftLabel: "   犬   ",
+              rightLabel: "   猫   ",
+              suffix: "】派",
+              value: dummyProfile.dogOrCat,
+              onChanged: (v) {
+                setState(() {
+                  dummyProfile.dogOrCat = v;
+                });
+              },
+            ),
+
+            const SizedBox(height: 12),
+
+            ProfileWhichOneSelector(
+              prefix: "休日は【",
+              leftLabel: "   インドア   ",
+              rightLabel: "   アウトドア   ",
+              suffix: "】派",
+              value: dummyProfile.indoorOrOutdoor,
+              onChanged: (v) {
+                setState(() {
+                  dummyProfile.indoorOrOutdoor = v;
+                });
+              },
+            ),
+
+            const SizedBox(height: 12),
+
+            ProfileWhichOneSelector(
+              prefix: "絶叫系は【",
+              leftLabel: "   乗れる   ",
+              rightLabel: "   乗れない   ",
+              suffix: "】",
+              value: dummyProfile.thrill,
+              onChanged: (v) {
+                setState(() {
+                  dummyProfile.thrill = v;
+                });
+              },
+            ),
+
+            const SizedBox(height: 12),
+
+            ProfileWhichOneSelector(
+              prefix: "【",
+              leftLabel: "   きのこの山   ",
+              rightLabel: "   たけのこの里   ",
+              suffix: "】派",
+              value: dummyProfile.kinokoOrTakenoko,
+              onChanged: (v) {
+                setState(() {
+                  dummyProfile.kinokoOrTakenoko = v;
+                });
+              },
+            ),
+
+            const SizedBox(height: 12),
+
+            ProfileWhichOneSelector(
+              prefix: "返信は【",
+              leftLabel: "   すぐ返信する   ",
+              rightLabel: "   溜めがち   ",
+              suffix: "】",
+              value: dummyProfile.reply,
+              onChanged: (v) {
+                setState(() {
+                  dummyProfile.reply = v;
+                });
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+//Which One?質問フォーマット
+class ProfileWhichOneSelector extends StatelessWidget {
+  final String prefix;
+  final String leftLabel;
+  final String rightLabel;
+  final String suffix;
+
+  final WhichOneAnswer value;
+  final ValueChanged<WhichOneAnswer> onChanged;
+
+  const ProfileWhichOneSelector({
+    super.key,
+    required this.prefix,
+    required this.leftLabel,
+    required this.rightLabel,
+    required this.suffix,
+    required this.value,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Text(prefix, style: AppTextStyles.profileFormatText4),
+
+        WhichOneChoiceButton(
+          label: leftLabel,
+          value: value,
+          myValue: WhichOneAnswer.left,
+          onChanged: onChanged,
+        ),
+
+        SizedBox(
+          width: 18,
+          child: WhichOneChoiceButton(
+            label: "・",
+            value: value,
+            myValue: WhichOneAnswer.center,
+            onChanged: onChanged,
+          ),
+        ),
+
+        WhichOneChoiceButton(
+          label: rightLabel,
+          value: value,
+          myValue: WhichOneAnswer.right,
+          onChanged: onChanged,
+        ),
+
+        Text(suffix, style: AppTextStyles.profileFormatText4),
+      ],
+    );
+  }
+}
+
+//Which One?の選択ボタンフォーマット
+class WhichOneChoiceButton extends StatelessWidget {
+  final String label;
+  final WhichOneAnswer value;
+  final WhichOneAnswer myValue;
+  final ValueChanged<WhichOneAnswer> onChanged;
+
+  const WhichOneChoiceButton({
+    super.key,
+    required this.label,
+    required this.value,
+    required this.myValue,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final selected = value == myValue;
+
+    return SizedBox(
+      height: 26,
+      child: InkWell(
+        onTap: () {
+          if (selected) {
+            onChanged(WhichOneAnswer.unknown);
+          } else {
+            onChanged(myValue);
+          }
+        },
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Text(label, style: AppTextStyles.profileFormatText4),
+
+            if (selected)
+              const Icon(
+                Icons.circle_outlined,
+                size: 22,
+                color: AppColors.circleOutlined,
+              ),
+          ],
         ),
       ),
     );
@@ -1123,7 +1403,8 @@ class ProfileWhichOneContents extends StatelessWidget {
 
 //Free Space
 class ProfileFreeSpace extends StatelessWidget {
-  const ProfileFreeSpace({super.key});
+  final String freeSpace;
+  const ProfileFreeSpace({super.key, required this.freeSpace});
 
   @override
   Widget build(BuildContext context) {
@@ -1161,7 +1442,24 @@ class ProfileFreeSpace extends StatelessWidget {
           Positioned(
             left: 0,
             top: 65,
-            child: ProfileWhiteSquare(width: 310, height: 130),
+            child: Stack(
+              children: [
+                const ProfileWhiteSquare(width: 310, height: 130),
+
+                Positioned(
+                  left: 5,
+                  top: 5,
+                  child: ProfileFreeSpaceInput(
+                    width: 300,
+                    height: 120,
+                    value: freeSpace,
+                    onChanged: (text) {
+                      dummyProfile.freeSpace = text;
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),

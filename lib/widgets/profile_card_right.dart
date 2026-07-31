@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'profile_card_parts.dart';
+import '../dummy/dummy_profile.dart';
 
 class ProfileCardRight extends StatelessWidget {
   const ProfileCardRight({super.key});
@@ -15,7 +16,10 @@ class ProfileCardRight extends StatelessWidget {
           child: Stack(
             children: [
               // もしもコーナー
-              const ProfileIfCorner(),
+              ProfileIfCorner(
+                ifMagicWish: dummyProfile.ifMagicWish,
+                ifNextLife: dummyProfile.ifNextLife,
+              ),
 
               // WhichOne?コーナー
               Positioned(
@@ -30,7 +34,7 @@ class ProfileCardRight extends StatelessWidget {
                 top: 510,
                 left: 30,
                 right: 0,
-                child: const ProfileFreeSpace(),
+                child: ProfileFreeSpace(freeSpace: dummyProfile.freeSpace),
               ),
             ],
           ),

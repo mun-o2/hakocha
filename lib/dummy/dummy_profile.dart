@@ -23,4 +23,19 @@ final dummyProfile = ProfileData(
   shoeSize: "24.5cm",
 
   idealType: "優しい人！",
+
+  ifMagicWish: "空を飛びたい",
+  ifNextLife: "自分！",
+
+  freeSpace: "今度ご飯行こうね！！",
+
+  confessed: YesNoAnswer.yes,
+  beenConfessed: YesNoAnswer.yes,
+  hasCrush: YesNoAnswer.no,
+
+  dogOrCat: WhichOneAnswer.left,
+  indoorOrOutdoor: WhichOneAnswer.right,
+  thrill: WhichOneAnswer.right,
+  kinokoOrTakenoko: WhichOneAnswer.right,
+  reply: WhichOneAnswer.left,
 );

@@ -66,4 +66,7 @@ class AppColors {
 
   //画像選択時のボトムシートサブカラー
   static const Color imapePickerBottomSheetSub = Color(0xFFFEEFF8);
+
+  //手書き風丸の線画色
+  static const Color circleOutlined = Color(0xFF7B7B7B);
 }

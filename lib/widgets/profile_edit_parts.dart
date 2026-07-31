@@ -88,21 +88,21 @@ class _ProfileEditableTextState extends State<ProfileEditableText> {
 }
 
 //ハート形の入力スペース
-class ProfileHeartInput extends StatefulWidget {
+class ProfileInputHeart extends StatefulWidget {
   final String value;
   final ValueChanged<String> onChanged;
 
-  const ProfileHeartInput({
+  const ProfileInputHeart({
     super.key,
     required this.value,
     required this.onChanged,
   });
 
   @override
-  State<ProfileHeartInput> createState() => _ProfileHeartInputState();
+  State<ProfileInputHeart> createState() => _ProfileInputHeartState();
 }
 
-class _ProfileHeartInputState extends State<ProfileHeartInput> {
+class _ProfileInputHeartState extends State<ProfileInputHeart> {
   late final TextEditingController controller;
 
   @override
@@ -112,7 +112,7 @@ class _ProfileHeartInputState extends State<ProfileHeartInput> {
   }
 
   @override
-  void didUpdateWidget(covariant ProfileHeartInput oldWidget) {
+  void didUpdateWidget(covariant ProfileInputHeart oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     if (oldWidget.value != widget.value) {
@@ -145,6 +145,147 @@ class _ProfileHeartInputState extends State<ProfileHeartInput> {
         onSubmitted: (_) {
           widget.onChanged(controller.text);
         },
+      ),
+    );
+  }
+}
+
+//もしもコーナーの楕円入力スペース（入力スペース自体は透明）
+class ProfileEllipseInput extends StatefulWidget {
+  final String value;
+  final ValueChanged<String> onChanged;
+  final double? width;
+
+  const ProfileEllipseInput({
+    super.key,
+    required this.value,
+    required this.onChanged,
+    this.width,
+  });
+
+  @override
+  State<ProfileEllipseInput> createState() => _ProfileEllipseInputState();
+}
+
+class _ProfileEllipseInputState extends State<ProfileEllipseInput> {
+  late final TextEditingController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = TextEditingController(text: widget.value);
+  }
+
+  @override
+  void didUpdateWidget(covariant ProfileEllipseInput oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (oldWidget.value != widget.value) {
+      controller.text = widget.value;
+    }
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Widget field = TextField(
+      controller: controller,
+      maxLines: 2,
+      textAlign: TextAlign.center,
+      textAlignVertical: TextAlignVertical.center,
+
+      style: AppTextStyles.profileText,
+      cursorColor: AppColors.pink4,
+
+      decoration: const InputDecoration(
+        border: InputBorder.none,
+        isDense: true,
+        contentPadding: EdgeInsets.zero,
+      ),
+
+      onSubmitted: (_) {
+        widget.onChanged(controller.text);
+      },
+    );
+
+    return widget.width == null
+        ? field
+        : SizedBox(width: widget.width, child: field);
+  }
+}
+
+//フリースペース部分
+class ProfileFreeSpaceInput extends StatefulWidget {
+  final String value;
+  final ValueChanged<String> onChanged;
+  final double width;
+  final double height;
+
+  const ProfileFreeSpaceInput({
+    super.key,
+    required this.value,
+    required this.onChanged,
+    required this.width,
+    required this.height,
+  });
+
+  @override
+  State<ProfileFreeSpaceInput> createState() => _ProfileFreeSpaceInputState();
+}
+
+class _ProfileFreeSpaceInputState extends State<ProfileFreeSpaceInput> {
+  late final TextEditingController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = TextEditingController(text: widget.value);
+  }
+
+  @override
+  void didUpdateWidget(covariant ProfileFreeSpaceInput oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (oldWidget.value != widget.value) {
+      controller.text = widget.value;
+    }
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: widget.width,
+      height: widget.height,
+      child: TextField(
+        controller: controller,
+
+        expands: true,
+        maxLines: null,
+        minLines: null,
+
+        textAlign: TextAlign.left,
+        textAlignVertical: TextAlignVertical.top,
+
+        style: AppTextStyles.profileText,
+        cursorColor: AppColors.pink4,
+
+        decoration: const InputDecoration(
+          border: InputBorder.none,
+          contentPadding: EdgeInsets.all(14),
+        ),
+
+        onChanged: widget.onChanged,
       ),
     );
   }
