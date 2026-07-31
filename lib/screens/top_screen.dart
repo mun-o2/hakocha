@@ -28,26 +28,27 @@ class TopScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 16),
+            const SizedBox(height: 32),
             
             // --- 1. プロフィールカード ---
             Container(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 20.0),
               decoration: BoxDecoration(
                 color: Colors.white,
-                border: Border.all(color: AppColors.pink4, width: 2),
+                // AppColorsのピンク4を使用
+                border: Border.all(color: AppColors.pink4, width: 2), 
                 borderRadius: BorderRadius.circular(16),
               ),
-              child: Row(
+              child: Column(
                 children: [
-                  const CircleAvatar(
-                    radius: 35,
-                    backgroundColor: AppColors.textTertiary,
-                  ),
-                  const SizedBox(width: 24),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      const CircleAvatar(
+                        radius: 35,
+                        backgroundColor: AppColors.textTertiary,
+                      ),
+                      const SizedBox(width: 24),
                       Text(
                         DummyHomeData.userName,
                         style: const TextStyle(
@@ -56,26 +57,28 @@ class TopScreen extends StatelessWidget {
                           color: AppColors.textPrimary,
                         ),
                       ),
-                      const SizedBox(height: 8),
-                      OutlinedButton(
-                        onPressed: () {},
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: AppColors.purple4,
-                          side: const BorderSide(color: AppColors.purple4),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          minimumSize: const Size(120, 32),
-                        ),
-                        child: const Text('プロフィール編集'),
-                      ),
                     ],
+                  ),
+                  const SizedBox(height: 20),
+                  OutlinedButton(
+                    onPressed: () {
+                      // TODO: 編集画面への遷移処理（別の人が作成中の画面をここに繋ぎ込みます）
+                    },
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: AppColors.purple4,
+                      side: const BorderSide(color: AppColors.purple4),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      minimumSize: const Size(160, 36),
+                    ),
+                    child: const Text('プロフィール編集'),
                   ),
                 ],
               ),
             ),
             
-            const SizedBox(height: 24),
+            const SizedBox(height: 40),
 
             // --- 2. 交換人数＆ページ数カード ---
             Container(
@@ -89,19 +92,17 @@ class TopScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   _buildStatItem('交換した人数', DummyHomeData.exchangedCount, '人'),
-                  
                   Container(
                     width: 1,
                     height: 50,
                     color: AppColors.textTertiary,
                   ),
-                  
                   _buildStatItem('プロフィール帳', DummyHomeData.profilePageCount, 'ページ'),
                 ],
               ),
             ),
 
-            const SizedBox(height: 32),
+            const SizedBox(height: 40),
 
             // --- 3. お知らせセクション ---
             const Text(
@@ -125,21 +126,19 @@ class TopScreen extends StatelessWidget {
               child: Text(
                 DummyHomeData.notification,
                 textAlign: TextAlign.center,
-                style: const TextStyle( // （Text全体からconstが外れたので、styleに付け直しています）
+                style: const TextStyle(
                   fontSize: 16,
                   color: AppColors.textPrimary,
                   height: 1.5,
                 ),
               ),
             ),
-            
           ],
         ),
       ),
     );
   }
 
-  // 数字の部分を作るための専用部品
   Widget _buildStatItem(String title, String number, String unit) {
     return Column(
       children: [
