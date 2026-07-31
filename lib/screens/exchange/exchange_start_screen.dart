@@ -10,7 +10,7 @@ class ExchangeStartScreen extends StatelessWidget {
     return SafeArea(
       child: Container(
         color: const Color(0xFFFBF8FF),
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+        padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -42,11 +42,14 @@ class ExchangeStartScreen extends StatelessWidget {
   }
 
   Widget _buildIllustration() {
-    return Center(
-      child: Image.asset(
-        'lib/assets/images/sharescreen_image85.png',
-        width: 240,
-        fit: BoxFit.contain,
+    return SizedBox(
+      height: 260,
+      child: Center(
+        child: Image.asset(
+          'lib/assets/images/sharescreen_image85.png',
+          width: 280,
+          fit: BoxFit.contain,
+        ),
       ),
     );
   }

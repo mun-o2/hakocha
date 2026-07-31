@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hakocha/constants/app_colors.dart';
 import 'package:hakocha/providers/exchange_provider.dart';
 import 'package:hakocha/data/dummy_exchange_data.dart';
@@ -35,9 +36,7 @@ class _ExchangeCodeInputScreenState extends State<ExchangeCodeInputScreen> {
 
     final provider = context.read<ExchangeProvider>();
 
-    // TODO:
-    // 今はダミーデータで判定
-    // 後でFirebase上のexchangeCode検索に差し替える
+    // TODO: Firebase接続後は交換コードでユーザーを検索する
     final isMatched = inputCode == dummyExchangeUser.exchangeCode;
 
     if (isMatched) {
@@ -45,11 +44,10 @@ class _ExchangeCodeInputScreenState extends State<ExchangeCodeInputScreen> {
         _errorMessage = null;
       });
 
-      // 一致したユーザーをExchangeProviderに登録
       provider.matchUser(dummyExchangeUser);
 
-      // exchange_screen.dart 側が currentStep を見て
-      // ExchangeMatchedScreen に切り替える想定
+      // ExchangeStep.matched に変わるので、
+      // exchange_screen.dart 側で matched画面へ切り替える
       Navigator.pop(context);
     } else {
       setState(() {
@@ -66,29 +64,26 @@ class _ExchangeCodeInputScreenState extends State<ExchangeCodeInputScreen> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const SizedBox(height: 48),
+              const SizedBox(height: 95),
 
               _buildTitle(),
 
               const SizedBox(height: 48),
 
-              _buildMyCodeCard(),
-
-              const SizedBox(height: 32),
-
-              _buildCodeInput(),
-
-              const SizedBox(height: 16),
-
-              _buildSubmitButton(),
+              Center(child: _buildCodeArea()),
 
               if (_errorMessage != null) ...[
-                const SizedBox(height: 16),
+                const SizedBox(height: 12),
                 Text(
                   _errorMessage!,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(color: Colors.red, fontSize: 14),
+                  style: const TextStyle(
+                    color: Colors.red,
+                    fontSize: 13,
+                    fontFamily: 'Noto Sans JP',
+                  ),
                 ),
               ],
             ],
@@ -98,120 +93,118 @@ class _ExchangeCodeInputScreenState extends State<ExchangeCodeInputScreen> {
     );
   }
 
+  /// 上部タイトル
   Widget _buildTitle() {
     return const Text(
-      '交換コードを入力',
+      'スマホを近づけて\nタップしてシェア！',
       textAlign: TextAlign.center,
       style: TextStyle(
         color: AppColors.textPrimary,
         fontSize: 24,
         fontFamily: 'Noto Sans JP',
-        fontWeight: FontWeight.w700,
+        fontWeight: FontWeight.w400,
+        height: 2,
       ),
     );
   }
 
-  Widget _buildMyCodeCard() {
+  /// 自分の交換コード + 相手のコード入力欄
+  Widget _buildCodeArea() {
     return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+      width: 300,
+      height: 174,
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 18),
       decoration: BoxDecoration(
         color: const Color(0xFFF3E9FD),
-        border: Border.all(color: AppColors.purple5, width: 2),
+        border: Border.all(color: AppColors.purple5, width: 3),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text(
-            'あなたの交換コード',
-            style: TextStyle(
-              color: AppColors.purple5,
-              fontSize: 14,
-              fontWeight: FontWeight.w700,
+          // 自分の交換コード
+          // 自分の交換コード
+          InkWell(
+            borderRadius: BorderRadius.circular(8),
+            onTap: () async {
+              await Clipboard.setData(
+                ClipboardData(text: dummyCurrentUser.exchangeCode),
+              );
+
+              if (!mounted) return;
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('交換コードをコピーしました'),
+                  duration: Duration(seconds: 1),
+                ),
+              );
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              child: Text(
+                dummyCurrentUser.exchangeCode,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: AppColors.purple5,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
             ),
           ),
 
-          const SizedBox(height: 8),
+          const SizedBox(height: 28),
 
-          Text(
-            dummyCurrentUser.exchangeCode,
-            style: const TextStyle(
-              color: AppColors.purple5,
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
-              letterSpacing: 1.2,
+          // 相手の交換コード入力欄
+          SizedBox(
+            width: 202,
+            height: 37,
+            child: TextField(
+              controller: _codeController,
+              autofocus: true,
+              textAlign: TextAlign.center,
+              textAlignVertical: TextAlignVertical.center,
+              textInputAction: TextInputAction.done,
+
+              // Enter / 完了でコード判定
+              onSubmitted: (_) {
+                _submitCode();
+              },
+
+              onChanged: (_) {
+                if (_errorMessage != null) {
+                  setState(() {
+                    _errorMessage = null;
+                  });
+                }
+              },
+
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: AppColors.backgroundWhite,
+
+                contentPadding: EdgeInsets.zero,
+
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(32),
+                  borderSide: const BorderSide(
+                    color: AppColors.purple5,
+                    width: 2,
+                  ),
+                ),
+
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(32),
+                  borderSide: const BorderSide(
+                    color: AppColors.purple5,
+                    width: 2,
+                  ),
+                ),
+              ),
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildCodeInput() {
-    return TextField(
-      controller: _codeController,
-      textAlign: TextAlign.center,
-
-      // iPhone側のEnter/完了でも送信
-      textInputAction: TextInputAction.done,
-
-      onSubmitted: (_) {
-        _submitCode();
-      },
-
-      onChanged: (_) {
-        if (_errorMessage != null) {
-          setState(() {
-            _errorMessage = null;
-          });
-        }
-      },
-
-      decoration: InputDecoration(
-        hintText: '交換コードを入力',
-        filled: true,
-        fillColor: AppColors.backgroundWhite,
-
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 24,
-          vertical: 16,
-        ),
-
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(32),
-          borderSide: const BorderSide(color: AppColors.purple5, width: 2),
-        ),
-
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(32),
-          borderSide: const BorderSide(color: AppColors.purple5, width: 2.5),
-        ),
-
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(32),
-          borderSide: const BorderSide(color: Colors.red, width: 2),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSubmitButton() {
-    return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        onPressed: _submitCode,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.purple5,
-          foregroundColor: AppColors.backgroundWhite,
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(32),
-          ),
-        ),
-        child: const Text(
-          '交換相手を探す',
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
-        ),
       ),
     );
   }

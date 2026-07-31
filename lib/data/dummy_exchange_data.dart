@@ -6,6 +6,7 @@ const dummyCurrentUser = UserProfile(
   name: 'みう',
   iconUrl: '',
   exchangeCode: 'EXC-2026-001',
+  themeColor: ProfileThemeColor.pink,
 );
 
 const dummyExchangeUser = UserProfile(
@@ -13,6 +14,7 @@ const dummyExchangeUser = UserProfile(
   name: 'あかり',
   iconUrl: '',
   exchangeCode: 'EXC-2026-002',
+  themeColor: ProfileThemeColor.blue,
 );
 
 final dummyExchanges = [
