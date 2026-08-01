@@ -1,6 +1,6 @@
 import '../models/profile_data.dart';
 
-final dummyProfile = ProfileData(
+final dummyProfile2 = ProfileData(
   instagramId: "@sakusaku",
   xId: "@sakusaku",
 
