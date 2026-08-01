@@ -34,7 +34,7 @@ class _ExchangeStartScreenState extends State<ExchangeStartScreen>
   // 交換成功音
   final AudioPlayer _audioPlayer = AudioPlayer();
 
-  Timer? _debugMatchTimer; // TODO: DEBUG削除
+  // Timer? _debugMatchTimer; // TODO: DEBUG削除
 
   @override
   void initState() {
@@ -43,7 +43,7 @@ class _ExchangeStartScreenState extends State<ExchangeStartScreen>
     _setupAnimation();
     _setupNearbyExchange();
 
-    _startDebugMatch(); // TODO: DEBUG削除
+    // _startDebugMatch(); // TODO: DEBUG削除
   }
 
   void _setupAnimation() {
@@ -102,7 +102,7 @@ class _ExchangeStartScreenState extends State<ExchangeStartScreen>
 
     // 本物の通信が先に成功した場合、
     // デバッグタイマーが後から発火しないように止める
-    _debugMatchTimer?.cancel(); // TODO: DEBUG削除
+    // _debugMatchTimer?.cancel(); // TODO: DEBUG削除
 
     await _playSuccessFeedback();
 
@@ -144,6 +144,7 @@ class _ExchangeStartScreenState extends State<ExchangeStartScreen>
 
   /// 実機1台でも交換演出を確認するための仮処理
   // TODO: DEBUG削除
+  /*
   void _startDebugMatch() {
     _debugMatchTimer = Timer(const Duration(seconds: 3), () async {
       if (!mounted) return;
@@ -164,10 +165,11 @@ class _ExchangeStartScreenState extends State<ExchangeStartScreen>
       context.read<ExchangeProvider>().simulateMatch();
     });
   }
+  */
 
   @override
   void dispose() {
-    _debugMatchTimer?.cancel(); // TODO: DEBUG削除
+    //_debugMatchTimer?.cancel(); // TODO: DEBUG削除
 
     _peersSubscription?.cancel();
     _remoteUserSubscription?.cancel();

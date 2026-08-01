@@ -3,9 +3,12 @@ import 'profile_card_parts.dart';
 import '../dummy/dummy_profile.dart';
 import '../constants/profile_theme.dart';
 
-class ProfileCardRight extends StatelessWidget {
-  final ProfileCardThemeColor theme;
+import '../dummy/dummy_profile2.dart';
+import '../models/profile_data.dart';
+
+class ProfileCardRight extends StatefulWidget {
   final bool editable;
+  final ProfileCardThemeColor theme;
 
   const ProfileCardRight({
     super.key,
@@ -14,22 +17,31 @@ class ProfileCardRight extends StatelessWidget {
   });
 
   @override
+  State<ProfileCardRight> createState() => _ProfileCardRightState();
+}
+
+class _ProfileCardRightState extends State<ProfileCardRight> {
+  late ProfileData profileData;
+
+  @override
   Widget build(BuildContext context) {
+    profileData = widget.theme == pinkProfileCardTheme
+        ? dummyProfile
+        : dummyProfile2;
     return Center(
       child: SizedBox(
         width: 400,
         height: 740,
         child: ProfileCardBody(
           isLeft: false,
-          theme: theme,
+          theme: widget.theme,
           child: Stack(
             children: [
               // もしもコーナー
               ProfileIfCorner(
-                ifMagicWish: dummyProfile.ifMagicWish,
-                ifNextLife: dummyProfile.ifNextLife,
-                editable: editable,
-                theme: theme,
+                profile: profileData,
+                editable: widget.editable,
+                theme: widget.theme,
               ),
 
               // WhichOne?コーナー
@@ -37,7 +49,11 @@ class ProfileCardRight extends StatelessWidget {
                 top: 200,
                 left: 0,
                 right: 0,
-                child: ProfileWhichOne(editable: editable, theme: theme),
+                child: ProfileWhichOne(
+                  editable: widget.editable,
+                  theme: widget.theme,
+                  profile: profileData,
+                ),
               ),
 
               // Free Spaceコーナー
@@ -46,9 +62,9 @@ class ProfileCardRight extends StatelessWidget {
                 left: 30,
                 right: 0,
                 child: ProfileFreeSpace(
-                  freeSpace: dummyProfile.freeSpace,
-                  editable: editable,
-                  theme: theme,
+                  profile: profileData,
+                  editable: widget.editable,
+                  theme: widget.theme,
                 ),
               ),
             ],

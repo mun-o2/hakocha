@@ -148,7 +148,9 @@ class _ProfileInputHeartState extends State<ProfileInputHeart> {
               maxLines: 2,
               textAlign: TextAlign.center,
               textAlignVertical: TextAlignVertical.center,
-              style: AppTextStyles.profileText,
+              style: AppTextStyles.profileText.copyWith(
+                color: widget.theme.mainColor,
+              ),
               cursorColor: widget.theme.mainColor,
               decoration: const InputDecoration(
                 border: InputBorder.none,
@@ -244,7 +246,9 @@ class _ProfileEllipseInputState extends State<ProfileEllipseInput> {
               maxLines: 2,
               textAlign: TextAlign.center,
               overflow: TextOverflow.visible,
-              style: AppTextStyles.profileText,
+              style: AppTextStyles.profileText.copyWith(
+                color: widget.theme.mainColor,
+              ),
             ),
           );
 
@@ -316,7 +320,9 @@ class _ProfileFreeSpaceInputState extends State<ProfileFreeSpaceInput> {
               textAlign: TextAlign.left,
               textAlignVertical: TextAlignVertical.top,
 
-              style: AppTextStyles.profileText,
+              style: AppTextStyles.profileText.copyWith(
+                color: widget.theme.mainColor,
+              ),
               cursorColor: widget.theme.mainColor,
 
               decoration: const InputDecoration(

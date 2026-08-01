@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:hakocha/constants/app_colors.dart';
 import 'package:hakocha/constants/app_text_styles.dart';
 import 'package:hakocha/constants/dummy_home_data.dart';
+import 'package:hakocha/constants/profile_theme.dart';
 import 'package:hakocha/screens/edit_profile_screen.dart';
 import 'package:hakocha/screens/settings_screen.dart';
+import 'package:hakocha/services/app_service.dart';
 
 class TopScreen extends StatefulWidget {
   const TopScreen({super.key});
@@ -15,6 +17,31 @@ class TopScreen extends StatefulWidget {
 class _TopScreenState extends State<TopScreen> {
   bool isEditing = false;
   bool isLoadingProfile = false;
+
+  ProfileCardThemeColor theme = pinkProfileCardTheme;
+  late DummyHomeData dummyHomeData;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // 初期値
+    dummyHomeData = DummyHomeData1;
+
+    _loadTheme();
+  }
+
+  Future<void> _loadTheme() async {
+    final color = await const AppService().getProfileColor();
+
+    if (!mounted) return;
+
+    setState(() {
+      theme = color == 'pink' ? pinkProfileCardTheme : blueProfileCardTheme;
+
+      dummyHomeData = color == 'pink' ? DummyHomeData1 : DummyHomeData2;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +85,7 @@ class _TopScreenState extends State<TopScreen> {
               children: [
                 const SizedBox(height: 18),
 
+                // 設定
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
@@ -99,7 +127,11 @@ class _TopScreenState extends State<TopScreen> {
 
                 const SizedBox(height: 18),
 
-                _buildNotificationCard(),
+                _buildNotificationCard(dummyHomeData.notification1),
+
+                const SizedBox(height: 16),
+
+                _buildNotificationCard(dummyHomeData.notification2),
 
                 const SizedBox(height: 40),
               ],
@@ -129,7 +161,7 @@ class _TopScreenState extends State<TopScreen> {
           Positioned(
             left: 155,
             top: 39,
-            child: Text(DummyHomeData.userName, style: AppTextStyles.userName),
+            child: Text(dummyHomeData.userName, style: AppTextStyles.userName),
           ),
 
           Positioned(
@@ -199,16 +231,18 @@ class _TopScreenState extends State<TopScreen> {
           Expanded(
             child: _buildStatItem(
               '交換した人数',
-              DummyHomeData.exchangedCount,
+              dummyHomeData.exchangeCount,
               '人',
               88,
             ),
           ),
-          Container(width: 1, height: 83, color: AppColors.pink4),
+
+          Container(width: 1, height: 83, color: theme.mainColor),
+
           Expanded(
             child: _buildStatItem(
               'プロフィール帳',
-              DummyHomeData.profilePageCount,
+              dummyHomeData.profilePageCount,
               'ページ',
               114,
             ),
@@ -240,19 +274,19 @@ class _TopScreenState extends State<TopScreen> {
           ),
         ),
 
-        Container(width: underlineWidth, height: 3, color: AppColors.pink4),
+        Container(width: underlineWidth, height: 3, color: theme.mainColor),
       ],
     );
   }
 
-  Widget _buildNotificationCard() {
+  Widget _buildNotificationCard(String notification) {
     return Container(
       width: 295,
       height: 128,
       alignment: Alignment.center,
       decoration: _cardDecoration(),
       child: Text(
-        DummyHomeData.notification,
+        notification,
         textAlign: TextAlign.center,
         style: AppTextStyles.bodyText,
       ),
@@ -262,7 +296,7 @@ class _TopScreenState extends State<TopScreen> {
   BoxDecoration _cardDecoration() {
     return BoxDecoration(
       color: Colors.white,
-      border: Border.all(color: AppColors.pink4, width: 3),
+      border: Border.all(color: theme.mainColor, width: 3),
       borderRadius: BorderRadius.circular(12),
     );
   }
