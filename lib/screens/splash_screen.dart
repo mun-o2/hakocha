@@ -34,12 +34,12 @@ class _SplashScreenState extends State<SplashScreen>
     // 1.5秒後にアニメーション開始
     Future.delayed(const Duration(milliseconds: 1500), () {
       if (mounted) {
-        _animationController.forward().then((_) {
-          if (mounted) {
-            // ホーム画面へ遷移
-            Navigator.of(context).pushReplacementNamed('/home');
-          }
-        });
+    _animationController.forward().then((_) {
+      if (mounted) {
+        // オンボーディングへ遷移
+        Navigator.of(context).pushReplacementNamed('/onboarding');
+      }
+    });
       }
     });
   }
