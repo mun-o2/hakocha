@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'edit_profile_screen.dart';
+import 'package:hakocha/dummy/dummy_profile.dart';
 import 'package:hakocha/screens/settings_screen.dart';
 import 'package:hakocha/constants/app_colors.dart';
 import 'package:hakocha/constants/dummy_home_data.dart';
@@ -65,7 +66,7 @@ class _TopScreenState extends State<TopScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        DummyHomeData.userName,
+                        dummyProfile.name,
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
