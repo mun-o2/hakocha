@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hakocha/constants/app_colors.dart';
 import 'package:hakocha/models/user_profile.dart';
 import 'package:hakocha/providers/exchange_provider.dart';
-import 'package:hakocha/screens/profile_detail_screen.dart';
 import 'package:provider/provider.dart';
 
 class ExchangeCompletedScreen extends StatelessWidget {
