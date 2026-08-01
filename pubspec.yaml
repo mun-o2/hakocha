@@ -69,6 +69,7 @@ flutter:
     - lib/assets/images/sharematched_attention.png
     - lib/assets/images/sharematched_flag.png
     - lib/assets/images/sharematched_letter.png
+    - lib/assets/images/profilebook.png
 
     - lib/assets/sounds/exchange_success.mp3
 

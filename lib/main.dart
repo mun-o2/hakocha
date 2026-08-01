@@ -50,7 +50,9 @@ class _HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<_HomeScreen> {
   AppTab _selectedTab = AppTab.home;
+
   Key _topScreenKey = UniqueKey();
+  Key _profileScreenKey = UniqueKey();
 
   List<Widget> get _screens => <Widget>[
     TopScreen(key: _topScreenKey),
@@ -58,12 +60,13 @@ class _HomeScreenState extends State<_HomeScreen> {
     ExchangeScreen(
       onOpenProfile: () {
         setState(() {
+          _profileScreenKey = UniqueKey();
           _selectedTab = AppTab.profile;
         });
       },
     ),
 
-    const ProfileScreen(),
+    ProfileScreen(key: _profileScreenKey),
   ];
 
   void _onTabSelected(int index) {
@@ -71,8 +74,11 @@ class _HomeScreenState extends State<_HomeScreen> {
 
     setState(() {
       if (selectedTab == AppTab.home) {
-        // ホームを押したらTopScreenを初期状態に戻す
         _topScreenKey = UniqueKey();
+      }
+
+      if (selectedTab == AppTab.profile) {
+        _profileScreenKey = UniqueKey();
       }
 
       _selectedTab = selectedTab;
@@ -82,7 +88,6 @@ class _HomeScreenState extends State<_HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: null,
       body: _screens[_selectedTab.index],
       bottomNavigationBar: AppBottomNavigationBar(
         currentIndex: _selectedTab.index,

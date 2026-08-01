@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'edit_profile_screen.dart';
+import 'package:hakocha/dummy/dummy_profile.dart';
+import 'package:hakocha/screens/settings_screen.dart';
 import 'package:hakocha/constants/app_colors.dart';
 import 'package:hakocha/constants/app_text_styles.dart';
 import 'package:hakocha/constants/dummy_home_data.dart';
