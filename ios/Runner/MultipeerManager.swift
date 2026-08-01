@@ -15,16 +15,16 @@ class MultipeerManager: NSObject {
     // 一旦ダミー
     // 実機A/Bでここを変えてテストしてOK
     // A
-    /*
+    
     private var localUserInfo: [String: Any] = [
         "userId": "user_001",
         "name": "みう",
         "exchangeCode": "ABCD1234"
     ]
-    */
+    
 
     // B
-    
+    /*
     private var localUserInfo: [String: Any] = [
     "userId": "user_002",
     "name": "あかり",
@@ -32,7 +32,7 @@ class MultipeerManager: NSObject {
     
 ]
 
-
+*/
     func start(withDisplayName name: String) {
         stop()
 

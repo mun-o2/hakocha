@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:hakocha/constants/app_colors.dart';
 import 'package:hakocha/models/remote_exchange_user.dart';
 import 'package:hakocha/screens/exchange/exchange_code_input_screen.dart';
-import 'package:hakocha/screens/exchange/exchange_match_screen.dart';
 import 'package:hakocha/services/nearby_exchange_service.dart';
+import 'package:provider/provider.dart';
+import 'package:hakocha/providers/exchange_provider.dart';
+import 'package:hakocha/models/user_profile.dart';
 
 class ExchangeStartScreen extends StatefulWidget {
   const ExchangeStartScreen({super.key});
@@ -63,44 +65,25 @@ class _ExchangeStartScreenState extends State<ExchangeStartScreen> {
     _nearbyService.start();
   }
 
-  void _handleRemoteUserReceived(RemoteExchangeUser user) {
+  void _handleRemoteUserReceived(RemoteExchangeUser remoteUser) {
     debugPrint(
-      '👤 [ExchangeStartScreen] '
-      'remoteUser received: ${user.name} (${user.id})',
+      '🎉 [ExchangeStartScreen] 相手情報受信！'
+      ' name=${remoteUser.name}, id=${remoteUser.id}',
     );
 
-    if (!mounted) {
-      return;
-    }
+    if (!mounted) return;
 
-    // 同じuserInfoが複数回来ても、
-    // 確認画面を何枚も開かないようにする。
-    if (_isNavigatingToMatch) {
-      debugPrint(
-        'ℹ️ [ExchangeStartScreen] '
-        'Already navigating to match screen.',
-      );
-      return;
-    }
-
-    _isNavigatingToMatch = true;
-
-    debugPrint(
-      '🚀 [ExchangeStartScreen] '
-      'Navigating to ExchangeMatchScreen: ${user.name}',
+    final user = UserProfile(
+      id: remoteUser.id,
+      name: remoteUser.name,
+      iconUrl: '',
+      exchangeCode: '',
+      themeColor: ProfileThemeColor.pink,
     );
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (_) => ExchangeMatchScreen(matchedUser: user)),
-    ).then((_) {
-      debugPrint(
-        '↩️ [ExchangeStartScreen] '
-        'Returned from ExchangeMatchScreen',
-      );
+    debugPrint('🔄 [ExchangeStartScreen] ExchangeProvider.matchUser()');
 
-      _isNavigatingToMatch = false;
-    });
+    context.read<ExchangeProvider>().matchUser(user);
   }
 
   @override
