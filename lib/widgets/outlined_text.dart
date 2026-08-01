@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class OutlinedText extends StatelessWidget {
   final String text;
   final TextStyle style;
+  final Color mainColor;
   final Color outlineColor;
   final double strokeWidth;
 
@@ -10,6 +11,7 @@ class OutlinedText extends StatelessWidget {
     super.key,
     required this.text,
     required this.style,
+    required this.mainColor,
     required this.outlineColor,
     this.strokeWidth = 4.5,
   });
@@ -27,7 +29,7 @@ class OutlinedText extends StatelessWidget {
               ..color = outlineColor,
           ),
         ),
-        Text(text, style: style),
+        Text(text, style: style.copyWith(color: mainColor)),
       ],
     );
   }

@@ -45,6 +45,7 @@ class _ProfileCardLeftState extends State<ProfileCardLeft> {
                   text: "My Profile",
                   style: AppTextStyles.profileTitle,
                   outlineColor: widget.theme.mainColor,
+                  mainColor: AppColors.white,
                 ),
               ),
 
@@ -56,9 +57,12 @@ class _ProfileCardLeftState extends State<ProfileCardLeft> {
                 theme: widget.theme,
               ),
               // メインプロフィール文
-              ProfileMainDescription(editable: widget.editable),
+              ProfileMainDescription(
+                editable: widget.editable,
+                theme: widget.theme,
+              ),
               // 左下詳細プロフィール
-              ProfileCardDetail(editable: widget.editable),
+              ProfileCardDetail(editable: widget.editable, theme: widget.theme),
               // Love Talk大ハート
               Positioned(
                 left: 110,
@@ -78,9 +82,10 @@ class _ProfileCardLeftState extends State<ProfileCardLeft> {
                 bottom: 80,
                 child: OutlinedText(
                   text: "理想のタイプは？",
-                  style: AppTextStyles.profileFormatText3,
+                  style: AppTextStyles.profileFormatSmall,
                   outlineColor: AppColors.white,
                   strokeWidth: 2.5,
+                  mainColor: AppColors.purple4,
                 ),
               ),
               Positioned(
@@ -89,6 +94,7 @@ class _ProfileCardLeftState extends State<ProfileCardLeft> {
                 child: ProfileInputHeart(
                   value: dummyProfile.idealType,
                   editable: widget.editable,
+                  theme: widget.theme,
                   onChanged: (text) {
                     dummyProfile.idealType = text;
                   },

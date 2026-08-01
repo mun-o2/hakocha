@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hakocha/constants/profile_theme.dart';
 import '../constants/app_text_styles.dart';
-import '../constants/app_colors.dart';
 
 //SNS
 class ProfileEditableText extends StatefulWidget {
@@ -8,6 +8,7 @@ class ProfileEditableText extends StatefulWidget {
   final String value;
   final ValueChanged<String> onChanged;
   final bool editable;
+  final ProfileCardThemeColor theme;
 
   const ProfileEditableText({
     super.key,
@@ -15,6 +16,7 @@ class ProfileEditableText extends StatefulWidget {
     required this.value,
     required this.onChanged,
     required this.editable,
+    required this.theme,
   });
 
   @override
@@ -64,7 +66,9 @@ class _ProfileEditableTextState extends State<ProfileEditableText> {
             textAlign: TextAlign.center,
             maxLines: 2,
             overflow: TextOverflow.visible,
-            style: AppTextStyles.profileText,
+            style: AppTextStyles.profileText.copyWith(
+              color: widget.theme.mainColor,
+            ),
           ),
         ),
       );
@@ -74,7 +78,7 @@ class _ProfileEditableTextState extends State<ProfileEditableText> {
       controller: controller,
       autofocus: true,
       style: AppTextStyles.profileText,
-      cursorColor: AppColors.pink4,
+      cursorColor: widget.theme.mainColor,
       decoration: const InputDecoration(
         isDense: true,
         border: InputBorder.none,
@@ -96,12 +100,14 @@ class ProfileInputHeart extends StatefulWidget {
   final String value;
   final ValueChanged<String> onChanged;
   final bool editable;
+  final ProfileCardThemeColor theme;
 
   const ProfileInputHeart({
     super.key,
     required this.value,
     required this.onChanged,
     required this.editable,
+    required this.theme,
   });
 
   @override
@@ -143,7 +149,7 @@ class _ProfileInputHeartState extends State<ProfileInputHeart> {
               textAlign: TextAlign.center,
               textAlignVertical: TextAlignVertical.center,
               style: AppTextStyles.profileText,
-              cursorColor: AppColors.pink4,
+              cursorColor: widget.theme.mainColor,
               decoration: const InputDecoration(
                 border: InputBorder.none,
                 isDense: true,
@@ -157,7 +163,9 @@ class _ProfileInputHeartState extends State<ProfileInputHeart> {
               child: Text(
                 controller.text,
                 textAlign: TextAlign.center,
-                style: AppTextStyles.profileText,
+                style: AppTextStyles.profileText.copyWith(
+                  color: widget.theme.mainColor,
+                ),
               ),
             ),
     );
@@ -170,6 +178,7 @@ class ProfileEllipseInput extends StatefulWidget {
   final ValueChanged<String> onChanged;
   final double? width;
   final bool editable;
+  final ProfileCardThemeColor theme;
 
   const ProfileEllipseInput({
     super.key,
@@ -177,6 +186,7 @@ class ProfileEllipseInput extends StatefulWidget {
     required this.onChanged,
     this.width,
     required this.editable,
+    required this.theme,
   });
 
   @override
@@ -215,8 +225,10 @@ class _ProfileEllipseInputState extends State<ProfileEllipseInput> {
             maxLines: 2,
             textAlign: TextAlign.center,
             textAlignVertical: TextAlignVertical.center,
-            style: AppTextStyles.profileText,
-            cursorColor: AppColors.pink4,
+            style: AppTextStyles.profileText.copyWith(
+              color: widget.theme.mainColor,
+            ),
+            cursorColor: widget.theme.mainColor,
             decoration: const InputDecoration(
               border: InputBorder.none,
               isDense: true,
@@ -248,6 +260,7 @@ class ProfileFreeSpaceInput extends StatefulWidget {
   final double width;
   final double height;
   final bool editable;
+  final ProfileCardThemeColor theme;
 
   const ProfileFreeSpaceInput({
     super.key,
@@ -256,6 +269,7 @@ class ProfileFreeSpaceInput extends StatefulWidget {
     required this.width,
     required this.height,
     required this.editable,
+    required this.theme,
   });
 
   @override
@@ -303,7 +317,7 @@ class _ProfileFreeSpaceInputState extends State<ProfileFreeSpaceInput> {
               textAlignVertical: TextAlignVertical.top,
 
               style: AppTextStyles.profileText,
-              cursorColor: AppColors.pink4,
+              cursorColor: widget.theme.mainColor,
 
               decoration: const InputDecoration(
                 border: InputBorder.none,
@@ -315,7 +329,12 @@ class _ProfileFreeSpaceInputState extends State<ProfileFreeSpaceInput> {
           : Padding(
               padding: const EdgeInsets.all(14),
               child: SingleChildScrollView(
-                child: Text(controller.text, style: AppTextStyles.profileText),
+                child: Text(
+                  controller.text,
+                  style: AppTextStyles.profileText.copyWith(
+                    color: widget.theme.mainColor,
+                  ),
+                ),
               ),
             ),
     );

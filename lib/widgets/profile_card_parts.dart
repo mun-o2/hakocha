@@ -268,8 +268,9 @@ class ProfileHeader extends StatelessWidget {
                     bottom: -10,
                     child: OutlinedText(
                       text: "にがおえ",
-                      style: AppTextStyles.profileFormatText1,
+                      style: AppTextStyles.profileFormatLarge,
                       outlineColor: AppColors.white,
+                      mainColor: theme.mainColor,
                     ),
                   ),
                 ],
@@ -288,6 +289,7 @@ class ProfileHeader extends StatelessWidget {
                       text: "SNS",
                       style: AppTextStyles.profileSNSLabel,
                       outlineColor: theme.mainColor,
+                      mainColor: AppColors.white,
                       strokeWidth: 2.5,
                     ),
                   ),
@@ -307,13 +309,16 @@ class ProfileHeader extends StatelessWidget {
                             ? ProfileEditableText(
                                 value: instagramId,
                                 editable: editable,
+                                theme: theme,
                                 onChanged: (text) {
                                   dummyProfile.instagramId = text;
                                 },
                               )
                             : Text(
                                 instagramId,
-                                style: AppTextStyles.profileText,
+                                style: AppTextStyles.profileText.copyWith(
+                                  color: theme.mainColor,
+                                ),
                               ),
                       ),
                     ],
@@ -330,11 +335,17 @@ class ProfileHeader extends StatelessWidget {
                             ? ProfileEditableText(
                                 value: xId,
                                 editable: editable,
+                                theme: theme,
                                 onChanged: (text) {
                                   dummyProfile.xId = text;
                                 },
                               )
-                            : Text(xId, style: AppTextStyles.profileText),
+                            : Text(
+                                xId,
+                                style: AppTextStyles.profileText.copyWith(
+                                  color: theme.mainColor,
+                                ),
+                              ),
                       ),
                     ],
                   ),
@@ -351,7 +362,12 @@ class ProfileHeader extends StatelessWidget {
 //基本プロフィール本文
 class ProfileMainDescription extends StatelessWidget {
   final bool editable;
-  const ProfileMainDescription({super.key, this.editable = true});
+  final ProfileCardThemeColor theme;
+  const ProfileMainDescription({
+    super.key,
+    this.editable = true,
+    required this.theme,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -369,7 +385,8 @@ class ProfileMainDescription extends StatelessWidget {
                 children: [
                   OutlinedText(
                     text: "わたしの名前は",
-                    style: AppTextStyles.profileFormatText1,
+                    style: AppTextStyles.profileFormatLarge,
+                    mainColor: theme.mainColor,
                     outlineColor: AppColors.white,
                   ),
 
@@ -380,6 +397,7 @@ class ProfileMainDescription extends StatelessWidget {
                     height: 25,
                     value: dummyProfile.name,
                     editable: editable,
+                    theme: theme,
                     onChanged: (text) {
                       dummyProfile.name = text;
                     },
@@ -389,7 +407,8 @@ class ProfileMainDescription extends StatelessWidget {
 
                   OutlinedText(
                     text: "で、",
-                    style: AppTextStyles.profileFormatText1,
+                    style: AppTextStyles.profileFormatLarge,
+                    mainColor: theme.mainColor,
                     outlineColor: AppColors.white,
                   ),
                 ],
@@ -406,6 +425,7 @@ class ProfileMainDescription extends StatelessWidget {
                     height: 25,
                     value: dummyProfile.birthYear,
                     editable: editable,
+                    theme: theme,
                     onChanged: (text) {
                       dummyProfile.birthYear = text;
                     },
@@ -415,7 +435,8 @@ class ProfileMainDescription extends StatelessWidget {
 
                   OutlinedText(
                     text: "年",
-                    style: AppTextStyles.profileFormatText1,
+                    style: AppTextStyles.profileFormatLarge,
+                    mainColor: theme.mainColor,
                     outlineColor: AppColors.white,
                   ),
 
@@ -425,6 +446,7 @@ class ProfileMainDescription extends StatelessWidget {
                     height: 25,
                     value: dummyProfile.birthMonth,
                     editable: editable,
+                    theme: theme,
                     onChanged: (text) {
                       dummyProfile.birthMonth = text;
                     },
@@ -432,7 +454,8 @@ class ProfileMainDescription extends StatelessWidget {
 
                   OutlinedText(
                     text: "月",
-                    style: AppTextStyles.profileFormatText1,
+                    style: AppTextStyles.profileFormatLarge,
+                    mainColor: theme.mainColor,
                     outlineColor: AppColors.white,
                   ),
 
@@ -442,6 +465,7 @@ class ProfileMainDescription extends StatelessWidget {
                     height: 25,
                     value: dummyProfile.birthDay,
                     editable: editable,
+                    theme: theme,
                     onChanged: (text) {
                       dummyProfile.birthDay = text;
                     },
@@ -449,7 +473,8 @@ class ProfileMainDescription extends StatelessWidget {
 
                   OutlinedText(
                     text: "日生まれの",
-                    style: AppTextStyles.profileFormatText1,
+                    style: AppTextStyles.profileFormatLarge,
+                    mainColor: theme.mainColor,
                     outlineColor: AppColors.white,
                   ),
                 ],
@@ -466,6 +491,7 @@ class ProfileMainDescription extends StatelessWidget {
                     height: 25,
                     value: dummyProfile.zodiacSign,
                     editable: editable,
+                    theme: theme,
                     onChanged: (text) {
                       dummyProfile.zodiacSign = text;
                     },
@@ -474,7 +500,8 @@ class ProfileMainDescription extends StatelessWidget {
 
                   OutlinedText(
                     text: "座だよ！",
-                    style: AppTextStyles.profileFormatText1,
+                    style: AppTextStyles.profileFormatLarge,
+                    mainColor: theme.mainColor,
                     outlineColor: AppColors.white,
                   ),
 
@@ -482,7 +509,8 @@ class ProfileMainDescription extends StatelessWidget {
 
                   OutlinedText(
                     text: "血液型は",
-                    style: AppTextStyles.profileFormatText1,
+                    style: AppTextStyles.profileFormatLarge,
+                    mainColor: theme.mainColor,
                     outlineColor: AppColors.white,
                   ),
 
@@ -492,6 +520,7 @@ class ProfileMainDescription extends StatelessWidget {
                     height: 25,
                     value: dummyProfile.bloodType,
                     editable: editable,
+                    theme: theme,
                     onChanged: (text) {
                       dummyProfile.bloodType = text;
                     },
@@ -500,7 +529,8 @@ class ProfileMainDescription extends StatelessWidget {
 
                   OutlinedText(
                     text: "型！",
-                    style: AppTextStyles.profileFormatText1,
+                    style: AppTextStyles.profileFormatLarge,
+                    mainColor: theme.mainColor,
                     outlineColor: AppColors.white,
                   ),
                 ],
@@ -514,7 +544,8 @@ class ProfileMainDescription extends StatelessWidget {
                 children: [
                   OutlinedText(
                     text: "MBTIは",
-                    style: AppTextStyles.profileFormatText1,
+                    style: AppTextStyles.profileFormatLarge,
+                    mainColor: theme.mainColor,
                     outlineColor: AppColors.white,
                   ),
 
@@ -525,6 +556,7 @@ class ProfileMainDescription extends StatelessWidget {
                     height: 25,
                     value: dummyProfile.mbti,
                     editable: editable,
+                    theme: theme,
                     onChanged: (text) {
                       dummyProfile.mbti = text;
                     },
@@ -534,7 +566,8 @@ class ProfileMainDescription extends StatelessWidget {
 
                   OutlinedText(
                     text: "だよ！",
-                    style: AppTextStyles.profileFormatText1,
+                    style: AppTextStyles.profileFormatLarge,
+                    mainColor: theme.mainColor,
                     outlineColor: AppColors.white,
                   ),
                 ],
@@ -548,7 +581,8 @@ class ProfileMainDescription extends StatelessWidget {
                 children: [
                   OutlinedText(
                     text: "みんなからは",
-                    style: AppTextStyles.profileFormatText1,
+                    style: AppTextStyles.profileFormatLarge,
+                    mainColor: theme.mainColor,
                     outlineColor: AppColors.white,
                   ),
 
@@ -559,6 +593,7 @@ class ProfileMainDescription extends StatelessWidget {
                     height: 25,
                     value: dummyProfile.nickname,
                     editable: editable,
+                    theme: theme,
                     onChanged: (text) {
                       dummyProfile.nickname = text;
                     },
@@ -568,7 +603,8 @@ class ProfileMainDescription extends StatelessWidget {
 
                   OutlinedText(
                     text: "って呼ばれてて、",
-                    style: AppTextStyles.profileFormatText1,
+                    style: AppTextStyles.profileFormatLarge,
+                    mainColor: theme.mainColor,
                     outlineColor: AppColors.white,
                   ),
                 ],
@@ -582,7 +618,8 @@ class ProfileMainDescription extends StatelessWidget {
                 children: [
                   OutlinedText(
                     text: "自分では",
-                    style: AppTextStyles.profileFormatText1,
+                    style: AppTextStyles.profileFormatLarge,
+                    mainColor: theme.mainColor,
                     outlineColor: AppColors.white,
                   ),
 
@@ -593,6 +630,7 @@ class ProfileMainDescription extends StatelessWidget {
                     height: 25,
                     value: dummyProfile.personality,
                     editable: editable,
+                    theme: theme,
                     onChanged: (text) {
                       dummyProfile.personality = text;
                     },
@@ -602,7 +640,8 @@ class ProfileMainDescription extends StatelessWidget {
 
                   OutlinedText(
                     text: "な性格だと",
-                    style: AppTextStyles.profileFormatText1,
+                    style: AppTextStyles.profileFormatLarge,
+                    mainColor: theme.mainColor,
                     outlineColor: AppColors.white,
                   ),
                 ],
@@ -616,7 +655,8 @@ class ProfileMainDescription extends StatelessWidget {
                 children: [
                   OutlinedText(
                     text: "思う！",
-                    style: AppTextStyles.profileFormatText1,
+                    style: AppTextStyles.profileFormatLarge,
+                    mainColor: theme.mainColor,
                     outlineColor: AppColors.white,
                   ),
 
@@ -624,7 +664,8 @@ class ProfileMainDescription extends StatelessWidget {
 
                   OutlinedText(
                     text: "休みの日は",
-                    style: AppTextStyles.profileFormatText1,
+                    style: AppTextStyles.profileFormatLarge,
+                    mainColor: theme.mainColor,
                     outlineColor: AppColors.white,
                   ),
 
@@ -635,6 +676,7 @@ class ProfileMainDescription extends StatelessWidget {
                     height: 25,
                     value: dummyProfile.holidayLife,
                     editable: editable,
+                    theme: theme,
                     onChanged: (text) {
                       dummyProfile.holidayLife = text;
                     },
@@ -649,7 +691,8 @@ class ProfileMainDescription extends StatelessWidget {
                 children: [
                   OutlinedText(
                     text: "してるかな！",
-                    style: AppTextStyles.profileFormatText1,
+                    style: AppTextStyles.profileFormatLarge,
+                    mainColor: theme.mainColor,
                     outlineColor: AppColors.white,
                   ),
                 ],
@@ -665,7 +708,12 @@ class ProfileMainDescription extends StatelessWidget {
 //詳細プロフィール文
 class ProfileCardDetail extends StatelessWidget {
   final bool editable;
-  const ProfileCardDetail({super.key, this.editable = true});
+  final ProfileCardThemeColor theme;
+  const ProfileCardDetail({
+    super.key,
+    this.editable = true,
+    required this.theme,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -681,6 +729,7 @@ class ProfileCardDetail extends StatelessWidget {
                 boxLeft: 20,
                 value: dummyProfile.birthplace,
                 editable: editable,
+                theme: theme,
               ),
               const SizedBox(width: 20),
 
@@ -689,6 +738,7 @@ class ProfileCardDetail extends StatelessWidget {
                 boxLeft: 20,
                 value: dummyProfile.brothers,
                 editable: editable,
+                theme: theme,
               ),
               const SizedBox(width: 20),
 
@@ -697,6 +747,7 @@ class ProfileCardDetail extends StatelessWidget {
                 boxLeft: 20,
                 value: dummyProfile.height,
                 editable: editable,
+                theme: theme,
               ),
               const SizedBox(width: 20),
 
@@ -705,6 +756,7 @@ class ProfileCardDetail extends StatelessWidget {
                 boxLeft: 20,
                 value: dummyProfile.shoeSize,
                 editable: editable,
+                theme: theme,
               ),
               const SizedBox(width: 20),
             ],
@@ -721,6 +773,7 @@ class ProfileDetailItem extends StatelessWidget {
   final double boxLeft;
   final String value;
   final bool editable;
+  final ProfileCardThemeColor theme;
 
   const ProfileDetailItem({
     super.key,
@@ -728,6 +781,7 @@ class ProfileDetailItem extends StatelessWidget {
     required this.boxLeft,
     required this.value,
     required this.editable,
+    required this.theme,
   });
 
   @override
@@ -746,6 +800,7 @@ class ProfileDetailItem extends StatelessWidget {
               height: 25,
               value: value,
               editable: editable,
+              theme: theme,
               onChanged: (text) {
                 dummyProfile.zodiacSign = text;
               },
@@ -757,7 +812,8 @@ class ProfileDetailItem extends StatelessWidget {
             top: 0,
             child: OutlinedText(
               text: title,
-              style: AppTextStyles.profileFormatText4,
+              style: AppTextStyles.profileFormatSmall,
+              mainColor: theme.mainColor,
               outlineColor: AppColors.white,
             ),
           ),
@@ -794,6 +850,7 @@ class _ProfileLoveTalkState extends State<ProfileLoveTalk> {
               text: "LoveTalk",
               style: AppTextStyles.profileTitle,
               outlineColor: widget.theme.mainColor,
+              mainColor: AppColors.white,
             ),
 
             const SizedBox(height: 12),
@@ -872,8 +929,9 @@ class ProfileYesNoSelector extends StatelessWidget {
             alignment: Alignment.centerRight,
             child: OutlinedText(
               text: question,
-              style: AppTextStyles.profileFormatText2,
+              style: AppTextStyles.profileFormatSmall,
               outlineColor: theme.mainColor,
+              mainColor: AppColors.white,
               strokeWidth: 2.5,
             ),
           ),
@@ -947,10 +1005,11 @@ class YesNoButton extends StatelessWidget {
           children: [
             OutlinedText(
               text: label,
-              style: AppTextStyles.profileFormatText2,
+              style: AppTextStyles.profileFormatSmall,
               outlineColor: myValue == YesNoAnswer.yes
                   ? theme.mainColor
                   : AppColors.purple4,
+              mainColor: AppColors.white,
               strokeWidth: 2.5,
             ),
             selected
@@ -1022,12 +1081,14 @@ class ProfileEllipse extends StatelessWidget {
   final String title;
   final Widget? child;
   final double top;
+  final ProfileCardThemeColor theme;
 
   const ProfileEllipse({
     super.key,
     required this.title,
     this.child,
     this.top = 80,
+    required this.theme,
   });
 
   @override
@@ -1061,8 +1122,9 @@ class ProfileEllipse extends StatelessWidget {
               top: 5,
               child: OutlinedText(
                 text: title,
-                style: AppTextStyles.profileFormatText4,
+                style: AppTextStyles.profileFormatSmall,
                 outlineColor: AppColors.white,
+                mainColor: theme.mainColor,
               ),
             ),
           ],
@@ -1100,6 +1162,7 @@ class ProfileIfCorner extends StatelessWidget {
                 text: "if...",
                 style: AppTextStyles.profileTitle,
                 outlineColor: theme.mainColor,
+                mainColor: AppColors.white,
               ),
             ),
             const SizedBox(width: 20),
@@ -1108,8 +1171,9 @@ class ProfileIfCorner extends StatelessWidget {
               padding: const EdgeInsets.only(top: 25),
               child: OutlinedText(
                 text: "もしもコーナー",
-                style: AppTextStyles.profileFormatText4,
+                style: AppTextStyles.profileFormatSmall,
                 outlineColor: AppColors.white,
+                mainColor: theme.mainColor,
                 strokeWidth: 2,
               ),
             ),
@@ -1122,6 +1186,7 @@ class ProfileIfCorner extends StatelessWidget {
             const SizedBox(width: 30),
             ProfileEllipse(
               title: "魔法がつかえたら…",
+              theme: theme,
               child: Padding(
                 padding: const EdgeInsets.only(top: 18),
                 child: Center(
@@ -1129,6 +1194,7 @@ class ProfileIfCorner extends StatelessWidget {
                     width: 120,
                     value: ifMagicWish,
                     editable: editable,
+                    theme: theme,
                     onChanged: (text) {
                       dummyProfile.ifMagicWish = text;
                     },
@@ -1139,6 +1205,7 @@ class ProfileIfCorner extends StatelessWidget {
             const SizedBox(width: 30),
             ProfileEllipse(
               title: "生まれ変わるなら…",
+              theme: theme,
               child: Padding(
                 padding: const EdgeInsets.only(top: 18),
                 child: Center(
@@ -1146,6 +1213,7 @@ class ProfileIfCorner extends StatelessWidget {
                     width: 120,
                     value: ifNextLife,
                     editable: editable,
+                    theme: theme,
                     onChanged: (text) {
                       dummyProfile.ifNextLife = text;
                     },
@@ -1173,8 +1241,9 @@ class ProfileWhichOne extends StatelessWidget {
       children: [
         OutlinedText(
           text: "あなたはどっち派？",
-          style: AppTextStyles.profileFormatText4,
+          style: AppTextStyles.profileFormatSmall,
           outlineColor: AppColors.white,
+          mainColor: theme.mainColor,
           strokeWidth: 2,
         ),
 
@@ -1185,6 +1254,7 @@ class ProfileWhichOne extends StatelessWidget {
             text: "Which One?",
             style: AppTextStyles.profileTitle,
             outlineColor: theme.mainColor,
+            mainColor: AppColors.white,
           ),
         ),
         const SizedBox(height: 5),
@@ -1442,7 +1512,12 @@ class ProfileWhichOneSelector extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text(prefix, style: AppTextStyles.profileFormatText4),
+        Text(
+          prefix,
+          style: AppTextStyles.profileFormatSmall.copyWith(
+            color: theme.mainColor,
+          ),
+        ),
 
         WhichOneChoiceButton(
           label: leftLabel,
@@ -1474,7 +1549,12 @@ class ProfileWhichOneSelector extends StatelessWidget {
           onChanged: onChanged,
         ),
 
-        Text(suffix, style: AppTextStyles.profileFormatText4),
+        Text(
+          suffix,
+          style: AppTextStyles.profileFormatSmall.copyWith(
+            color: theme.mainColor,
+          ),
+        ),
       ],
     );
   }
@@ -1518,7 +1598,12 @@ class WhichOneChoiceButton extends StatelessWidget {
         child: Stack(
           alignment: Alignment.center,
           children: [
-            Text(label, style: AppTextStyles.profileFormatText4),
+            Text(
+              label,
+              style: AppTextStyles.profileFormatSmall.copyWith(
+                color: theme.mainColor,
+              ),
+            ),
 
             if (selected)
               const Icon(
@@ -1561,6 +1646,7 @@ class ProfileFreeSpace extends StatelessWidget {
               text: "Free Space",
               style: AppTextStyles.profileTitle,
               outlineColor: theme.mainColor,
+              mainColor: AppColors.white,
             ),
           ),
           Positioned(
@@ -1570,8 +1656,9 @@ class ProfileFreeSpace extends StatelessWidget {
               alignment: Alignment.centerRight,
               child: OutlinedText(
                 text: "ここは自由に記入してね",
-                style: AppTextStyles.profileFormatText4,
+                style: AppTextStyles.profileFormatSmall,
                 outlineColor: AppColors.white,
+                mainColor: theme.mainColor,
                 strokeWidth: 2,
               ),
             ),
@@ -1593,6 +1680,7 @@ class ProfileFreeSpace extends StatelessWidget {
                     height: 120,
                     value: freeSpace,
                     editable: editable,
+                    theme: theme,
                     onChanged: (text) {
                       dummyProfile.freeSpace = text;
                     },
