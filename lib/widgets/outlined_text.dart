@@ -11,7 +11,7 @@ class OutlinedText extends StatelessWidget {
     required this.text,
     required this.style,
     required this.outlineColor,
-    this.strokeWidth = 4.5, // デフォルト4.5
+    this.strokeWidth = 4.5,
   });
 
   @override
@@ -27,7 +27,6 @@ class OutlinedText extends StatelessWidget {
               ..color = outlineColor,
           ),
         ),
-        // 中の文字
         Text(text, style: style),
       ],
     );
