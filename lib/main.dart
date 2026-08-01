@@ -6,6 +6,7 @@ import 'package:hakocha/providers/exchange_provider.dart';
 import 'package:hakocha/screens/exchange_screen.dart';
 import 'package:hakocha/screens/profile_screen.dart';
 import 'package:hakocha/screens/splash_screen.dart';
+import 'package:hakocha/screens/onboarding_screen.dart';
 import 'package:hakocha/screens/top_screen.dart';
 import 'package:hakocha/widgets/app_bottom_navigation_bar.dart';
 
@@ -27,7 +28,10 @@ class HakochaApp extends StatelessWidget {
           useMaterial3: true,
         ),
         home: const SplashScreen(),
-        routes: {'/home': (context) => const _HomeScreen()},
+        routes: {
+          '/onboarding': (context) => const OnboardingScreen(),
+          '/home': (context) => const _HomeScreen(),
+        },
       ),
     );
   }

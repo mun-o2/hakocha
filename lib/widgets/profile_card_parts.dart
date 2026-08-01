@@ -12,13 +12,20 @@ import 'package:iconify_flutter/icons/bxl.dart';
 import 'profile_edit_parts.dart';
 import '../dummy/dummy_profile.dart';
 import 'image_picker_sheet.dart';
+import '../constants/profile_theme.dart';
 
 // カード全体
 class ProfileCardBody extends StatelessWidget {
   final bool isLeft;
   final Widget child;
+  final ProfileCardThemeColor theme;
 
-  const ProfileCardBody({super.key, this.isLeft = true, required this.child});
+  const ProfileCardBody({
+    super.key,
+    this.isLeft = true,
+    required this.child,
+    required this.theme,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +42,7 @@ class ProfileCardBody extends StatelessWidget {
             child: Container(
               width: 80,
               decoration: BoxDecoration(
-                color: AppColors.pink4,
+                color: theme.mainColor,
                 borderRadius: BorderRadius.circular(20),
               ),
             ),
@@ -69,7 +76,7 @@ class ProfileCardBody extends StatelessWidget {
             right: 0,
             top: 0,
             bottom: 0,
-            child: ProfileCardMain(isLeft: true, child: child),
+            child: ProfileCardMain(isLeft: true, theme: theme, child: child),
           ),
         ],
       );
@@ -87,7 +94,7 @@ class ProfileCardBody extends StatelessWidget {
             child: Container(
               width: 80,
               decoration: BoxDecoration(
-                color: AppColors.pink4,
+                color: theme.mainColor,
                 borderRadius: BorderRadius.circular(20),
               ),
             ),
@@ -121,7 +128,7 @@ class ProfileCardBody extends StatelessWidget {
             right: 23,
             top: 0,
             bottom: 0,
-            child: ProfileCardMain(isLeft: false, child: child),
+            child: ProfileCardMain(isLeft: false, theme: theme, child: child),
           ),
         ],
       );
@@ -133,14 +140,20 @@ class ProfileCardBody extends StatelessWidget {
 class ProfileCardMain extends StatelessWidget {
   final bool isLeft;
   final Widget child;
+  final ProfileCardThemeColor theme;
 
-  const ProfileCardMain({super.key, this.isLeft = true, required this.child});
+  const ProfileCardMain({
+    super.key,
+    this.isLeft = true,
+    required this.child,
+    required this.theme,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.pink4,
+        color: theme.mainColor,
         borderRadius: BorderRadius.only(
           topLeft: isLeft ? Radius.zero : const Radius.circular(30),
           topRight: isLeft ? const Radius.circular(30) : Radius.zero,
@@ -152,7 +165,7 @@ class ProfileCardMain extends StatelessWidget {
 
       child: Container(
         decoration: BoxDecoration(
-          color: AppColors.profileCardBackground,
+          color: theme.backgroundColor,
           borderRadius: BorderRadius.only(
             topLeft: isLeft ? Radius.zero : const Radius.circular(27),
             topRight: isLeft ? const Radius.circular(27) : Radius.zero,
@@ -203,12 +216,14 @@ class ProfileHeader extends StatelessWidget {
   final String instagramId;
   final String xId;
   final bool editable;
+  final ProfileCardThemeColor theme;
 
   const ProfileHeader({
     super.key,
     required this.instagramId,
     required this.xId,
     required this.editable,
+    required this.theme,
   });
 
   @override
@@ -238,12 +253,10 @@ class ProfileHeader extends StatelessWidget {
                     width: 95,
                     height: 110,
                     decoration: BoxDecoration(
-                      color: AppColors.profileCardBackground,
+                      color: theme.backgroundColor,
                       boxShadow: [
                         BoxShadow(
-                          color: AppColors.profileCardBackground.withValues(
-                            alpha: 0.8,
-                          ),
+                          color: theme.backgroundColor.withValues(alpha: 0.8),
                           blurRadius: 8,
                           spreadRadius: 2,
                         ),
@@ -274,7 +287,7 @@ class ProfileHeader extends StatelessWidget {
                     child: OutlinedText(
                       text: "SNS",
                       style: AppTextStyles.profileSNSLabel,
-                      outlineColor: AppColors.pink4,
+                      outlineColor: theme.mainColor,
                       strokeWidth: 2.5,
                     ),
                   ),
@@ -285,7 +298,7 @@ class ProfileHeader extends StatelessWidget {
                     children: [
                       Iconify(
                         AntDesign.instagram_outlined,
-                        color: AppColors.pink4,
+                        color: theme.mainColor,
                         size: 26,
                       ),
                       const SizedBox(width: 23),
@@ -293,6 +306,7 @@ class ProfileHeader extends StatelessWidget {
                         child: editable
                             ? ProfileEditableText(
                                 value: instagramId,
+                                editable: editable,
                                 onChanged: (text) {
                                   dummyProfile.instagramId = text;
                                 },
@@ -309,12 +323,13 @@ class ProfileHeader extends StatelessWidget {
 
                   Row(
                     children: [
-                      Iconify(Bxl.twitter, color: AppColors.pink4, size: 26),
+                      Iconify(Bxl.twitter, color: theme.mainColor, size: 26),
                       const SizedBox(width: 23),
                       Expanded(
                         child: editable
                             ? ProfileEditableText(
                                 value: xId,
+                                editable: editable,
                                 onChanged: (text) {
                                   dummyProfile.xId = text;
                                 },
@@ -755,7 +770,8 @@ class ProfileDetailItem extends StatelessWidget {
 // LoveTalk
 class ProfileLoveTalk extends StatefulWidget {
   final bool editable;
-  const ProfileLoveTalk({super.key, this.editable = true});
+  final ProfileCardThemeColor theme;
+  const ProfileLoveTalk({super.key, this.editable = true, required this.theme});
 
   @override
   State<ProfileLoveTalk> createState() => _ProfileLoveTalkState();
@@ -777,7 +793,7 @@ class _ProfileLoveTalkState extends State<ProfileLoveTalk> {
             OutlinedText(
               text: "LoveTalk",
               style: AppTextStyles.profileTitle,
-              outlineColor: AppColors.pink4,
+              outlineColor: widget.theme.mainColor,
             ),
 
             const SizedBox(height: 12),
@@ -786,6 +802,7 @@ class _ProfileLoveTalkState extends State<ProfileLoveTalk> {
               question: "告白したことある？",
               value: dummyProfile.confessed,
               editable: widget.editable,
+              theme: widget.theme,
               onChanged: (v) {
                 setState(() {
                   dummyProfile.confessed = v;
@@ -799,6 +816,7 @@ class _ProfileLoveTalkState extends State<ProfileLoveTalk> {
               question: "告白されたことある？",
               value: dummyProfile.beenConfessed,
               editable: widget.editable,
+              theme: widget.theme,
               onChanged: (v) {
                 setState(() {
                   dummyProfile.beenConfessed = v;
@@ -812,6 +830,7 @@ class _ProfileLoveTalkState extends State<ProfileLoveTalk> {
               question: "今好きな人はいる？",
               value: dummyProfile.hasCrush,
               editable: widget.editable,
+              theme: widget.theme,
               onChanged: (v) {
                 setState(() {
                   dummyProfile.hasCrush = v;
@@ -831,6 +850,7 @@ class ProfileYesNoSelector extends StatelessWidget {
   final YesNoAnswer value;
   final ValueChanged<YesNoAnswer> onChanged;
   final bool editable;
+  final ProfileCardThemeColor theme;
 
   const ProfileYesNoSelector({
     super.key,
@@ -838,6 +858,7 @@ class ProfileYesNoSelector extends StatelessWidget {
     required this.value,
     required this.onChanged,
     required this.editable,
+    required this.theme,
   });
 
   @override
@@ -852,7 +873,7 @@ class ProfileYesNoSelector extends StatelessWidget {
             child: OutlinedText(
               text: question,
               style: AppTextStyles.profileFormatText2,
-              outlineColor: AppColors.pink4,
+              outlineColor: theme.mainColor,
               strokeWidth: 2.5,
             ),
           ),
@@ -866,6 +887,7 @@ class ProfileYesNoSelector extends StatelessWidget {
           myValue: YesNoAnswer.yes,
           onChanged: onChanged,
           editable: editable,
+          theme: theme,
         ),
 
         const SizedBox(width: 8),
@@ -876,6 +898,7 @@ class ProfileYesNoSelector extends StatelessWidget {
           myValue: YesNoAnswer.no,
           onChanged: onChanged,
           editable: editable,
+          theme: theme,
         ),
       ],
     );
@@ -889,6 +912,7 @@ class YesNoButton extends StatelessWidget {
   final YesNoAnswer myValue;
   final ValueChanged<YesNoAnswer> onChanged;
   final bool editable;
+  final ProfileCardThemeColor theme;
 
   const YesNoButton({
     super.key,
@@ -897,6 +921,7 @@ class YesNoButton extends StatelessWidget {
     required this.myValue,
     required this.onChanged,
     required this.editable,
+    required this.theme,
   });
 
   @override
@@ -924,7 +949,7 @@ class YesNoButton extends StatelessWidget {
               text: label,
               style: AppTextStyles.profileFormatText2,
               outlineColor: myValue == YesNoAnswer.yes
-                  ? AppColors.pink4
+                  ? theme.mainColor
                   : AppColors.purple4,
               strokeWidth: 2.5,
             ),
@@ -945,8 +970,9 @@ class YesNoButton extends StatelessWidget {
 //LoveTalkのハート
 class LoveTalkHeart extends StatelessWidget {
   final bool isPink;
+  final ProfileCardThemeColor theme;
 
-  const LoveTalkHeart({super.key, required this.isPink});
+  const LoveTalkHeart({super.key, required this.isPink, required this.theme});
 
   @override
   Widget build(BuildContext context) {
@@ -959,12 +985,12 @@ class LoveTalkHeart extends StatelessWidget {
           Icon(
             Icons.favorite,
             size: (isPink ? 300 : 120),
-            color: (isPink ? AppColors.pink4 : AppColors.purple4).withValues(
+            color: (isPink ? theme.mainColor : AppColors.purple4).withValues(
               alpha: 0.3,
             ),
             shadows: [
               Shadow(
-                color: (isPink ? AppColors.pink4 : AppColors.purple4)
+                color: (isPink ? theme.mainColor : AppColors.purple4)
                     .withValues(alpha: 0.3),
                 blurRadius: 7,
               ),
@@ -1051,12 +1077,14 @@ class ProfileIfCorner extends StatelessWidget {
   final String ifMagicWish;
   final String ifNextLife;
   final bool editable;
+  final ProfileCardThemeColor theme;
 
   const ProfileIfCorner({
     super.key,
     required this.ifMagicWish,
     required this.ifNextLife,
     required this.editable,
+    required this.theme,
   });
 
   @override
@@ -1071,7 +1099,7 @@ class ProfileIfCorner extends StatelessWidget {
               child: OutlinedText(
                 text: "if...",
                 style: AppTextStyles.profileTitle,
-                outlineColor: AppColors.pink4,
+                outlineColor: theme.mainColor,
               ),
             ),
             const SizedBox(width: 20),
@@ -1135,7 +1163,8 @@ class ProfileIfCorner extends StatelessWidget {
 //Which One?コーナー
 class ProfileWhichOne extends StatelessWidget {
   final bool editable;
-  const ProfileWhichOne({super.key, this.editable = true});
+  final ProfileCardThemeColor theme;
+  const ProfileWhichOne({super.key, this.editable = true, required this.theme});
 
   @override
   Widget build(BuildContext context) {
@@ -1155,13 +1184,14 @@ class ProfileWhichOne extends StatelessWidget {
           child: OutlinedText(
             text: "Which One?",
             style: AppTextStyles.profileTitle,
-            outlineColor: AppColors.pink4,
+            outlineColor: theme.mainColor,
           ),
         ),
         const SizedBox(height: 5),
         //枠
         ProfileWhichOneFrame(
-          child: ProfileWhichOneContents(editable: editable),
+          theme: theme,
+          child: ProfileWhichOneContents(theme: theme, editable: editable),
         ),
       ],
     ));
@@ -1171,8 +1201,9 @@ class ProfileWhichOne extends StatelessWidget {
 //Which One?の枠
 class ProfileWhichOneFrame extends StatelessWidget {
   final Widget? child;
+  final ProfileCardThemeColor theme;
 
-  const ProfileWhichOneFrame({super.key, this.child});
+  const ProfileWhichOneFrame({super.key, this.child, required this.theme});
 
   @override
   Widget build(BuildContext context) {
@@ -1180,7 +1211,7 @@ class ProfileWhichOneFrame extends StatelessWidget {
       width: 300,
       height: 220,
       child: CustomPaint(
-        painter: _ProfileWhichOnePainter(),
+        painter: _ProfileWhichOnePainter(theme: theme),
         child: Padding(padding: const EdgeInsets.all(10), child: child),
       ),
     );
@@ -1189,6 +1220,9 @@ class ProfileWhichOneFrame extends StatelessWidget {
 
 //Which One?の枠を描写
 class _ProfileWhichOnePainter extends CustomPainter {
+  final ProfileCardThemeColor theme;
+
+  _ProfileWhichOnePainter({required this.theme});
   @override
   void paint(Canvas canvas, Size size) {
     const double cut = 10;
@@ -1224,7 +1258,7 @@ class _ProfileWhichOnePainter extends CustomPainter {
 
     canvas.drawPath(outerPath, Paint()..color = AppColors.white);
 
-    // 内側のピンク線
+    // 内側のテーマカラー線
     final innerPath = Path()
       ..moveTo(cut + 8, 8)
       ..lineTo(size.width - cut - 8, 8)
@@ -1256,7 +1290,7 @@ class _ProfileWhichOnePainter extends CustomPainter {
     canvas.drawPath(
       innerPath,
       Paint()
-        ..color = AppColors.profileCardBackground
+        ..color = theme.backgroundColor
         ..style = PaintingStyle.stroke
         ..strokeWidth = 3,
     );
@@ -1269,7 +1303,12 @@ class _ProfileWhichOnePainter extends CustomPainter {
 //Which One?質問内容
 class ProfileWhichOneContents extends StatefulWidget {
   final bool editable;
-  const ProfileWhichOneContents({super.key, this.editable = true});
+  final ProfileCardThemeColor theme;
+  const ProfileWhichOneContents({
+    super.key,
+    this.editable = true,
+    required this.theme,
+  });
 
   @override
   State<ProfileWhichOneContents> createState() =>
@@ -1291,6 +1330,7 @@ class _ProfileWhichOneContentsState extends State<ProfileWhichOneContents> {
               leftLabel: "   犬   ",
               rightLabel: "   猫   ",
               suffix: "】派",
+              theme: widget.theme,
               value: dummyProfile.dogOrCat,
               editable: widget.editable,
               onChanged: (v) {
@@ -1307,6 +1347,7 @@ class _ProfileWhichOneContentsState extends State<ProfileWhichOneContents> {
               leftLabel: "   インドア   ",
               rightLabel: "   アウトドア   ",
               suffix: "】派",
+              theme: widget.theme,
               value: dummyProfile.indoorOrOutdoor,
               editable: widget.editable,
               onChanged: (v) {
@@ -1323,6 +1364,7 @@ class _ProfileWhichOneContentsState extends State<ProfileWhichOneContents> {
               leftLabel: "   乗れる   ",
               rightLabel: "   乗れない   ",
               suffix: "】",
+              theme: widget.theme,
               value: dummyProfile.thrill,
               editable: widget.editable,
               onChanged: (v) {
@@ -1339,6 +1381,7 @@ class _ProfileWhichOneContentsState extends State<ProfileWhichOneContents> {
               leftLabel: "   きのこの山   ",
               rightLabel: "   たけのこの里   ",
               suffix: "】派",
+              theme: widget.theme,
               value: dummyProfile.kinokoOrTakenoko,
               editable: widget.editable,
               onChanged: (v) {
@@ -1355,6 +1398,7 @@ class _ProfileWhichOneContentsState extends State<ProfileWhichOneContents> {
               leftLabel: "   すぐ返信する   ",
               rightLabel: "   溜めがち   ",
               suffix: "】",
+              theme: widget.theme,
               value: dummyProfile.reply,
               editable: widget.editable,
               onChanged: (v) {
@@ -1376,6 +1420,7 @@ class ProfileWhichOneSelector extends StatelessWidget {
   final String leftLabel;
   final String rightLabel;
   final String suffix;
+  final ProfileCardThemeColor theme;
 
   final WhichOneAnswer value;
   final ValueChanged<WhichOneAnswer> onChanged;
@@ -1390,6 +1435,7 @@ class ProfileWhichOneSelector extends StatelessWidget {
     required this.value,
     required this.onChanged,
     required this.editable,
+    required this.theme,
   });
 
   @override
@@ -1403,6 +1449,7 @@ class ProfileWhichOneSelector extends StatelessWidget {
           value: value,
           myValue: WhichOneAnswer.left,
           editable: editable,
+          theme: theme,
           onChanged: onChanged,
         ),
 
@@ -1413,6 +1460,7 @@ class ProfileWhichOneSelector extends StatelessWidget {
             value: value,
             myValue: WhichOneAnswer.center,
             editable: editable,
+            theme: theme,
             onChanged: onChanged,
           ),
         ),
@@ -1422,6 +1470,7 @@ class ProfileWhichOneSelector extends StatelessWidget {
           value: value,
           myValue: WhichOneAnswer.right,
           editable: editable,
+          theme: theme,
           onChanged: onChanged,
         ),
 
@@ -1437,6 +1486,7 @@ class WhichOneChoiceButton extends StatelessWidget {
   final WhichOneAnswer value;
   final WhichOneAnswer myValue;
   final bool editable;
+  final ProfileCardThemeColor theme;
   final ValueChanged<WhichOneAnswer> onChanged;
 
   const WhichOneChoiceButton({
@@ -1446,6 +1496,7 @@ class WhichOneChoiceButton extends StatelessWidget {
     required this.myValue,
     required this.onChanged,
     required this.editable,
+    required this.theme,
   });
 
   @override
@@ -1486,10 +1537,12 @@ class WhichOneChoiceButton extends StatelessWidget {
 class ProfileFreeSpace extends StatelessWidget {
   final String freeSpace;
   final bool editable;
+  final ProfileCardThemeColor theme;
   const ProfileFreeSpace({
     super.key,
     required this.freeSpace,
     required this.editable,
+    required this.theme,
   });
 
   @override
@@ -1507,7 +1560,7 @@ class ProfileFreeSpace extends StatelessWidget {
             child: OutlinedText(
               text: "Free Space",
               style: AppTextStyles.profileTitle,
-              outlineColor: AppColors.pink4,
+              outlineColor: theme.mainColor,
             ),
           ),
           Positioned(

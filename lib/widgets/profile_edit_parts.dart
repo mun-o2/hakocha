@@ -7,14 +7,14 @@ class ProfileEditableText extends StatefulWidget {
   final double? width;
   final String value;
   final ValueChanged<String> onChanged;
-  //final bool editable;
+  final bool editable;
 
   const ProfileEditableText({
     super.key,
     this.width,
     required this.value,
     required this.onChanged,
-    //required this.editable,
+    required this.editable,
   });
 
   @override
@@ -50,11 +50,13 @@ class _ProfileEditableTextState extends State<ProfileEditableText> {
   Widget build(BuildContext context) {
     if (!editing) {
       return GestureDetector(
-        onTap: () {
-          setState(() {
-            editing = true;
-          });
-        },
+        onTap: widget.editable
+            ? () {
+                setState(() {
+                  editing = true;
+                });
+              }
+            : null,
         child: SizedBox(
           width: widget.width,
           child: Text(

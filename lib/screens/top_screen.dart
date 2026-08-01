@@ -5,7 +5,7 @@ import 'package:hakocha/constants/app_colors.dart';
 import 'package:hakocha/constants/dummy_home_data.dart';
 
 class TopScreen extends StatefulWidget {
-  const TopScreen({super.key});
+  const TopScreen({super.key, required});
 
   @override
   State<TopScreen> createState() => _TopScreenState();
@@ -17,7 +17,7 @@ class _TopScreenState extends State<TopScreen> {
   @override
   Widget build(BuildContext context) {
     if (isEditing) {
-      return const EditProfileScreen();
+      return EditProfileScreen();
     }
 
     return Scaffold(
