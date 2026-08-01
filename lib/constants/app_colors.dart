@@ -23,8 +23,8 @@ class AppColors {
 
   // Accent Colors - Purple & Blue
   /// パープル4（アクセント色）
-  static const Color purple4 = Color(0xFFF3E9FD);
-  static const Color purple5 = Color(0xFF9B7CF5);
+  static const Color purple4 = Color(0xFF9B7CF5);
+  static const Color purple5 = Color(0xFFF3E9FD);
 
   /// ブルー4（アクセント色）
   static const Color blue4 = Color(0xFF2563EB);
@@ -70,4 +70,10 @@ class AppColors {
 
   //手書き風丸の線画色
   static const Color circleOutlined = Color(0xFF7B7B7B);
+
+  /// ブルー4（アクセント色）
+  static const Color blue3 = Color(0xFF6BCBFF);
+
+  /// ブルー5（ブルー背景）
+  static const Color profileCardBackgroundBlue = Color(0xFFEAF8FF);
 }

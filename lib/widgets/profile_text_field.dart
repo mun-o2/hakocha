@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../constants/app_text_styles.dart';
 import '../constants/app_colors.dart';
+import '../constants/profile_theme.dart';
 
 //白い四角い枠の入力スペース
 class ProfileInputBox extends StatefulWidget {
@@ -8,6 +9,8 @@ class ProfileInputBox extends StatefulWidget {
   final double height;
   final String value;
   final ValueChanged<String> onChanged;
+  final bool editable;
+  final ProfileCardThemeColor theme;
 
   const ProfileInputBox({
     super.key,
@@ -15,6 +18,8 @@ class ProfileInputBox extends StatefulWidget {
     required this.height,
     required this.value,
     required this.onChanged,
+    required this.editable,
+    required this.theme,
   });
 
   @override
@@ -61,25 +66,32 @@ class _ProfileInputBoxState extends State<ProfileInputBox> {
         ],
       ),
 
-      child: TextField(
-        controller: controller,
-
-        textAlign: TextAlign.center,
-
-        style: AppTextStyles.profileText,
-
-        cursorColor: AppColors.pink4,
-
-        decoration: const InputDecoration(
-          border: InputBorder.none,
-          isDense: true,
-          contentPadding: EdgeInsets.zero,
-        ),
-
-        onSubmitted: (_) {
-          widget.onChanged(controller.text);
-        },
-      ),
+      child: widget.editable
+          ? TextField(
+              controller: controller,
+              textAlign: TextAlign.center,
+              style: AppTextStyles.profileText.copyWith(
+                color: widget.theme.mainColor,
+              ),
+              cursorColor: widget.theme.mainColor,
+              decoration: const InputDecoration(
+                border: InputBorder.none,
+                isDense: true,
+                contentPadding: EdgeInsets.zero,
+              ),
+              onSubmitted: (_) {
+                widget.onChanged(controller.text);
+              },
+            )
+          : Center(
+              child: Text(
+                controller.text,
+                textAlign: TextAlign.center,
+                style: AppTextStyles.profileText.copyWith(
+                  color: widget.theme.mainColor,
+                ),
+              ),
+            ),
     );
   }
 }

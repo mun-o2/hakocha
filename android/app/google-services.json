@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "609000800598",
+    "project_id": "hakocha-50413",
+    "storage_bucket": "hakocha-50413.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:609000800598:android:1bdf4bbd7809f4ca20d6f7",
+        "android_client_info": {
+          "package_name": "com.example.hakocha"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJvTGUrwVfr99xqnoFZqnI6wBtetwmMoA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
