@@ -264,7 +264,7 @@ class _ExchangeStartScreenState extends State<ExchangeStartScreen>
                 '交換コードで受け取る',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: AppColors.purple5,
+                  color: AppColors.purple4,
                   fontSize: 20,
                   fontFamily: 'Noto Sans JP',
                   fontWeight: FontWeight.w700,
@@ -275,9 +275,9 @@ class _ExchangeStartScreenState extends State<ExchangeStartScreen>
 
               OutlinedButton(
                 style: OutlinedButton.styleFrom(
-                  foregroundColor: AppColors.purple5,
+                  foregroundColor: AppColors.purple4,
                   backgroundColor: AppColors.backgroundWhite,
-                  side: const BorderSide(color: AppColors.purple5, width: 2),
+                  side: const BorderSide(color: AppColors.purple4, width: 2),
                   padding: const EdgeInsets.symmetric(
                     vertical: 8,
                     horizontal: 24,

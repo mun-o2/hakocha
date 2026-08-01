@@ -120,7 +120,9 @@ class _ExchangeFreeSpaceScreenState extends State<ExchangeFreeSpaceScreen> {
                           child: OutlinedText(
                             text: 'Free Space',
                             style: AppTextStyles.profileTitle,
+                            mainColor: AppColors.white,
                             outlineColor: AppColors.pink4,
+                            strokeWidth: 2,
                           ),
                         ),
                       ],

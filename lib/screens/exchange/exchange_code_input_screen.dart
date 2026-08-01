@@ -116,7 +116,7 @@ class _ExchangeCodeInputScreenState extends State<ExchangeCodeInputScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 18),
       decoration: BoxDecoration(
         color: const Color(0xFFF3E9FD),
-        border: Border.all(color: AppColors.purple5, width: 3),
+        border: Border.all(color: AppColors.purple4, width: 3),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
@@ -146,7 +146,7 @@ class _ExchangeCodeInputScreenState extends State<ExchangeCodeInputScreen> {
                 dummyCurrentUser.exchangeCode,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
-                  color: AppColors.purple5,
+                  color: AppColors.purple4,
                   fontSize: 20,
                   fontWeight: FontWeight.w400,
                 ),

@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+
 import '../constants/app_text_styles.dart';
 import '../constants/app_colors.dart';
+import '../constants/profile_theme.dart';
+import '../dummy/dummy_profile.dart';
+
 import 'outlined_text.dart';
 import 'profile_card_parts.dart';
 import 'profile_edit_parts.dart';
 
-//ダミーデータの読み込み
-import '../dummy/dummy_profile.dart';
-
 class ProfileCardLeft extends StatefulWidget {
-  const ProfileCardLeft({super.key});
+  final bool editable;
+  final ProfileCardThemeColor theme;
+
+  const ProfileCardLeft({super.key, this.editable = true, required this.theme});
 
   @override
   State<ProfileCardLeft> createState() => _ProfileCardLeftState();
@@ -24,6 +28,7 @@ class _ProfileCardLeftState extends State<ProfileCardLeft> {
         height: 740,
         child: ProfileCardBody(
           isLeft: true,
+          theme: widget.theme,
           child: Stack(
             children: [
               // 白い四角
@@ -39,7 +44,8 @@ class _ProfileCardLeftState extends State<ProfileCardLeft> {
                 child: OutlinedText(
                   text: "My Profile",
                   style: AppTextStyles.profileTitle,
-                  outlineColor: AppColors.pink4,
+                  outlineColor: widget.theme.mainColor,
+                  mainColor: AppColors.white,
                 ),
               ),
 
@@ -47,33 +53,39 @@ class _ProfileCardLeftState extends State<ProfileCardLeft> {
               ProfileHeader(
                 instagramId: dummyProfile.instagramId,
                 xId: dummyProfile.xId,
+                editable: widget.editable,
+                theme: widget.theme,
               ),
               // メインプロフィール文
-              const ProfileMainDescription(),
+              ProfileMainDescription(
+                editable: widget.editable,
+                theme: widget.theme,
+              ),
               // 左下詳細プロフィール
-              const ProfileCardDetail(),
+              ProfileCardDetail(editable: widget.editable, theme: widget.theme),
               // Love Talk大ハート
               Positioned(
                 left: 110,
                 bottom: -20,
-                child: const LoveTalkHeart(isPink: true),
+                child: LoveTalkHeart(isPink: true, theme: widget.theme),
               ),
-              const ProfileLoveTalk(),
+              ProfileLoveTalk(editable: widget.editable, theme: widget.theme),
 
               // Love Talk小ハート
               Positioned(
                 right: 0,
                 bottom: 0,
-                child: const LoveTalkHeart(isPink: false),
+                child: LoveTalkHeart(isPink: false, theme: widget.theme),
               ),
               Positioned(
                 right: 0,
                 bottom: 80,
                 child: OutlinedText(
                   text: "理想のタイプは？",
-                  style: AppTextStyles.profileFormatText3,
+                  style: AppTextStyles.profileFormatSmall,
                   outlineColor: AppColors.white,
                   strokeWidth: 2.5,
+                  mainColor: AppColors.purple4,
                 ),
               ),
               Positioned(
@@ -81,6 +93,8 @@ class _ProfileCardLeftState extends State<ProfileCardLeft> {
                 bottom: 30,
                 child: ProfileInputHeart(
                   value: dummyProfile.idealType,
+                  editable: widget.editable,
+                  theme: widget.theme,
                   onChanged: (text) {
                     dummyProfile.idealType = text;
                   },

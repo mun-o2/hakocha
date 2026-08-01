@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hakocha/constants/app_colors.dart';
+import 'package:hakocha/widgets/profile_card_left.dart';
+import 'package:hakocha/widgets/profile_card_right.dart';
+import 'package:hakocha/constants/profile_theme.dart';
+import 'package:hakocha/services/app_service.dart';
 
 /// プロフィール帳タブ
 class ProfileScreen extends StatefulWidget {
@@ -19,16 +23,19 @@ class _ProfileScreenState extends State<ProfileScreen>
   bool _isOpening = false;
   bool _isDetailOpen = false;
 
+  ProfileCardThemeColor theme = pinkProfileCardTheme;
+
   @override
   void initState() {
     super.initState();
+
+    _loadTheme();
 
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 650),
     );
 
-    // タップ時に少しふわっと大きくなって戻る
     _scaleAnimation = TweenSequence<double>([
       TweenSequenceItem(
         tween: Tween<double>(
@@ -46,7 +53,6 @@ class _ProfileScreenState extends State<ProfileScreen>
       ),
     ]).animate(_controller);
 
-    // 透明度変更
     _fadeAnimation = TweenSequence<double>([
       TweenSequenceItem(
         tween: Tween<double>(begin: 1.0, end: 0.88),
@@ -59,6 +65,16 @@ class _ProfileScreenState extends State<ProfileScreen>
     ]).animate(_controller);
   }
 
+  Future<void> _loadTheme() async {
+    final color = await const AppService().getProfileColor();
+
+    if (!mounted) return;
+
+    setState(() {
+      theme = color == 'pink' ? pinkProfileCardTheme : blueProfileCardTheme;
+    });
+  }
+
   Future<void> _openProfileBook() async {
     if (_isOpening) return;
 
@@ -66,15 +82,12 @@ class _ProfileScreenState extends State<ProfileScreen>
       _isOpening = true;
     });
 
-    // タップした感
     HapticFeedback.lightImpact();
 
-    // 表紙をふわっとさせる
     await _controller.forward();
 
     if (!mounted) return;
 
-    // ProfileScreen内で詳細表示に切り替える
     setState(() {
       _isDetailOpen = true;
       _isOpening = false;
@@ -102,14 +115,12 @@ class _ProfileScreenState extends State<ProfileScreen>
       switchInCurve: Curves.easeOut,
       switchOutCurve: Curves.easeIn,
       child: _isDetailOpen
-          ? ProfileDetailScreen(
-              key: const ValueKey('profileDetail'),
-              onBack: _closeProfileBook,
-            )
+          ? _buildProfileBookDetail()
           : _buildProfileBookCover(),
     );
   }
 
+  /// プロフィール帳の表紙
   Widget _buildProfileBookCover() {
     return Scaffold(
       key: const ValueKey('profileCover'),
@@ -134,46 +145,35 @@ class _ProfileScreenState extends State<ProfileScreen>
       ),
     );
   }
-}
 
-/// プロフィール帳の中身
-class ProfileDetailScreen extends StatelessWidget {
-  const ProfileDetailScreen({super.key, required this.onBack});
-
-  final VoidCallback onBack;
-
-  @override
-  Widget build(BuildContext context) {
+  /// プロフィール帳の中身
+  Widget _buildProfileBookDetail() {
     return Scaffold(
+      key: const ValueKey('profileDetail'),
       backgroundColor: AppColors.backgroundPink,
-      appBar: AppBar(
-        backgroundColor: AppColors.backgroundPink,
-        elevation: 0,
-        leading: IconButton(
-          onPressed: onBack,
-          icon: const Icon(
-            Icons.arrow_back_ios_new_rounded,
-            color: AppColors.textPrimary,
-          ),
-        ),
-        title: const Text(
-          'プロフィール帳の中身',
-          style: TextStyle(
-            color: AppColors.textPrimary,
-            fontSize: 18,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        centerTitle: true,
-      ),
-      body: const Center(
-        child: Padding(
-          padding: EdgeInsets.all(24),
-          child: Text(
-            'ここに別の人が書いた「プロフィール帳の中身」を表示します。',
-            textAlign: TextAlign.center,
-            style: TextStyle(color: AppColors.textPrimary, fontSize: 16),
-          ),
+      body: SafeArea(
+        child: Stack(
+          children: [
+            PageView(
+              children: [
+                ProfileCardLeft(editable: false, theme: theme),
+                ProfileCardRight(editable: false, theme: theme),
+              ],
+            ),
+
+            // 表紙に戻る
+            Positioned(
+              top: 8,
+              left: 8,
+              child: IconButton(
+                onPressed: _closeProfileBook,
+                icon: const Icon(
+                  Icons.arrow_back_ios_new_rounded,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'edit_profile_screen.dart';
-import 'package:hakocha/dummy/dummy_profile.dart';
-import 'package:hakocha/screens/settings_screen.dart';
 import 'package:hakocha/constants/app_colors.dart';
 import 'package:hakocha/constants/app_text_styles.dart';
 import 'package:hakocha/constants/dummy_home_data.dart';
@@ -61,7 +58,6 @@ class _TopScreenState extends State<TopScreen> {
               children: [
                 const SizedBox(height: 18),
 
-                // 設定ボタン
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
@@ -163,16 +159,16 @@ class _TopScreenState extends State<TopScreen> {
                     states,
                   ) {
                     if (states.contains(WidgetState.pressed)) {
-                      return AppColors.purple5.withValues(alpha: 0.12);
+                      return AppColors.purple4.withValues(alpha: 0.12);
                     }
 
                     return Colors.white;
                   }),
                   overlayColor: WidgetStateProperty.all(
-                    AppColors.purple5.withValues(alpha: 0.10),
+                    AppColors.purple4.withValues(alpha: 0.10),
                   ),
                   side: WidgetStateProperty.all(
-                    const BorderSide(color: AppColors.purple5, width: 2),
+                    const BorderSide(color: AppColors.purple4, width: 2),
                   ),
                   shape: WidgetStateProperty.all(
                     RoundedRectangleBorder(
@@ -208,9 +204,7 @@ class _TopScreenState extends State<TopScreen> {
               88,
             ),
           ),
-
           Container(width: 1, height: 83, color: AppColors.pink4),
-
           Expanded(
             child: _buildStatItem(
               'プロフィール帳',
@@ -285,7 +279,6 @@ class _ProfileLoadingScreen extends StatefulWidget {
 class _ProfileLoadingScreenState extends State<_ProfileLoadingScreen>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
-
   late final Animation<double> _fadeAnimation;
   late final Animation<double> _scaleAnimation;
 

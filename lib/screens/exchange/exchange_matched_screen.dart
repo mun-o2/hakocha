@@ -98,10 +98,10 @@ class ExchangeMatchedScreen extends StatelessWidget {
               child: OutlinedButton(
                 onPressed: provider.startWriting,
                 style: OutlinedButton.styleFrom(
-                  foregroundColor: AppColors.purple5,
+                  foregroundColor: AppColors.purple4,
                   backgroundColor: AppColors.backgroundWhite,
                   padding: EdgeInsets.zero,
-                  side: const BorderSide(color: AppColors.purple5, width: 2),
+                  side: const BorderSide(color: AppColors.purple4, width: 2),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(32),
                   ),
@@ -110,7 +110,7 @@ class ExchangeMatchedScreen extends StatelessWidget {
                   '記入する！',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: AppColors.purple5,
+                    color: AppColors.purple4,
                     fontSize: 20,
                     fontFamily: 'Noto Sans JP',
                     fontWeight: FontWeight.w400,

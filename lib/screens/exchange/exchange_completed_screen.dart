@@ -102,10 +102,10 @@ class _ExchangeCompletedScreenState extends State<ExchangeCompletedScreen>
                           widget.onOpenProfile();
                         },
                         style: OutlinedButton.styleFrom(
-                          foregroundColor: AppColors.purple5,
+                          foregroundColor: AppColors.purple4,
                           backgroundColor: AppColors.backgroundWhite,
                           side: const BorderSide(
-                            color: AppColors.purple5,
+                            color: AppColors.purple4,
                             width: 2,
                           ),
                           shape: RoundedRectangleBorder(
@@ -115,7 +115,7 @@ class _ExchangeCompletedScreenState extends State<ExchangeCompletedScreen>
                         child: const Text(
                           'プロフィール帳を見る',
                           style: TextStyle(
-                            color: AppColors.purple5,
+                            color: AppColors.purple4,
                             fontSize: 18,
                           ),
                         ),
