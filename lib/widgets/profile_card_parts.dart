@@ -722,9 +722,10 @@ class ProfileDetailItem extends StatelessWidget {
   }
 }
 
-//LoveTalk
+// LoveTalk
 class ProfileLoveTalk extends StatefulWidget {
   const ProfileLoveTalk({super.key});
+
   @override
   State<ProfileLoveTalk> createState() => _ProfileLoveTalkState();
 }
@@ -732,50 +733,61 @@ class ProfileLoveTalk extends StatefulWidget {
 class _ProfileLoveTalkState extends State<ProfileLoveTalk> {
   @override
   Widget build(BuildContext context) {
-    return (Stack(
-      children: [
-        Positioned(
-          left: 142,
-          bottom: 110,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              ProfileYesNoSelector(
-                question: "告白したことある？",
-                value: dummyProfile.confessed,
-                onChanged: (v) {
-                  setState(() {
-                    dummyProfile.confessed = v;
-                  });
-                },
-              ),
-              const SizedBox(height: 10),
+    return Positioned(
+      left: 155,
+      right: 10,
+      bottom: 105,
+      child: SizedBox(
+        width: 250,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            OutlinedText(
+              text: "LoveTalk",
+              style: AppTextStyles.profileTitle,
+              outlineColor: AppColors.pink4,
+            ),
 
-              ProfileYesNoSelector(
-                question: "告白されたことある？",
-                value: dummyProfile.beenConfessed,
-                onChanged: (v) {
-                  setState(() {
-                    dummyProfile.beenConfessed = v;
-                  });
-                },
-              ),
-              const SizedBox(height: 10),
+            const SizedBox(height: 12),
 
-              ProfileYesNoSelector(
-                question: "今好きな人はいる？",
-                value: dummyProfile.hasCrush,
-                onChanged: (v) {
-                  setState(() {
-                    dummyProfile.hasCrush = v;
-                  });
-                },
-              ),
-            ],
-          ),
+            ProfileYesNoSelector(
+              question: "告白したことある？",
+              value: dummyProfile.confessed,
+              onChanged: (v) {
+                setState(() {
+                  dummyProfile.confessed = v;
+                });
+              },
+            ),
+
+            const SizedBox(height: 8),
+
+            ProfileYesNoSelector(
+              question: "告白されたことある？",
+              value: dummyProfile.beenConfessed,
+              onChanged: (v) {
+                setState(() {
+                  dummyProfile.beenConfessed = v;
+                });
+              },
+            ),
+
+            const SizedBox(height: 8),
+
+            ProfileYesNoSelector(
+              question: "今好きな人はいる？",
+              value: dummyProfile.hasCrush,
+              onChanged: (v) {
+                setState(() {
+                  dummyProfile.hasCrush = v;
+                });
+              },
+            ),
+          ],
         ),
-      ],
-    ));
+      ),
+    );
   }
 }
 
@@ -791,12 +803,14 @@ class ProfileYesNoSelector extends StatelessWidget {
     required this.value,
     required this.onChanged,
   });
+
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox(
-          width: 150, // 全質問共通
+          width: 150,
           child: Align(
             alignment: Alignment.centerRight,
             child: OutlinedText(

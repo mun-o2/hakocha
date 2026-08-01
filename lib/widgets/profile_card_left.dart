@@ -18,111 +18,80 @@ class ProfileCardLeft extends StatefulWidget {
 class _ProfileCardLeftState extends State<ProfileCardLeft> {
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        const double designWidth = 400;
-        const double designHeight = 740;
+    return Center(
+      child: SizedBox(
+        width: 400,
+        height: 740,
+        child: ProfileCardBody(
+          isLeft: true,
+          child: Stack(
+            children: [
+              // 白い四角
+              Positioned(
+                left: 27,
+                top: 43,
+                child: const ProfileWhiteSquare(width: 310, height: 155),
+              ),
 
-        final widthScale = constraints.maxWidth / designWidth;
-        final heightScale = constraints.maxHeight / designHeight;
-
-        // 縦横どちらにも収まる倍率
-        final scale = widthScale < heightScale ? widthScale : heightScale;
-
-        return Center(
-          child: Transform.scale(
-            scale: scale,
-            alignment: Alignment.center,
-            child: SizedBox(
-              width: designWidth,
-              height: designHeight,
-              child: ProfileCardBody(
-                isLeft: true,
-                child: Stack(
-                  children: [
-                    // 白い四角
-                    Positioned(
-                      left: 27,
-                      top: 43,
-                      child: const ProfileWhiteSquare(width: 310, height: 155),
-                    ),
-
-                    // My Profile見出し
-                    Padding(
-                      padding: const EdgeInsets.only(top: 22, left: 25),
-                      child: OutlinedText(
-                        text: "My Profile",
-                        style: AppTextStyles.profileTitle,
-                        outlineColor: AppColors.pink4,
-                      ),
-                    ),
-
-                    // 似顔絵・SNS
-                    ProfileHeader(
-                      instagramId: dummyProfile.instagramId,
-                      xId: dummyProfile.xId,
-                    ),
-
-                    // メインプロフィール文
-                    const ProfileMainDescription(),
-
-                    // 左下詳細プロフィール
-                    const ProfileCardDetail(),
-
-                    // Love Talk大ハート
-                    Positioned(
-                      left: 110,
-                      bottom: -20,
-                      child: const LoveTalkHeart(isPink: true),
-                    ),
-
-                    const ProfileLoveTalk(),
-
-                    // Love Talk見出し
-                    Padding(
-                      padding: const EdgeInsets.only(top: 490, left: 170),
-                      child: OutlinedText(
-                        text: "LoveTalk",
-                        style: AppTextStyles.profileTitle,
-                        outlineColor: AppColors.pink4,
-                      ),
-                    ),
-
-                    // Love Talk小ハート
-                    Positioned(
-                      right: 0,
-                      bottom: 0,
-                      child: const LoveTalkHeart(isPink: false),
-                    ),
-
-                    Positioned(
-                      right: 0,
-                      bottom: 80,
-                      child: OutlinedText(
-                        text: "理想のタイプは？",
-                        style: AppTextStyles.profileFormatText3,
-                        outlineColor: AppColors.white,
-                        strokeWidth: 2.5,
-                      ),
-                    ),
-
-                    Positioned(
-                      right: -8,
-                      bottom: 30,
-                      child: ProfileInputHeart(
-                        value: dummyProfile.idealType,
-                        onChanged: (text) {
-                          dummyProfile.idealType = text;
-                        },
-                      ),
-                    ),
-                  ],
+              // My Profile見出し
+              Padding(
+                padding: const EdgeInsets.only(top: 22, left: 25),
+                child: OutlinedText(
+                  text: "My Profile",
+                  style: AppTextStyles.profileTitle,
+                  outlineColor: AppColors.pink4,
                 ),
               ),
-            ),
+
+              // 似顔絵・SNS
+              ProfileHeader(
+                instagramId: dummyProfile.instagramId,
+                xId: dummyProfile.xId,
+              ),
+              // メインプロフィール文
+              const ProfileMainDescription(),
+              // 左下詳細プロフィール
+              const ProfileCardDetail(),
+              // Love Talk大ハート
+              Positioned(
+                left: 110,
+                bottom: -20,
+                child: const LoveTalkHeart(isPink: true),
+              ),
+              const ProfileLoveTalk(),
+
+              // Love Talk小ハート
+              Positioned(
+                right: 0,
+                bottom: 0,
+                child: const LoveTalkHeart(isPink: false),
+              ),
+              Positioned(
+                right: 0,
+                bottom: 80,
+                child: OutlinedText(
+                  text: "理想のタイプは？",
+                  style: AppTextStyles.profileFormatText3,
+                  outlineColor: AppColors.white,
+                  strokeWidth: 2.5,
+                ),
+              ),
+              Positioned(
+                right: -8,
+                bottom: 30,
+                child: ProfileInputHeart(
+                  value: dummyProfile.idealType,
+                  onChanged: (text) {
+                    dummyProfile.idealType = text;
+                  },
+                ),
+              ),
+
+              // 文字入力部分の追加必要
+            ],
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }
