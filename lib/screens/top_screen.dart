@@ -1,20 +1,36 @@
 import 'package:flutter/material.dart';
+import 'edit_profile_screen.dart';
 import 'package:hakocha/screens/settings_screen.dart';
 import 'package:hakocha/constants/app_colors.dart';
 import 'package:hakocha/constants/dummy_home_data.dart';
 
-class TopScreen extends StatelessWidget {
+class TopScreen extends StatefulWidget {
   const TopScreen({super.key});
 
   @override
+  State<TopScreen> createState() => _TopScreenState();
+}
+
+class _TopScreenState extends State<TopScreen> {
+  bool isEditing = false;
+
+  @override
   Widget build(BuildContext context) {
+    if (isEditing) {
+      return const EditProfileScreen();
+    }
+
     return Scaffold(
       backgroundColor: AppColors.backgroundPink,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.settings, color: AppColors.textSecondary, size: 30),
+          icon: const Icon(
+            Icons.settings,
+            color: AppColors.textSecondary,
+            size: 30,
+          ),
           onPressed: () {
             Navigator.push(
               context,
@@ -29,7 +45,7 @@ class TopScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 16),
-            
+
             // --- 1. プロフィールカード ---
             Container(
               padding: const EdgeInsets.all(20.0),
@@ -51,14 +67,19 @@ class TopScreen extends StatelessWidget {
                       Text(
                         DummyHomeData.userName,
                         style: const TextStyle(
-                          fontSize: 20, 
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: AppColors.textPrimary,
                         ),
                       ),
                       const SizedBox(height: 8),
+
                       OutlinedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          setState(() {
+                            isEditing = true;
+                          });
+                        },
                         style: OutlinedButton.styleFrom(
                           foregroundColor: AppColors.purple4,
                           side: const BorderSide(color: AppColors.purple4),
@@ -74,7 +95,7 @@ class TopScreen extends StatelessWidget {
                 ],
               ),
             ),
-            
+
             const SizedBox(height: 24),
 
             // --- 2. 交換人数＆ページ数カード ---
@@ -89,14 +110,16 @@ class TopScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   _buildStatItem('交換した人数', DummyHomeData.exchangedCount, '人'),
-                  
                   Container(
                     width: 1,
                     height: 50,
                     color: AppColors.textTertiary,
                   ),
-                  
-                  _buildStatItem('プロフィール帳', DummyHomeData.profilePageCount, 'ページ'),
+                  _buildStatItem(
+                    'プロフィール帳',
+                    DummyHomeData.profilePageCount,
+                    'ページ',
+                  ),
                 ],
               ),
             ),
@@ -113,10 +136,13 @@ class TopScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            
+
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.symmetric(vertical: 40.0, horizontal: 16.0),
+              padding: const EdgeInsets.symmetric(
+                vertical: 40.0,
+                horizontal: 16.0,
+              ),
               decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border.all(color: AppColors.pink4, width: 2),
@@ -125,14 +151,13 @@ class TopScreen extends StatelessWidget {
               child: Text(
                 DummyHomeData.notification,
                 textAlign: TextAlign.center,
-                style: const TextStyle( // （Text全体からconstが外れたので、styleに付け直しています）
+                style: const TextStyle(
                   fontSize: 16,
                   color: AppColors.textPrimary,
                   height: 1.5,
                 ),
               ),
             ),
-            
           ],
         ),
       ),
@@ -143,22 +168,40 @@ class TopScreen extends StatelessWidget {
   Widget _buildStatItem(String title, String number, String unit) {
     return Column(
       children: [
-        Text(title, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.textPrimary)),
+        Text(
+          title,
+          style: const TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+            color: AppColors.textPrimary,
+          ),
+        ),
         const SizedBox(height: 8),
         Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Text(number, style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold, height: 1.0, color: AppColors.textPrimary)),
+            Text(
+              number,
+              style: const TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                height: 1.0,
+                color: AppColors.textPrimary,
+              ),
+            ),
             const SizedBox(width: 2),
-            Text(unit, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.textPrimary)),
+            Text(
+              unit,
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: AppColors.textPrimary,
+              ),
+            ),
           ],
         ),
         const SizedBox(height: 4),
-        Container(
-          width: 60,
-          height: 2,
-          color: AppColors.pink4,
-        ),
+        Container(width: 60, height: 2, color: AppColors.pink4),
       ],
     );
   }
