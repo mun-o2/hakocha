@@ -55,7 +55,7 @@ class _ExchangeStartScreenState extends State<ExchangeStartScreen> {
       });
     });
 
-    // ★ 相手のhakochaユーザー情報を受信
+    // 相手のhakochaユーザー情報を受信
     _remoteUserSubscription = _nearbyService.remoteUserStream.listen(
       _handleRemoteUserReceived,
     );
@@ -124,7 +124,7 @@ class _ExchangeStartScreenState extends State<ExchangeStartScreen> {
 
             // 今はデバッグ用。
             // userInfo交換が安定したら削除してOK。
-            _buildPeersList(),
+            // _buildPeersList(),
           ],
         ),
       ),

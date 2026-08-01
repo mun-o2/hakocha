@@ -81,8 +81,8 @@ class _TopScreenState extends State<TopScreen> {
                           });
                         },
                         style: OutlinedButton.styleFrom(
-                          foregroundColor: AppColors.purple4,
-                          side: const BorderSide(color: AppColors.purple4),
+                          foregroundColor: AppColors.purple5,
+                          side: const BorderSide(color: AppColors.purple5),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),

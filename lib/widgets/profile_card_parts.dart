@@ -1465,7 +1465,7 @@ class ProfileFreeSpace extends StatelessWidget {
                   top: 5,
                   child: ProfileFreeSpaceInput(
                     width: 300,
-                    height: 120,
+                    height: 60,
                     value: freeSpace,
                     onChanged: (text) {
                       dummyProfile.freeSpace = text;
