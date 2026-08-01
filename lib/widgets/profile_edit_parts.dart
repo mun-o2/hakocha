@@ -7,12 +7,14 @@ class ProfileEditableText extends StatefulWidget {
   final double? width;
   final String value;
   final ValueChanged<String> onChanged;
+  //final bool editable;
 
   const ProfileEditableText({
     super.key,
     this.width,
     required this.value,
     required this.onChanged,
+    //required this.editable,
   });
 
   @override
@@ -57,8 +59,10 @@ class _ProfileEditableTextState extends State<ProfileEditableText> {
           width: widget.width,
           child: Text(
             controller.text,
+            textAlign: TextAlign.center,
+            maxLines: 2,
+            overflow: TextOverflow.visible,
             style: AppTextStyles.profileText,
-            overflow: TextOverflow.ellipsis,
           ),
         ),
       );
@@ -85,14 +89,17 @@ class _ProfileEditableTextState extends State<ProfileEditableText> {
   }
 }
 
+//Love Talk右下
 class ProfileInputHeart extends StatefulWidget {
   final String value;
   final ValueChanged<String> onChanged;
+  final bool editable;
 
   const ProfileInputHeart({
     super.key,
     required this.value,
     required this.onChanged,
+    required this.editable,
   });
 
   @override
@@ -127,36 +134,47 @@ class _ProfileInputHeartState extends State<ProfileInputHeart> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 125,
-      child: TextField(
-        controller: controller,
-        maxLines: 2,
-        textAlign: TextAlign.center,
-        textAlignVertical: TextAlignVertical.center,
-        style: AppTextStyles.profileText,
-        cursorColor: AppColors.pink4,
-        decoration: const InputDecoration(
-          border: InputBorder.none,
-          isDense: true,
-          contentPadding: EdgeInsets.zero,
-        ),
-        onSubmitted: (_) {
-          widget.onChanged(controller.text);
-        },
-      ),
+      child: widget.editable
+          ? TextField(
+              controller: controller,
+              maxLines: 2,
+              textAlign: TextAlign.center,
+              textAlignVertical: TextAlignVertical.center,
+              style: AppTextStyles.profileText,
+              cursorColor: AppColors.pink4,
+              decoration: const InputDecoration(
+                border: InputBorder.none,
+                isDense: true,
+                contentPadding: EdgeInsets.zero,
+              ),
+              onSubmitted: (_) {
+                widget.onChanged(controller.text);
+              },
+            )
+          : Center(
+              child: Text(
+                controller.text,
+                textAlign: TextAlign.center,
+                style: AppTextStyles.profileText,
+              ),
+            ),
     );
   }
 }
 
+//もしもコーナー用白い楕円
 class ProfileEllipseInput extends StatefulWidget {
   final String value;
   final ValueChanged<String> onChanged;
   final double? width;
+  final bool editable;
 
   const ProfileEllipseInput({
     super.key,
     required this.value,
     required this.onChanged,
     this.width,
+    required this.editable,
   });
 
   @override
@@ -189,29 +207,36 @@ class _ProfileEllipseInputState extends State<ProfileEllipseInput> {
 
   @override
   Widget build(BuildContext context) {
-    Widget field = TextField(
-      controller: controller,
-      maxLines: 2,
-      textAlign: TextAlign.center,
-      textAlignVertical: TextAlignVertical.center,
-
-      style: AppTextStyles.profileText,
-      cursorColor: AppColors.pink4,
-
-      decoration: const InputDecoration(
-        border: InputBorder.none,
-        isDense: true,
-        contentPadding: EdgeInsets.zero,
-      ),
-
-      onSubmitted: (_) {
-        widget.onChanged(controller.text);
-      },
-    );
+    Widget child = widget.editable
+        ? TextField(
+            controller: controller,
+            maxLines: 2,
+            textAlign: TextAlign.center,
+            textAlignVertical: TextAlignVertical.center,
+            style: AppTextStyles.profileText,
+            cursorColor: AppColors.pink4,
+            decoration: const InputDecoration(
+              border: InputBorder.none,
+              isDense: true,
+              contentPadding: EdgeInsets.zero,
+            ),
+            onSubmitted: (_) {
+              widget.onChanged(controller.text);
+            },
+          )
+        : Center(
+            child: Text(
+              controller.text,
+              maxLines: 2,
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.visible,
+              style: AppTextStyles.profileText,
+            ),
+          );
 
     return widget.width == null
-        ? field
-        : SizedBox(width: widget.width, child: field);
+        ? child
+        : SizedBox(width: widget.width, child: child);
   }
 }
 
@@ -220,6 +245,7 @@ class ProfileFreeSpaceInput extends StatefulWidget {
   final ValueChanged<String> onChanged;
   final double width;
   final double height;
+  final bool editable;
 
   const ProfileFreeSpaceInput({
     super.key,
@@ -227,6 +253,7 @@ class ProfileFreeSpaceInput extends StatefulWidget {
     required this.onChanged,
     required this.width,
     required this.height,
+    required this.editable,
   });
 
   @override
@@ -262,26 +289,33 @@ class _ProfileFreeSpaceInputState extends State<ProfileFreeSpaceInput> {
     return SizedBox(
       width: widget.width,
       height: widget.height,
-      child: TextField(
-        controller: controller,
+      child: widget.editable
+          ? TextField(
+              controller: controller,
 
-        expands: true,
-        maxLines: null,
-        minLines: null,
+              expands: true,
+              maxLines: null,
+              minLines: null,
 
-        textAlign: TextAlign.left,
-        textAlignVertical: TextAlignVertical.top,
+              textAlign: TextAlign.left,
+              textAlignVertical: TextAlignVertical.top,
 
-        style: AppTextStyles.profileText,
-        cursorColor: AppColors.pink4,
+              style: AppTextStyles.profileText,
+              cursorColor: AppColors.pink4,
 
-        decoration: const InputDecoration(
-          border: InputBorder.none,
-          contentPadding: EdgeInsets.all(14),
-        ),
+              decoration: const InputDecoration(
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.all(14),
+              ),
 
-        onChanged: widget.onChanged,
-      ),
+              onChanged: widget.onChanged,
+            )
+          : Padding(
+              padding: const EdgeInsets.all(14),
+              child: SingleChildScrollView(
+                child: Text(controller.text, style: AppTextStyles.profileText),
+              ),
+            ),
     );
   }
 }

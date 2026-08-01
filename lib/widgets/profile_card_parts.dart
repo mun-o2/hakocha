@@ -202,11 +202,13 @@ class ProfileWhiteSquare extends StatelessWidget {
 class ProfileHeader extends StatelessWidget {
   final String instagramId;
   final String xId;
+  final bool editable;
 
   const ProfileHeader({
     super.key,
     required this.instagramId,
     required this.xId,
+    required this.editable,
   });
 
   @override
@@ -223,9 +225,11 @@ class ProfileHeader extends StatelessWidget {
             // にがおえ
             InkWell(
               borderRadius: BorderRadius.circular(8),
-              onTap: () {
-                showImagePickerSheet(context);
-              },
+              onTap: editable
+                  ? () {
+                      showImagePickerSheet(context);
+                    }
+                  : null,
               child: Stack(
                 clipBehavior: Clip.none,
                 alignment: Alignment.bottomCenter,
@@ -286,12 +290,17 @@ class ProfileHeader extends StatelessWidget {
                       ),
                       const SizedBox(width: 23),
                       Expanded(
-                        child: ProfileEditableText(
-                          value: instagramId,
-                          onChanged: (text) {
-                            dummyProfile.instagramId = text;
-                          },
-                        ),
+                        child: editable
+                            ? ProfileEditableText(
+                                value: instagramId,
+                                onChanged: (text) {
+                                  dummyProfile.instagramId = text;
+                                },
+                              )
+                            : Text(
+                                instagramId,
+                                style: AppTextStyles.profileText,
+                              ),
                       ),
                     ],
                   ),
@@ -303,12 +312,14 @@ class ProfileHeader extends StatelessWidget {
                       Iconify(Bxl.twitter, color: AppColors.pink4, size: 26),
                       const SizedBox(width: 23),
                       Expanded(
-                        child: ProfileEditableText(
-                          value: xId,
-                          onChanged: (text) {
-                            dummyProfile.xId = text;
-                          },
-                        ),
+                        child: editable
+                            ? ProfileEditableText(
+                                value: xId,
+                                onChanged: (text) {
+                                  dummyProfile.xId = text;
+                                },
+                              )
+                            : Text(xId, style: AppTextStyles.profileText),
                       ),
                     ],
                   ),
@@ -324,7 +335,8 @@ class ProfileHeader extends StatelessWidget {
 
 //基本プロフィール本文
 class ProfileMainDescription extends StatelessWidget {
-  const ProfileMainDescription({super.key});
+  final bool editable;
+  const ProfileMainDescription({super.key, this.editable = true});
 
   @override
   Widget build(BuildContext context) {
@@ -352,6 +364,7 @@ class ProfileMainDescription extends StatelessWidget {
                     width: 100,
                     height: 25,
                     value: dummyProfile.name,
+                    editable: editable,
                     onChanged: (text) {
                       dummyProfile.name = text;
                     },
@@ -377,6 +390,7 @@ class ProfileMainDescription extends StatelessWidget {
                     width: 80,
                     height: 25,
                     value: dummyProfile.birthYear,
+                    editable: editable,
                     onChanged: (text) {
                       dummyProfile.birthYear = text;
                     },
@@ -395,6 +409,7 @@ class ProfileMainDescription extends StatelessWidget {
                     width: 50,
                     height: 25,
                     value: dummyProfile.birthMonth,
+                    editable: editable,
                     onChanged: (text) {
                       dummyProfile.birthMonth = text;
                     },
@@ -411,6 +426,7 @@ class ProfileMainDescription extends StatelessWidget {
                     width: 50,
                     height: 25,
                     value: dummyProfile.birthDay,
+                    editable: editable,
                     onChanged: (text) {
                       dummyProfile.birthDay = text;
                     },
@@ -434,6 +450,7 @@ class ProfileMainDescription extends StatelessWidget {
                     width: 70,
                     height: 25,
                     value: dummyProfile.zodiacSign,
+                    editable: editable,
                     onChanged: (text) {
                       dummyProfile.zodiacSign = text;
                     },
@@ -459,6 +476,7 @@ class ProfileMainDescription extends StatelessWidget {
                     width: 50,
                     height: 25,
                     value: dummyProfile.bloodType,
+                    editable: editable,
                     onChanged: (text) {
                       dummyProfile.bloodType = text;
                     },
@@ -491,6 +509,7 @@ class ProfileMainDescription extends StatelessWidget {
                     width: 70,
                     height: 25,
                     value: dummyProfile.mbti,
+                    editable: editable,
                     onChanged: (text) {
                       dummyProfile.mbti = text;
                     },
@@ -524,6 +543,7 @@ class ProfileMainDescription extends StatelessWidget {
                     width: 80,
                     height: 25,
                     value: dummyProfile.nickname,
+                    editable: editable,
                     onChanged: (text) {
                       dummyProfile.nickname = text;
                     },
@@ -557,6 +577,7 @@ class ProfileMainDescription extends StatelessWidget {
                     width: 150,
                     height: 25,
                     value: dummyProfile.personality,
+                    editable: editable,
                     onChanged: (text) {
                       dummyProfile.personality = text;
                     },
@@ -598,6 +619,7 @@ class ProfileMainDescription extends StatelessWidget {
                     width: 150,
                     height: 25,
                     value: dummyProfile.holidayLife,
+                    editable: editable,
                     onChanged: (text) {
                       dummyProfile.holidayLife = text;
                     },
@@ -627,7 +649,8 @@ class ProfileMainDescription extends StatelessWidget {
 
 //詳細プロフィール文
 class ProfileCardDetail extends StatelessWidget {
-  const ProfileCardDetail({super.key});
+  final bool editable;
+  const ProfileCardDetail({super.key, this.editable = true});
 
   @override
   Widget build(BuildContext context) {
@@ -642,6 +665,7 @@ class ProfileCardDetail extends StatelessWidget {
                 title: "出身地",
                 boxLeft: 20,
                 value: dummyProfile.birthplace,
+                editable: editable,
               ),
               const SizedBox(width: 20),
 
@@ -649,6 +673,7 @@ class ProfileCardDetail extends StatelessWidget {
                 title: "兄弟構成",
                 boxLeft: 20,
                 value: dummyProfile.brothers,
+                editable: editable,
               ),
               const SizedBox(width: 20),
 
@@ -656,6 +681,7 @@ class ProfileCardDetail extends StatelessWidget {
                 title: "身長",
                 boxLeft: 20,
                 value: dummyProfile.height,
+                editable: editable,
               ),
               const SizedBox(width: 20),
 
@@ -663,6 +689,7 @@ class ProfileCardDetail extends StatelessWidget {
                 title: "靴のサイズ",
                 boxLeft: 20,
                 value: dummyProfile.shoeSize,
+                editable: editable,
               ),
               const SizedBox(width: 20),
             ],
@@ -678,12 +705,14 @@ class ProfileDetailItem extends StatelessWidget {
   final String title;
   final double boxLeft;
   final String value;
+  final bool editable;
 
   const ProfileDetailItem({
     super.key,
     required this.title,
     required this.boxLeft,
     required this.value,
+    required this.editable,
   });
 
   @override
@@ -701,6 +730,7 @@ class ProfileDetailItem extends StatelessWidget {
               width: 100,
               height: 25,
               value: value,
+              editable: editable,
               onChanged: (text) {
                 dummyProfile.zodiacSign = text;
               },
@@ -724,7 +754,8 @@ class ProfileDetailItem extends StatelessWidget {
 
 // LoveTalk
 class ProfileLoveTalk extends StatefulWidget {
-  const ProfileLoveTalk({super.key});
+  final bool editable;
+  const ProfileLoveTalk({super.key, this.editable = true});
 
   @override
   State<ProfileLoveTalk> createState() => _ProfileLoveTalkState();
@@ -754,6 +785,7 @@ class _ProfileLoveTalkState extends State<ProfileLoveTalk> {
             ProfileYesNoSelector(
               question: "告白したことある？",
               value: dummyProfile.confessed,
+              editable: widget.editable,
               onChanged: (v) {
                 setState(() {
                   dummyProfile.confessed = v;
@@ -766,6 +798,7 @@ class _ProfileLoveTalkState extends State<ProfileLoveTalk> {
             ProfileYesNoSelector(
               question: "告白されたことある？",
               value: dummyProfile.beenConfessed,
+              editable: widget.editable,
               onChanged: (v) {
                 setState(() {
                   dummyProfile.beenConfessed = v;
@@ -778,6 +811,7 @@ class _ProfileLoveTalkState extends State<ProfileLoveTalk> {
             ProfileYesNoSelector(
               question: "今好きな人はいる？",
               value: dummyProfile.hasCrush,
+              editable: widget.editable,
               onChanged: (v) {
                 setState(() {
                   dummyProfile.hasCrush = v;
@@ -796,12 +830,14 @@ class ProfileYesNoSelector extends StatelessWidget {
   final String question;
   final YesNoAnswer value;
   final ValueChanged<YesNoAnswer> onChanged;
+  final bool editable;
 
   const ProfileYesNoSelector({
     super.key,
     required this.question,
     required this.value,
     required this.onChanged,
+    required this.editable,
   });
 
   @override
@@ -829,6 +865,7 @@ class ProfileYesNoSelector extends StatelessWidget {
           value: value,
           myValue: YesNoAnswer.yes,
           onChanged: onChanged,
+          editable: editable,
         ),
 
         const SizedBox(width: 8),
@@ -838,6 +875,7 @@ class ProfileYesNoSelector extends StatelessWidget {
           value: value,
           myValue: YesNoAnswer.no,
           onChanged: onChanged,
+          editable: editable,
         ),
       ],
     );
@@ -850,6 +888,7 @@ class YesNoButton extends StatelessWidget {
   final YesNoAnswer value;
   final YesNoAnswer myValue;
   final ValueChanged<YesNoAnswer> onChanged;
+  final bool editable;
 
   const YesNoButton({
     super.key,
@@ -857,6 +896,7 @@ class YesNoButton extends StatelessWidget {
     required this.value,
     required this.myValue,
     required this.onChanged,
+    required this.editable,
   });
 
   @override
@@ -867,14 +907,15 @@ class YesNoButton extends StatelessWidget {
       width: 25,
       height: 20,
       child: InkWell(
-        onTap: () {
-          // もう一度押したら解除
-          if (selected) {
-            onChanged(YesNoAnswer.unknown);
-          } else {
-            onChanged(myValue);
-          }
-        },
+        onTap: editable
+            ? () {
+                if (selected) {
+                  onChanged(YesNoAnswer.unknown);
+                } else {
+                  onChanged(myValue);
+                }
+              }
+            : null,
         child: Stack(
           alignment: Alignment.center,
           clipBehavior: Clip.none,
@@ -1009,11 +1050,13 @@ class ProfileEllipse extends StatelessWidget {
 class ProfileIfCorner extends StatelessWidget {
   final String ifMagicWish;
   final String ifNextLife;
+  final bool editable;
 
   const ProfileIfCorner({
     super.key,
     required this.ifMagicWish,
     required this.ifNextLife,
+    required this.editable,
   });
 
   @override
@@ -1057,6 +1100,7 @@ class ProfileIfCorner extends StatelessWidget {
                   child: ProfileEllipseInput(
                     width: 120,
                     value: ifMagicWish,
+                    editable: editable,
                     onChanged: (text) {
                       dummyProfile.ifMagicWish = text;
                     },
@@ -1073,6 +1117,7 @@ class ProfileIfCorner extends StatelessWidget {
                   child: ProfileEllipseInput(
                     width: 120,
                     value: ifNextLife,
+                    editable: editable,
                     onChanged: (text) {
                       dummyProfile.ifNextLife = text;
                     },
@@ -1089,7 +1134,8 @@ class ProfileIfCorner extends StatelessWidget {
 
 //Which One?コーナー
 class ProfileWhichOne extends StatelessWidget {
-  const ProfileWhichOne({super.key});
+  final bool editable;
+  const ProfileWhichOne({super.key, this.editable = true});
 
   @override
   Widget build(BuildContext context) {
@@ -1114,7 +1160,9 @@ class ProfileWhichOne extends StatelessWidget {
         ),
         const SizedBox(height: 5),
         //枠
-        const ProfileWhichOneFrame(child: ProfileWhichOneContents()),
+        ProfileWhichOneFrame(
+          child: ProfileWhichOneContents(editable: editable),
+        ),
       ],
     ));
   }
@@ -1220,7 +1268,8 @@ class _ProfileWhichOnePainter extends CustomPainter {
 
 //Which One?質問内容
 class ProfileWhichOneContents extends StatefulWidget {
-  const ProfileWhichOneContents({super.key});
+  final bool editable;
+  const ProfileWhichOneContents({super.key, this.editable = true});
 
   @override
   State<ProfileWhichOneContents> createState() =>
@@ -1243,6 +1292,7 @@ class _ProfileWhichOneContentsState extends State<ProfileWhichOneContents> {
               rightLabel: "   猫   ",
               suffix: "】派",
               value: dummyProfile.dogOrCat,
+              editable: widget.editable,
               onChanged: (v) {
                 setState(() {
                   dummyProfile.dogOrCat = v;
@@ -1258,6 +1308,7 @@ class _ProfileWhichOneContentsState extends State<ProfileWhichOneContents> {
               rightLabel: "   アウトドア   ",
               suffix: "】派",
               value: dummyProfile.indoorOrOutdoor,
+              editable: widget.editable,
               onChanged: (v) {
                 setState(() {
                   dummyProfile.indoorOrOutdoor = v;
@@ -1273,6 +1324,7 @@ class _ProfileWhichOneContentsState extends State<ProfileWhichOneContents> {
               rightLabel: "   乗れない   ",
               suffix: "】",
               value: dummyProfile.thrill,
+              editable: widget.editable,
               onChanged: (v) {
                 setState(() {
                   dummyProfile.thrill = v;
@@ -1288,6 +1340,7 @@ class _ProfileWhichOneContentsState extends State<ProfileWhichOneContents> {
               rightLabel: "   たけのこの里   ",
               suffix: "】派",
               value: dummyProfile.kinokoOrTakenoko,
+              editable: widget.editable,
               onChanged: (v) {
                 setState(() {
                   dummyProfile.kinokoOrTakenoko = v;
@@ -1303,6 +1356,7 @@ class _ProfileWhichOneContentsState extends State<ProfileWhichOneContents> {
               rightLabel: "   溜めがち   ",
               suffix: "】",
               value: dummyProfile.reply,
+              editable: widget.editable,
               onChanged: (v) {
                 setState(() {
                   dummyProfile.reply = v;
@@ -1326,6 +1380,7 @@ class ProfileWhichOneSelector extends StatelessWidget {
   final WhichOneAnswer value;
   final ValueChanged<WhichOneAnswer> onChanged;
 
+  final bool editable;
   const ProfileWhichOneSelector({
     super.key,
     required this.prefix,
@@ -1334,6 +1389,7 @@ class ProfileWhichOneSelector extends StatelessWidget {
     required this.suffix,
     required this.value,
     required this.onChanged,
+    required this.editable,
   });
 
   @override
@@ -1346,6 +1402,7 @@ class ProfileWhichOneSelector extends StatelessWidget {
           label: leftLabel,
           value: value,
           myValue: WhichOneAnswer.left,
+          editable: editable,
           onChanged: onChanged,
         ),
 
@@ -1355,6 +1412,7 @@ class ProfileWhichOneSelector extends StatelessWidget {
             label: "・",
             value: value,
             myValue: WhichOneAnswer.center,
+            editable: editable,
             onChanged: onChanged,
           ),
         ),
@@ -1363,6 +1421,7 @@ class ProfileWhichOneSelector extends StatelessWidget {
           label: rightLabel,
           value: value,
           myValue: WhichOneAnswer.right,
+          editable: editable,
           onChanged: onChanged,
         ),
 
@@ -1377,6 +1436,7 @@ class WhichOneChoiceButton extends StatelessWidget {
   final String label;
   final WhichOneAnswer value;
   final WhichOneAnswer myValue;
+  final bool editable;
   final ValueChanged<WhichOneAnswer> onChanged;
 
   const WhichOneChoiceButton({
@@ -1385,6 +1445,7 @@ class WhichOneChoiceButton extends StatelessWidget {
     required this.value,
     required this.myValue,
     required this.onChanged,
+    required this.editable,
   });
 
   @override
@@ -1394,13 +1455,15 @@ class WhichOneChoiceButton extends StatelessWidget {
     return SizedBox(
       height: 26,
       child: InkWell(
-        onTap: () {
-          if (selected) {
-            onChanged(WhichOneAnswer.unknown);
-          } else {
-            onChanged(myValue);
-          }
-        },
+        onTap: editable
+            ? () {
+                if (selected) {
+                  onChanged(WhichOneAnswer.unknown);
+                } else {
+                  onChanged(myValue);
+                }
+              }
+            : null,
         child: Stack(
           alignment: Alignment.center,
           children: [
@@ -1422,7 +1485,12 @@ class WhichOneChoiceButton extends StatelessWidget {
 //Free Space
 class ProfileFreeSpace extends StatelessWidget {
   final String freeSpace;
-  const ProfileFreeSpace({super.key, required this.freeSpace});
+  final bool editable;
+  const ProfileFreeSpace({
+    super.key,
+    required this.freeSpace,
+    required this.editable,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -1471,6 +1539,7 @@ class ProfileFreeSpace extends StatelessWidget {
                     width: 300,
                     height: 120,
                     value: freeSpace,
+                    editable: editable,
                     onChanged: (text) {
                       dummyProfile.freeSpace = text;
                     },

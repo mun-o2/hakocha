@@ -21,6 +21,7 @@ class ProfileCardRight extends StatelessWidget {
               ProfileIfCorner(
                 ifMagicWish: dummyProfile.ifMagicWish,
                 ifNextLife: dummyProfile.ifNextLife,
+                editable: editable,
               ),
 
               // WhichOne?コーナー
@@ -28,7 +29,7 @@ class ProfileCardRight extends StatelessWidget {
                 top: 200,
                 left: 0,
                 right: 0,
-                child: const ProfileWhichOne(),
+                child: ProfileWhichOne(editable: editable),
               ),
 
               // Free Spaceコーナー
@@ -36,7 +37,10 @@ class ProfileCardRight extends StatelessWidget {
                 top: 510,
                 left: 30,
                 right: 0,
-                child: ProfileFreeSpace(freeSpace: dummyProfile.freeSpace),
+                child: ProfileFreeSpace(
+                  freeSpace: dummyProfile.freeSpace,
+                  editable: editable,
+                ),
               ),
             ],
           ),

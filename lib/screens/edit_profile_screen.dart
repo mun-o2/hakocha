@@ -22,13 +22,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: PageView(
-        controller: _pageController,
         children: const [
           // 最初に表示されるページ
-          ProfileCardLeft(),
+          ProfileCardLeft(editable: true),
 
           // 2ページ目
-          ProfileCardRight(),
+          ProfileCardRight(editable: true),
         ],
       ),
     );

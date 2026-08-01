@@ -9,9 +9,9 @@ import 'profile_edit_parts.dart';
 import '../dummy/dummy_profile.dart';
 
 class ProfileCardLeft extends StatefulWidget {
-  //final bool editable;
+  final bool editable;
 
-  const ProfileCardLeft({super.key /*this.editable = true*/});
+  const ProfileCardLeft({super.key, this.editable = true});
 
   @override
   State<ProfileCardLeft> createState() => _ProfileCardLeftState();
@@ -49,19 +49,19 @@ class _ProfileCardLeftState extends State<ProfileCardLeft> {
               ProfileHeader(
                 instagramId: dummyProfile.instagramId,
                 xId: dummyProfile.xId,
-                //editable: widget.editable,
+                editable: widget.editable,
               ),
               // メインプロフィール文
-              const ProfileMainDescription(),
+              ProfileMainDescription(editable: widget.editable),
               // 左下詳細プロフィール
-              const ProfileCardDetail(),
+              ProfileCardDetail(editable: widget.editable),
               // Love Talk大ハート
               Positioned(
                 left: 110,
                 bottom: -20,
                 child: const LoveTalkHeart(isPink: true),
               ),
-              const ProfileLoveTalk(),
+              ProfileLoveTalk(editable: widget.editable),
 
               // Love Talk小ハート
               Positioned(
@@ -84,6 +84,7 @@ class _ProfileCardLeftState extends State<ProfileCardLeft> {
                 bottom: 30,
                 child: ProfileInputHeart(
                   value: dummyProfile.idealType,
+                  editable: widget.editable,
                   onChanged: (text) {
                     dummyProfile.idealType = text;
                   },

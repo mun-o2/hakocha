@@ -8,7 +8,7 @@ class ProfileInputBox extends StatefulWidget {
   final double height;
   final String value;
   final ValueChanged<String> onChanged;
-  //final bool editable;
+  final bool editable;
 
   const ProfileInputBox({
     super.key,
@@ -16,7 +16,7 @@ class ProfileInputBox extends StatefulWidget {
     required this.height,
     required this.value,
     required this.onChanged,
-    //required this.editable,
+    required this.editable,
   });
 
   @override
@@ -63,25 +63,28 @@ class _ProfileInputBoxState extends State<ProfileInputBox> {
         ],
       ),
 
-      child: TextField(
-        controller: controller,
-
-        textAlign: TextAlign.center,
-
-        style: AppTextStyles.profileText,
-
-        cursorColor: AppColors.pink4,
-
-        decoration: const InputDecoration(
-          border: InputBorder.none,
-          isDense: true,
-          contentPadding: EdgeInsets.zero,
-        ),
-
-        onSubmitted: (_) {
-          widget.onChanged(controller.text);
-        },
-      ),
+      child: widget.editable
+          ? TextField(
+              controller: controller,
+              textAlign: TextAlign.center,
+              style: AppTextStyles.profileText,
+              cursorColor: AppColors.pink4,
+              decoration: const InputDecoration(
+                border: InputBorder.none,
+                isDense: true,
+                contentPadding: EdgeInsets.zero,
+              ),
+              onSubmitted: (_) {
+                widget.onChanged(controller.text);
+              },
+            )
+          : Center(
+              child: Text(
+                controller.text,
+                textAlign: TextAlign.center,
+                style: AppTextStyles.profileText,
+              ),
+            ),
     );
   }
 }
