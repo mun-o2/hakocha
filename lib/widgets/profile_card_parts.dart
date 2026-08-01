@@ -9,7 +9,7 @@ import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/ant_design.dart';
 import 'package:iconify_flutter/icons/bxl.dart';
 
-import 'profile_edit_parts.dart';
+import 'package:hakocha/widgets/profile_edit_parts.dart';
 import '../dummy/dummy_profile.dart';
 import 'image_picker_sheet.dart';
 
@@ -1424,7 +1424,7 @@ class ProfileFreeSpace extends StatelessWidget {
   Widget build(BuildContext context) {
     return (SizedBox(
       width: 300,
-      height: 180,
+      height: 140,
       child: Stack(
         clipBehavior: Clip.none,
         children: [
@@ -1458,14 +1458,14 @@ class ProfileFreeSpace extends StatelessWidget {
             top: 65,
             child: Stack(
               children: [
-                const ProfileWhiteSquare(width: 310, height: 130),
+                const ProfileWhiteSquare(width: 310, height: 110),
 
                 Positioned(
                   left: 5,
                   top: 5,
                   child: ProfileFreeSpaceInput(
                     width: 300,
-                    height: 60,
+                    height: 100,
                     value: freeSpace,
                     onChanged: (text) {
                       dummyProfile.freeSpace = text;

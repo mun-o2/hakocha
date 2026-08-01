@@ -27,6 +27,7 @@ class HakochaApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => ExchangeProvider(),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: AppStrings.appTitle,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -49,9 +50,10 @@ class _HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<_HomeScreen> {
   AppTab _selectedTab = AppTab.home;
+  Key _topScreenKey = UniqueKey();
 
   List<Widget> get _screens => <Widget>[
-    const TopScreen(),
+    TopScreen(key: _topScreenKey),
 
     ExchangeScreen(
       onOpenProfile: () {
@@ -65,8 +67,15 @@ class _HomeScreenState extends State<_HomeScreen> {
   ];
 
   void _onTabSelected(int index) {
+    final selectedTab = AppTab.values[index];
+
     setState(() {
-      _selectedTab = AppTab.values[index];
+      if (selectedTab == AppTab.home) {
+        // ホームを押したらTopScreenを初期状態に戻す
+        _topScreenKey = UniqueKey();
+      }
+
+      _selectedTab = selectedTab;
     });
   }
 
