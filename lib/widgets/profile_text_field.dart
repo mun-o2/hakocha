@@ -8,6 +8,7 @@ class ProfileInputBox extends StatefulWidget {
   final double height;
   final String value;
   final ValueChanged<String> onChanged;
+  //final bool editable;
 
   const ProfileInputBox({
     super.key,
@@ -15,6 +16,7 @@ class ProfileInputBox extends StatefulWidget {
     required this.height,
     required this.value,
     required this.onChanged,
+    //required this.editable,
   });
 
   @override

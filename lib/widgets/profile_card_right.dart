@@ -3,7 +3,9 @@ import 'profile_card_parts.dart';
 import '../dummy/dummy_profile.dart';
 
 class ProfileCardRight extends StatelessWidget {
-  const ProfileCardRight({super.key});
+  final bool editable;
+
+  const ProfileCardRight({super.key, this.editable = true});
 
   @override
   Widget build(BuildContext context) {

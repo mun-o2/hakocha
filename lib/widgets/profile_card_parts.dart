@@ -849,35 +849,39 @@ class YesNoButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final selected = value == myValue;
 
-    return InkWell(
-      onTap: () {
-        // もう一度押したら解除
-        if (selected) {
-          onChanged(YesNoAnswer.unknown);
-        } else {
-          onChanged(myValue);
-        }
-      },
-      child: Stack(
-        alignment: Alignment.center,
-        clipBehavior: Clip.none,
-        children: [
-          OutlinedText(
-            text: label,
-            style: AppTextStyles.profileFormatText2,
-            outlineColor: myValue == YesNoAnswer.yes
-                ? AppColors.pink4
-                : AppColors.purple4,
-            strokeWidth: 2.5,
-          ),
-          selected
-              ? const Icon(
-                  Icons.circle_outlined,
-                  size: 22,
-                  color: AppColors.circleOutlined,
-                )
-              : const SizedBox(),
-        ],
+    return SizedBox(
+      width: 25,
+      height: 20,
+      child: InkWell(
+        onTap: () {
+          // もう一度押したら解除
+          if (selected) {
+            onChanged(YesNoAnswer.unknown);
+          } else {
+            onChanged(myValue);
+          }
+        },
+        child: Stack(
+          alignment: Alignment.center,
+          clipBehavior: Clip.none,
+          children: [
+            OutlinedText(
+              text: label,
+              style: AppTextStyles.profileFormatText2,
+              outlineColor: myValue == YesNoAnswer.yes
+                  ? AppColors.pink4
+                  : AppColors.purple4,
+              strokeWidth: 2.5,
+            ),
+            selected
+                ? const Icon(
+                    Icons.circle_outlined,
+                    size: 22,
+                    color: AppColors.circleOutlined,
+                  )
+                : const SizedBox(),
+          ],
+        ),
       ),
     );
   }
