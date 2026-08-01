@@ -12,6 +12,9 @@ import 'package:hakocha/screens/exchange/exchange_code_input_screen.dart';
 import 'package:hakocha/services/nearby_exchange_service.dart';
 import 'package:provider/provider.dart';
 
+import 'package:hakocha/dummy/dummy_profile.dart';
+import 'package:hakocha/dummy/dummy_profile2.dart';
+
 class ExchangeStartScreen extends StatefulWidget {
   const ExchangeStartScreen({super.key});
 
@@ -108,12 +111,18 @@ class _ExchangeStartScreenState extends State<ExchangeStartScreen>
 
     if (!mounted) return;
 
+    final partnerProfile = remoteUser.id == 'user_001'
+        ? dummyProfile
+        : dummyProfile2;
+
     final user = UserProfile(
       id: remoteUser.id,
-      name: remoteUser.name,
+      name: partnerProfile.name,
       iconUrl: '',
       exchangeCode: remoteUser.exchangeCode,
-      themeColor: ProfileThemeColor.pink,
+      themeColor: remoteUser.id == 'user_001'
+          ? ProfileThemeColor.pink
+          : ProfileThemeColor.blue,
     );
 
     debugPrint('🎉 [ExchangeStartScreen] real matchUser()');

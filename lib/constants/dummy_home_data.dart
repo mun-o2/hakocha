@@ -35,3 +35,11 @@ final DummyHomeData2 = DummyHomeData(
   notification1: DummyNotifications2.notification1,
   notification2: DummyNotifications2.notification2,
 );
+
+// 現在のユーザー
+final currentProfile = dummyProfile;
+
+// 交換相手
+final exchangePartnerProfile = currentProfile == dummyProfile
+    ? dummyProfile2
+    : dummyProfile;
