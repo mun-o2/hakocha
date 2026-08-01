@@ -1,9 +1,11 @@
-
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:hakocha/constants/app_colors.dart';
+import 'package:hakocha/models/remote_exchange_user.dart';
 import 'package:hakocha/screens/exchange/exchange_code_input_screen.dart';
+import 'package:hakocha/screens/exchange/exchange_match_screen.dart';
 import 'package:hakocha/services/nearby_exchange_service.dart';
 
 class ExchangeStartScreen extends StatefulWidget {
@@ -15,32 +17,102 @@ class ExchangeStartScreen extends StatefulWidget {
 
 class _ExchangeStartScreenState extends State<ExchangeStartScreen> {
   late final NearbyExchangeService _nearbyService;
+
+  StreamSubscription<List<PeerDevice>>? _peersSubscription;
+  StreamSubscription<RemoteExchangeUser>? _remoteUserSubscription;
+
   List<PeerDevice> _peers = [];
+
+  bool _isNavigatingToMatch = false;
 
   @override
   void initState() {
     super.initState();
+
     final name = Platform.localHostname;
-    print('🚀 [ExchangeStartScreen] initState: displayName=$name');
+
+    debugPrint('🚀 [ExchangeStartScreen] initState: displayName=$name');
+
     _nearbyService = NearbyExchangeService(displayName: name);
-    _nearbyService.peersStream.listen((list) {
-      print('📋 [ExchangeStartScreen] peersStream updated: ${list.length} peer(s)');
+
+    // 近くの端末一覧
+    _peersSubscription = _nearbyService.peersStream.listen((list) {
+      debugPrint(
+        '📋 [ExchangeStartScreen] '
+        'peersStream updated: ${list.length} peer(s)',
+      );
+
       for (final peer in list) {
-        print('   - ${peer.name} (${peer.id})');
+        debugPrint('   - ${peer.name} (${peer.id})');
       }
+
+      if (!mounted) return;
+
       setState(() {
         _peers = list;
       });
     });
-    print('🔍 [ExchangeStartScreen] Starting nearby service...');
+
+    // ★ 相手のhakochaユーザー情報を受信
+    _remoteUserSubscription = _nearbyService.remoteUserStream.listen(
+      _handleRemoteUserReceived,
+    );
+
+    debugPrint('🔍 [ExchangeStartScreen] Starting nearby service...');
+
     _nearbyService.start();
+  }
+
+  void _handleRemoteUserReceived(RemoteExchangeUser user) {
+    debugPrint(
+      '👤 [ExchangeStartScreen] '
+      'remoteUser received: ${user.name} (${user.id})',
+    );
+
+    if (!mounted) {
+      return;
+    }
+
+    // 同じuserInfoが複数回来ても、
+    // 確認画面を何枚も開かないようにする。
+    if (_isNavigatingToMatch) {
+      debugPrint(
+        'ℹ️ [ExchangeStartScreen] '
+        'Already navigating to match screen.',
+      );
+      return;
+    }
+
+    _isNavigatingToMatch = true;
+
+    debugPrint(
+      '🚀 [ExchangeStartScreen] '
+      'Navigating to ExchangeMatchScreen: ${user.name}',
+    );
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => ExchangeMatchScreen(matchedUser: user)),
+    ).then((_) {
+      debugPrint(
+        '↩️ [ExchangeStartScreen] '
+        'Returned from ExchangeMatchScreen',
+      );
+
+      _isNavigatingToMatch = false;
+    });
   }
 
   @override
   void dispose() {
-    print('🛑 [ExchangeStartScreen] dispose: stopping service');
+    debugPrint('🛑 [ExchangeStartScreen] dispose: stopping service');
+
+    _peersSubscription?.cancel();
+    _remoteUserSubscription?.cancel();
+
     _nearbyService.stop();
     _nearbyService.dispose();
+
     super.dispose();
   }
 
@@ -54,12 +126,21 @@ class _ExchangeStartScreenState extends State<ExchangeStartScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const SizedBox(height: 80),
+
             _buildTitle(),
+
             const SizedBox(height: 24),
+
             _buildIllustration(),
+
             const SizedBox(height: 32),
+
             _buildActionArea(context),
+
             const SizedBox(height: 16),
+
+            // 今はデバッグ用。
+            // userInfo交換が安定したら削除してOK。
             _buildPeersList(),
           ],
         ),
@@ -109,7 +190,6 @@ class _ExchangeStartScreenState extends State<ExchangeStartScreen> {
               borderRadius: BorderRadius.circular(12),
             ),
           ),
-
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -140,11 +220,10 @@ class _ExchangeStartScreenState extends State<ExchangeStartScreen> {
                   ),
                 ),
                 onPressed: () {
-                  // コード入力画面へ
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const ExchangeCodeInputScreen(),
+                      builder: (_) => const ExchangeCodeInputScreen(),
                     ),
                   );
                 },
@@ -156,31 +235,9 @@ class _ExchangeStartScreenState extends State<ExchangeStartScreen> {
             ],
           ),
         ),
-
-        const SizedBox(height: 16),
-
-        // 開発用のボタン（削除予定）
-        /*
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.pink4,
-            foregroundColor: AppColors.backgroundWhite,
-            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 48),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(18),
-            ),
-          ),
-          onPressed: () {
-            context.read<ExchangeProvider>().simulateMatch();
-          },
-          child: const Text('開発用：相手を見つける'),
-        ),
-        */
       ],
     );
   }
-
-  // (UI replaced by fixed-size Stack layout above)
 
   Widget _buildPeersList() {
     return Expanded(
@@ -188,9 +245,13 @@ class _ExchangeStartScreenState extends State<ExchangeStartScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Text('検出した端末： ${_peers.length}', style: const TextStyle(fontSize: 16)),
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: Text(
+              '検出した端末： ${_peers.length}',
+              style: const TextStyle(fontSize: 16),
+            ),
           ),
+
           Expanded(
             child: Card(
               elevation: 2,
@@ -200,11 +261,15 @@ class _ExchangeStartScreenState extends State<ExchangeStartScreen> {
                       itemCount: _peers.length,
                       separatorBuilder: (_, __) => const Divider(height: 1),
                       itemBuilder: (context, index) {
-                        final p = _peers[index];
+                        final peer = _peers[index];
+
                         return ListTile(
-                          title: Text(p.name),
-                          subtitle: Text(p.addressText()),
-                          trailing: Text(p.id, style: const TextStyle(fontSize: 10)),
+                          title: Text(peer.name),
+                          subtitle: Text(peer.addressText()),
+                          trailing: Text(
+                            peer.id,
+                            style: const TextStyle(fontSize: 10),
+                          ),
                         );
                       },
                     ),
