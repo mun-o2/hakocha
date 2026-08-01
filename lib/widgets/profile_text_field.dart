@@ -70,7 +70,9 @@ class _ProfileInputBoxState extends State<ProfileInputBox> {
           ? TextField(
               controller: controller,
               textAlign: TextAlign.center,
-              style: AppTextStyles.profileText,
+              style: AppTextStyles.profileText.copyWith(
+                color: widget.theme.mainColor,
+              ),
               cursorColor: widget.theme.mainColor,
               decoration: const InputDecoration(
                 border: InputBorder.none,

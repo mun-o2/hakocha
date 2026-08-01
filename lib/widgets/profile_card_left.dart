@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hakocha/dummy/dummy_profile2.dart';
 import '../constants/app_text_styles.dart';
 import '../constants/app_colors.dart';
 import 'outlined_text.dart';
@@ -8,6 +9,8 @@ import '../constants/profile_theme.dart';
 
 //ダミーデータの読み込み
 import '../dummy/dummy_profile.dart';
+import '../dummy/dummy_profile2.dart';
+import '../models/profile_data.dart';
 
 class ProfileCardLeft extends StatefulWidget {
   final bool editable;
@@ -20,8 +23,14 @@ class ProfileCardLeft extends StatefulWidget {
 }
 
 class _ProfileCardLeftState extends State<ProfileCardLeft> {
+  late ProfileData profileData;
+
   @override
   Widget build(BuildContext context) {
+    profileData = widget.theme == pinkProfileCardTheme
+        ? dummyProfile
+        : dummyProfile2;
+
     return Center(
       child: SizedBox(
         width: 400,
@@ -51,25 +60,33 @@ class _ProfileCardLeftState extends State<ProfileCardLeft> {
 
               // 似顔絵・SNS
               ProfileHeader(
-                instagramId: dummyProfile.instagramId,
-                xId: dummyProfile.xId,
+                profile: profileData,
                 editable: widget.editable,
                 theme: widget.theme,
               ),
               // メインプロフィール文
               ProfileMainDescription(
+                profile: profileData,
                 editable: widget.editable,
                 theme: widget.theme,
               ),
               // 左下詳細プロフィール
-              ProfileCardDetail(editable: widget.editable, theme: widget.theme),
+              ProfileCardDetail(
+                editable: widget.editable,
+                theme: widget.theme,
+                profile: profileData,
+              ),
               // Love Talk大ハート
               Positioned(
                 left: 110,
                 bottom: -20,
                 child: LoveTalkHeart(isPink: true, theme: widget.theme),
               ),
-              ProfileLoveTalk(editable: widget.editable, theme: widget.theme),
+              ProfileLoveTalk(
+                editable: widget.editable,
+                theme: widget.theme,
+                profile: profileData,
+              ),
 
               // Love Talk小ハート
               Positioned(
@@ -92,11 +109,11 @@ class _ProfileCardLeftState extends State<ProfileCardLeft> {
                 right: -8,
                 bottom: 30,
                 child: ProfileInputHeart(
-                  value: dummyProfile.idealType,
+                  value: profileData.idealType,
                   editable: widget.editable,
                   theme: widget.theme,
                   onChanged: (text) {
-                    dummyProfile.idealType = text;
+                    profileData.idealType = text;
                   },
                 ),
               ),

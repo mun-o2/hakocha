@@ -213,15 +213,13 @@ class ProfileWhiteSquare extends StatelessWidget {
 
 //似顔絵・SNS部分
 class ProfileHeader extends StatelessWidget {
-  final String instagramId;
-  final String xId;
+  final ProfileData profile;
   final bool editable;
   final ProfileCardThemeColor theme;
 
   const ProfileHeader({
     super.key,
-    required this.instagramId,
-    required this.xId,
+    required this.profile,
     required this.editable,
     required this.theme,
   });
@@ -307,15 +305,15 @@ class ProfileHeader extends StatelessWidget {
                       Expanded(
                         child: editable
                             ? ProfileEditableText(
-                                value: instagramId,
+                                value: profile.instagramId,
                                 editable: editable,
                                 theme: theme,
                                 onChanged: (text) {
-                                  dummyProfile.instagramId = text;
+                                  profile.instagramId = text;
                                 },
                               )
                             : Text(
-                                instagramId,
+                                profile.instagramId,
                                 style: AppTextStyles.profileText.copyWith(
                                   color: theme.mainColor,
                                 ),
@@ -333,15 +331,15 @@ class ProfileHeader extends StatelessWidget {
                       Expanded(
                         child: editable
                             ? ProfileEditableText(
-                                value: xId,
+                                value: profile.xId,
                                 editable: editable,
                                 theme: theme,
                                 onChanged: (text) {
-                                  dummyProfile.xId = text;
+                                  profile.xId = text;
                                 },
                               )
                             : Text(
-                                xId,
+                                profile.xId,
                                 style: AppTextStyles.profileText.copyWith(
                                   color: theme.mainColor,
                                 ),
@@ -362,10 +360,12 @@ class ProfileHeader extends StatelessWidget {
 //基本プロフィール本文
 class ProfileMainDescription extends StatelessWidget {
   final bool editable;
+  final ProfileData profile;
   final ProfileCardThemeColor theme;
   const ProfileMainDescription({
     super.key,
     this.editable = true,
+    required this.profile,
     required this.theme,
   });
 
@@ -395,11 +395,11 @@ class ProfileMainDescription extends StatelessWidget {
                   ProfileInputBox(
                     width: 100,
                     height: 25,
-                    value: dummyProfile.name,
+                    value: profile.name,
                     editable: editable,
                     theme: theme,
                     onChanged: (text) {
-                      dummyProfile.name = text;
+                      profile.name = text;
                     },
                   ),
 
@@ -423,11 +423,11 @@ class ProfileMainDescription extends StatelessWidget {
                   ProfileInputBox(
                     width: 80,
                     height: 25,
-                    value: dummyProfile.birthYear,
+                    value: profile.birthYear,
                     editable: editable,
                     theme: theme,
                     onChanged: (text) {
-                      dummyProfile.birthYear = text;
+                      profile.birthYear = text;
                     },
                   ),
 
@@ -444,11 +444,11 @@ class ProfileMainDescription extends StatelessWidget {
                   ProfileInputBox(
                     width: 50,
                     height: 25,
-                    value: dummyProfile.birthMonth,
+                    value: profile.birthMonth,
                     editable: editable,
                     theme: theme,
                     onChanged: (text) {
-                      dummyProfile.birthMonth = text;
+                      profile.birthMonth = text;
                     },
                   ),
 
@@ -463,11 +463,11 @@ class ProfileMainDescription extends StatelessWidget {
                   ProfileInputBox(
                     width: 50,
                     height: 25,
-                    value: dummyProfile.birthDay,
+                    value: profile.birthDay,
                     editable: editable,
                     theme: theme,
                     onChanged: (text) {
-                      dummyProfile.birthDay = text;
+                      profile.birthDay = text;
                     },
                   ),
 
@@ -489,11 +489,11 @@ class ProfileMainDescription extends StatelessWidget {
                   ProfileInputBox(
                     width: 70,
                     height: 25,
-                    value: dummyProfile.zodiacSign,
+                    value: profile.zodiacSign,
                     editable: editable,
                     theme: theme,
                     onChanged: (text) {
-                      dummyProfile.zodiacSign = text;
+                      profile.zodiacSign = text;
                     },
                   ),
                   const SizedBox(width: 4),
@@ -518,11 +518,11 @@ class ProfileMainDescription extends StatelessWidget {
                   ProfileInputBox(
                     width: 50,
                     height: 25,
-                    value: dummyProfile.bloodType,
+                    value: profile.bloodType,
                     editable: editable,
                     theme: theme,
                     onChanged: (text) {
-                      dummyProfile.bloodType = text;
+                      profile.bloodType = text;
                     },
                   ),
                   const SizedBox(width: 4),
@@ -554,11 +554,11 @@ class ProfileMainDescription extends StatelessWidget {
                   ProfileInputBox(
                     width: 70,
                     height: 25,
-                    value: dummyProfile.mbti,
+                    value: profile.mbti,
                     editable: editable,
                     theme: theme,
                     onChanged: (text) {
-                      dummyProfile.mbti = text;
+                      profile.mbti = text;
                     },
                   ),
 
@@ -591,11 +591,11 @@ class ProfileMainDescription extends StatelessWidget {
                   ProfileInputBox(
                     width: 80,
                     height: 25,
-                    value: dummyProfile.nickname,
+                    value: profile.nickname,
                     editable: editable,
                     theme: theme,
                     onChanged: (text) {
-                      dummyProfile.nickname = text;
+                      profile.nickname = text;
                     },
                   ),
 
@@ -628,11 +628,11 @@ class ProfileMainDescription extends StatelessWidget {
                   ProfileInputBox(
                     width: 150,
                     height: 25,
-                    value: dummyProfile.personality,
+                    value: profile.personality,
                     editable: editable,
                     theme: theme,
                     onChanged: (text) {
-                      dummyProfile.personality = text;
+                      profile.personality = text;
                     },
                   ),
 
@@ -674,11 +674,11 @@ class ProfileMainDescription extends StatelessWidget {
                   ProfileInputBox(
                     width: 150,
                     height: 25,
-                    value: dummyProfile.holidayLife,
+                    value: profile.holidayLife,
                     editable: editable,
                     theme: theme,
                     onChanged: (text) {
-                      dummyProfile.holidayLife = text;
+                      profile.holidayLife = text;
                     },
                   ),
                 ],
@@ -709,10 +709,13 @@ class ProfileMainDescription extends StatelessWidget {
 class ProfileCardDetail extends StatelessWidget {
   final bool editable;
   final ProfileCardThemeColor theme;
+  final ProfileData profile;
+
   const ProfileCardDetail({
     super.key,
     this.editable = true,
     required this.theme,
+    required this.profile,
   });
 
   @override
@@ -727,7 +730,10 @@ class ProfileCardDetail extends StatelessWidget {
               ProfileDetailItem(
                 title: "出身地",
                 boxLeft: 20,
-                value: dummyProfile.birthplace,
+                fieldValue: profile.birthplace,
+                onChanged: (text) {
+                  profile.birthplace = text;
+                },
                 editable: editable,
                 theme: theme,
               ),
@@ -736,7 +742,10 @@ class ProfileCardDetail extends StatelessWidget {
               ProfileDetailItem(
                 title: "兄弟構成",
                 boxLeft: 20,
-                value: dummyProfile.brothers,
+                fieldValue: profile.brothers,
+                onChanged: (text) {
+                  profile.brothers = text;
+                },
                 editable: editable,
                 theme: theme,
               ),
@@ -745,7 +754,10 @@ class ProfileCardDetail extends StatelessWidget {
               ProfileDetailItem(
                 title: "身長",
                 boxLeft: 20,
-                value: dummyProfile.height,
+                fieldValue: profile.height,
+                onChanged: (text) {
+                  profile.height = text;
+                },
                 editable: editable,
                 theme: theme,
               ),
@@ -754,7 +766,10 @@ class ProfileCardDetail extends StatelessWidget {
               ProfileDetailItem(
                 title: "靴のサイズ",
                 boxLeft: 20,
-                value: dummyProfile.shoeSize,
+                fieldValue: profile.shoeSize,
+                onChanged: (text) {
+                  profile.shoeSize = text;
+                },
                 editable: editable,
                 theme: theme,
               ),
@@ -771,7 +786,8 @@ class ProfileCardDetail extends StatelessWidget {
 class ProfileDetailItem extends StatelessWidget {
   final String title;
   final double boxLeft;
-  final String value;
+  final String fieldValue;
+  final ValueChanged<String> onChanged;
   final bool editable;
   final ProfileCardThemeColor theme;
 
@@ -779,9 +795,10 @@ class ProfileDetailItem extends StatelessWidget {
     super.key,
     required this.title,
     required this.boxLeft,
-    required this.value,
+    required this.fieldValue,
     required this.editable,
     required this.theme,
+    required this.onChanged,
   });
 
   @override
@@ -798,12 +815,10 @@ class ProfileDetailItem extends StatelessWidget {
             child: ProfileInputBox(
               width: 100,
               height: 25,
-              value: value,
+              value: fieldValue,
               editable: editable,
               theme: theme,
-              onChanged: (text) {
-                dummyProfile.zodiacSign = text;
-              },
+              onChanged: (text) {},
             ),
           ),
 
@@ -827,7 +842,13 @@ class ProfileDetailItem extends StatelessWidget {
 class ProfileLoveTalk extends StatefulWidget {
   final bool editable;
   final ProfileCardThemeColor theme;
-  const ProfileLoveTalk({super.key, this.editable = true, required this.theme});
+  final ProfileData profile;
+  const ProfileLoveTalk({
+    super.key,
+    this.editable = true,
+    required this.theme,
+    required this.profile,
+  });
 
   @override
   State<ProfileLoveTalk> createState() => _ProfileLoveTalkState();
@@ -857,12 +878,12 @@ class _ProfileLoveTalkState extends State<ProfileLoveTalk> {
 
             ProfileYesNoSelector(
               question: "告白したことある？",
-              value: dummyProfile.confessed,
+              value: widget.profile.confessed,
               editable: widget.editable,
               theme: widget.theme,
               onChanged: (v) {
                 setState(() {
-                  dummyProfile.confessed = v;
+                  widget.profile.confessed = v;
                 });
               },
             ),
@@ -871,12 +892,12 @@ class _ProfileLoveTalkState extends State<ProfileLoveTalk> {
 
             ProfileYesNoSelector(
               question: "告白されたことある？",
-              value: dummyProfile.beenConfessed,
+              value: widget.profile.beenConfessed,
               editable: widget.editable,
               theme: widget.theme,
               onChanged: (v) {
                 setState(() {
-                  dummyProfile.beenConfessed = v;
+                  widget.profile.beenConfessed = v;
                 });
               },
             ),
@@ -885,12 +906,12 @@ class _ProfileLoveTalkState extends State<ProfileLoveTalk> {
 
             ProfileYesNoSelector(
               question: "今好きな人はいる？",
-              value: dummyProfile.hasCrush,
+              value: widget.profile.hasCrush,
               editable: widget.editable,
               theme: widget.theme,
               onChanged: (v) {
                 setState(() {
-                  dummyProfile.hasCrush = v;
+                  widget.profile.hasCrush = v;
                 });
               },
             ),
@@ -1136,15 +1157,13 @@ class ProfileEllipse extends StatelessWidget {
 
 //もしもコーナー
 class ProfileIfCorner extends StatelessWidget {
-  final String ifMagicWish;
-  final String ifNextLife;
+  final ProfileData profile;
   final bool editable;
   final ProfileCardThemeColor theme;
 
   const ProfileIfCorner({
     super.key,
-    required this.ifMagicWish,
-    required this.ifNextLife,
+    required this.profile,
     required this.editable,
     required this.theme,
   });
@@ -1192,11 +1211,11 @@ class ProfileIfCorner extends StatelessWidget {
                 child: Center(
                   child: ProfileEllipseInput(
                     width: 120,
-                    value: ifMagicWish,
+                    value: profile.ifMagicWish,
                     editable: editable,
                     theme: theme,
                     onChanged: (text) {
-                      dummyProfile.ifMagicWish = text;
+                      profile.ifMagicWish = text;
                     },
                   ),
                 ),
@@ -1211,11 +1230,11 @@ class ProfileIfCorner extends StatelessWidget {
                 child: Center(
                   child: ProfileEllipseInput(
                     width: 120,
-                    value: ifNextLife,
+                    value: profile.ifNextLife,
                     editable: editable,
                     theme: theme,
                     onChanged: (text) {
-                      dummyProfile.ifNextLife = text;
+                      profile.ifNextLife = text;
                     },
                   ),
                 ),
@@ -1232,7 +1251,13 @@ class ProfileIfCorner extends StatelessWidget {
 class ProfileWhichOne extends StatelessWidget {
   final bool editable;
   final ProfileCardThemeColor theme;
-  const ProfileWhichOne({super.key, this.editable = true, required this.theme});
+  final ProfileData profile;
+  const ProfileWhichOne({
+    super.key,
+    this.editable = true,
+    required this.theme,
+    required this.profile,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -1261,7 +1286,11 @@ class ProfileWhichOne extends StatelessWidget {
         //枠
         ProfileWhichOneFrame(
           theme: theme,
-          child: ProfileWhichOneContents(theme: theme, editable: editable),
+          child: ProfileWhichOneContents(
+            theme: theme,
+            editable: editable,
+            profile: profile,
+          ),
         ),
       ],
     ));
@@ -1374,10 +1403,12 @@ class _ProfileWhichOnePainter extends CustomPainter {
 class ProfileWhichOneContents extends StatefulWidget {
   final bool editable;
   final ProfileCardThemeColor theme;
+  final ProfileData profile;
   const ProfileWhichOneContents({
     super.key,
     this.editable = true,
     required this.theme,
+    required this.profile,
   });
 
   @override
@@ -1401,11 +1432,11 @@ class _ProfileWhichOneContentsState extends State<ProfileWhichOneContents> {
               rightLabel: "   猫   ",
               suffix: "】派",
               theme: widget.theme,
-              value: dummyProfile.dogOrCat,
+              value: widget.profile.dogOrCat,
               editable: widget.editable,
               onChanged: (v) {
                 setState(() {
-                  dummyProfile.dogOrCat = v;
+                  widget.profile.dogOrCat = v;
                 });
               },
             ),
@@ -1418,11 +1449,11 @@ class _ProfileWhichOneContentsState extends State<ProfileWhichOneContents> {
               rightLabel: "   アウトドア   ",
               suffix: "】派",
               theme: widget.theme,
-              value: dummyProfile.indoorOrOutdoor,
+              value: widget.profile.indoorOrOutdoor,
               editable: widget.editable,
               onChanged: (v) {
                 setState(() {
-                  dummyProfile.indoorOrOutdoor = v;
+                  widget.profile.indoorOrOutdoor = v;
                 });
               },
             ),
@@ -1435,11 +1466,11 @@ class _ProfileWhichOneContentsState extends State<ProfileWhichOneContents> {
               rightLabel: "   乗れない   ",
               suffix: "】",
               theme: widget.theme,
-              value: dummyProfile.thrill,
+              value: widget.profile.thrill,
               editable: widget.editable,
               onChanged: (v) {
                 setState(() {
-                  dummyProfile.thrill = v;
+                  widget.profile.thrill = v;
                 });
               },
             ),
@@ -1452,11 +1483,11 @@ class _ProfileWhichOneContentsState extends State<ProfileWhichOneContents> {
               rightLabel: "   たけのこの里   ",
               suffix: "】派",
               theme: widget.theme,
-              value: dummyProfile.kinokoOrTakenoko,
+              value: widget.profile.kinokoOrTakenoko,
               editable: widget.editable,
               onChanged: (v) {
                 setState(() {
-                  dummyProfile.kinokoOrTakenoko = v;
+                  widget.profile.kinokoOrTakenoko = v;
                 });
               },
             ),
@@ -1469,11 +1500,11 @@ class _ProfileWhichOneContentsState extends State<ProfileWhichOneContents> {
               rightLabel: "   溜めがち   ",
               suffix: "】",
               theme: widget.theme,
-              value: dummyProfile.reply,
+              value: widget.profile.reply,
               editable: widget.editable,
               onChanged: (v) {
                 setState(() {
-                  dummyProfile.reply = v;
+                  widget.profile.reply = v;
                 });
               },
             ),
@@ -1620,12 +1651,12 @@ class WhichOneChoiceButton extends StatelessWidget {
 
 //Free Space
 class ProfileFreeSpace extends StatelessWidget {
-  final String freeSpace;
+  final ProfileData profile;
   final bool editable;
   final ProfileCardThemeColor theme;
   const ProfileFreeSpace({
     super.key,
-    required this.freeSpace,
+    required this.profile,
     required this.editable,
     required this.theme,
   });
@@ -1678,11 +1709,11 @@ class ProfileFreeSpace extends StatelessWidget {
                   child: ProfileFreeSpaceInput(
                     width: 300,
                     height: 120,
-                    value: freeSpace,
+                    value: profile.freeSpace,
                     editable: editable,
                     theme: theme,
                     onChanged: (text) {
-                      dummyProfile.freeSpace = text;
+                      profile.freeSpace = text;
                     },
                   ),
                 ),

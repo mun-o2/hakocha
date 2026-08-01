@@ -3,10 +3,12 @@ import 'edit_profile_screen.dart';
 import 'package:hakocha/dummy/dummy_profile.dart';
 import 'package:hakocha/screens/settings_screen.dart';
 import 'package:hakocha/constants/app_colors.dart';
-import 'package:hakocha/constants/dummy_home_data.dart';
+import '../constants/profile_theme.dart';
+import '../services/app_service.dart';
+import '../constants/dummy_home_data.dart';
 
 class TopScreen extends StatefulWidget {
-  const TopScreen({super.key, required});
+  const TopScreen({super.key});
 
   @override
   State<TopScreen> createState() => _TopScreenState();
@@ -14,9 +16,30 @@ class TopScreen extends StatefulWidget {
 
 class _TopScreenState extends State<TopScreen> {
   bool isEditing = false;
+  ProfileCardThemeColor theme = pinkProfileCardTheme;
+
+  late DummyHomeData dummyHomeData;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadTheme();
+  }
+
+  Future<void> _loadTheme() async {
+    final color = await const AppService().getProfileColor();
+
+    setState(() {
+      theme = color == 'pink' ? pinkProfileCardTheme : blueProfileCardTheme;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    dummyHomeData = theme == pinkProfileCardTheme
+        ? DummyHomeData1
+        : DummyHomeData2;
+
     if (isEditing) {
       return EditProfileScreen();
     }
@@ -66,7 +89,7 @@ class _TopScreenState extends State<TopScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        dummyProfile.name,
+                        dummyHomeData.userName,
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -110,7 +133,7 @@ class _TopScreenState extends State<TopScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  _buildStatItem('交換した人数', DummyHomeData.exchangedCount, '人'),
+                  _buildStatItem('交換した人数', dummyHomeData.exchangeCount, '人'),
                   Container(
                     width: 1,
                     height: 50,
@@ -118,7 +141,7 @@ class _TopScreenState extends State<TopScreen> {
                   ),
                   _buildStatItem(
                     'プロフィール帳',
-                    DummyHomeData.profilePageCount,
+                    dummyHomeData.profilePageCount,
                     'ページ',
                   ),
                 ],
@@ -150,7 +173,31 @@ class _TopScreenState extends State<TopScreen> {
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Text(
-                DummyHomeData.notification,
+                dummyHomeData.notification1,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 16,
+                  color: AppColors.textPrimary,
+                  height: 1.5,
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 16),
+
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(
+                vertical: 40.0,
+                horizontal: 16.0,
+              ),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(color: AppColors.pink4, width: 2),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                dummyHomeData.notification2,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   fontSize: 16,
