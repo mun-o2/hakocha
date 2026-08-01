@@ -4,10 +4,45 @@ import 'package:hakocha/models/user_profile.dart';
 import 'package:hakocha/providers/exchange_provider.dart';
 import 'package:provider/provider.dart';
 
-class ExchangeCompletedScreen extends StatelessWidget {
+class ExchangeCompletedScreen extends StatefulWidget {
   const ExchangeCompletedScreen({super.key, required this.onOpenProfile});
 
   final VoidCallback onOpenProfile;
+
+  @override
+  State<ExchangeCompletedScreen> createState() =>
+      _ExchangeCompletedScreenState();
+}
+
+class _ExchangeCompletedScreenState extends State<ExchangeCompletedScreen>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _animationController;
+  late final Animation<double> _scaleAnimation;
+  late final Animation<double> _fadeAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1200),
+    )..repeat(reverse: true);
+
+    _scaleAnimation = Tween<double>(begin: 0.96, end: 1.04).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
+    );
+
+    _fadeAnimation = Tween<double>(begin: 0.82, end: 1.0).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
+    );
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +63,9 @@ class ExchangeCompletedScreen extends StatelessWidget {
               children: [
                 const Spacer(),
 
-                // タイトル・画像・ボタンを1つのまとまりにする
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // タイトル
                     const Text(
                       '相手に届いたよ！',
                       textAlign: TextAlign.center,
@@ -45,24 +78,28 @@ class ExchangeCompletedScreen extends StatelessWidget {
 
                     const SizedBox(height: 40),
 
-                    // 画像
-                    Image.asset(
-                      'lib/assets/images/sharematched_letter.png',
-                      width: 260,
-                      fit: BoxFit.contain,
+                    // ふわふわする画像（気に入らなかったら消してね）
+                    FadeTransition(
+                      opacity: _fadeAnimation,
+                      child: ScaleTransition(
+                        scale: _scaleAnimation,
+                        child: Image.asset(
+                          'lib/assets/images/sharematched_letter.png',
+                          width: 260,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
                     ),
 
                     const SizedBox(height: 40),
 
-                    // ボタン
                     SizedBox(
                       width: 230,
                       height: 44,
                       child: OutlinedButton(
                         onPressed: () {
-                          // プロフィール帳画面へ遷移
                           provider.resetExchange();
-                          onOpenProfile();
+                          widget.onOpenProfile();
                         },
                         style: OutlinedButton.styleFrom(
                           foregroundColor: AppColors.purple5,
@@ -96,7 +133,6 @@ class ExchangeCompletedScreen extends StatelessWidget {
     );
   }
 
-  /// 相手が選択しているカラーを背景色として使用
   Color _getBackgroundColor(ProfileThemeColor themeColor) {
     switch (themeColor) {
       case ProfileThemeColor.pink:

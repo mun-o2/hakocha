@@ -41,6 +41,7 @@ dependencies:
   flutter_nearby_connections: ^1.1.2
   firebase_core: ^4.12.1
   cloud_firestore: ^6.7.1
+  audioplayers: ^6.7.1
 
 dev_dependencies:
   flutter_test:
@@ -68,6 +69,8 @@ flutter:
     - lib/assets/images/sharematched_attention.png
     - lib/assets/images/sharematched_flag.png
     - lib/assets/images/sharematched_letter.png
+
+    - lib/assets/sounds/exchange_success.mp3
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
