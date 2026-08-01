@@ -64,6 +64,7 @@ flutter:
     - lib/assets/images/sharescreen_image85.png
     - lib/assets/images/sharematched_attention.png
     - lib/assets/images/sharematched_flag.png
+    - lib/assets/images/sharematched_letter.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

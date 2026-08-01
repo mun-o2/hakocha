@@ -44,10 +44,18 @@ class _HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<_HomeScreen> {
   AppTab _selectedTab = AppTab.home;
 
-  static const List<Widget> _screens = <Widget>[
-    TopScreen(),
-    ExchangeScreen(),
-    ProfileScreen(),
+  List<Widget> get _screens => <Widget>[
+    const TopScreen(),
+
+    ExchangeScreen(
+      onOpenProfile: () {
+        setState(() {
+          _selectedTab = AppTab.profile;
+        });
+      },
+    ),
+
+    const ProfileScreen(),
   ];
 
   void _onTabSelected(int index) {

@@ -89,7 +89,7 @@ class ExchangeMatchedScreen extends StatelessWidget {
               ),
             ),
 
-            const Spacer(),
+            const SizedBox(height: 32),
 
             // 記入するボタン
             SizedBox(
@@ -143,11 +143,11 @@ class ExchangeMatchedScreen extends StatelessWidget {
       height: 180,
       child: Stack(
         alignment: Alignment.center,
-        clipBehavior: Clip.none, // ← 上にはみ出しても表示する
+        clipBehavior: Clip.none, // 上にはみ出しても表示する
         children: [
           // アイコン周囲のattention装飾
           Transform.translate(
-            offset: const Offset(0, -25), // ← attentionだけ上へ
+            offset: const Offset(0, -25), // attentionだけ上へ
             child: Image.asset(
               'lib/assets/images/sharematched_attention.png',
               width: 300,

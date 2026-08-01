@@ -79,13 +79,13 @@ class _ExchangeFreeSpaceScreenState extends State<ExchangeFreeSpaceScreen> {
 
                   // Free Space見出し ＋ 白い入力欄
                   SizedBox(
-                    height: 280,
+                    height: 260,
                     child: Stack(
                       clipBehavior: Clip.none,
                       children: [
                         // 白いFree Space入力欄
                         Positioned(
-                          top: 30, // ← 見出しに被る位置から白背景を開始
+                          top: 30,
                           left: 0,
                           right: 0,
                           bottom: 0,
