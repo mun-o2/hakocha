@@ -75,7 +75,7 @@ class _TopScreenState extends State<TopScreen> {
               padding: const EdgeInsets.all(20.0),
               decoration: BoxDecoration(
                 color: Colors.white,
-                border: Border.all(color: AppColors.pink4, width: 2),
+                border: Border.all(color: theme.mainColor, width: 2),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Row(
