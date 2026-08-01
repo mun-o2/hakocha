@@ -68,5 +68,13 @@
 		</array>
 		<key>UIStatusBarHidden</key>
 		<false/>
+		
+		<!-- Multipeer / Local Network permissions for discovery -->
+		<key>NSLocalNetworkUsageDescription</key>
+		<string>近くのhakocha端末を検出するためにローカルネットワークへのアクセスを使用します。</string>
+		<key>NSBonjourServices</key>
+		<array>
+			<string>_hakochaex._tcp</string>
+		</array>
 	</dict>
 </plist>

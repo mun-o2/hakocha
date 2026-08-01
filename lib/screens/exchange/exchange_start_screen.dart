@@ -1,9 +1,48 @@
+
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:hakocha/constants/app_colors.dart';
 import 'package:hakocha/screens/exchange/exchange_code_input_screen.dart';
+import 'package:hakocha/services/nearby_exchange_service.dart';
 
-class ExchangeStartScreen extends StatelessWidget {
+class ExchangeStartScreen extends StatefulWidget {
   const ExchangeStartScreen({super.key});
+
+  @override
+  State<ExchangeStartScreen> createState() => _ExchangeStartScreenState();
+}
+
+class _ExchangeStartScreenState extends State<ExchangeStartScreen> {
+  late final NearbyExchangeService _nearbyService;
+  List<PeerDevice> _peers = [];
+
+  @override
+  void initState() {
+    super.initState();
+    final name = Platform.localHostname;
+    print('🚀 [ExchangeStartScreen] initState: displayName=$name');
+    _nearbyService = NearbyExchangeService(displayName: name);
+    _nearbyService.peersStream.listen((list) {
+      print('📋 [ExchangeStartScreen] peersStream updated: ${list.length} peer(s)');
+      for (final peer in list) {
+        print('   - ${peer.name} (${peer.id})');
+      }
+      setState(() {
+        _peers = list;
+      });
+    });
+    print('🔍 [ExchangeStartScreen] Starting nearby service...');
+    _nearbyService.start();
+  }
+
+  @override
+  void dispose() {
+    print('🛑 [ExchangeStartScreen] dispose: stopping service');
+    _nearbyService.stop();
+    _nearbyService.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +60,7 @@ class ExchangeStartScreen extends StatelessWidget {
             const SizedBox(height: 32),
             _buildActionArea(context),
             const SizedBox(height: 16),
+            _buildPeersList(),
           ],
         ),
       ),
@@ -141,4 +181,37 @@ class ExchangeStartScreen extends StatelessWidget {
   }
 
   // (UI replaced by fixed-size Stack layout above)
+
+  Widget _buildPeersList() {
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Text('検出した端末： ${_peers.length}', style: const TextStyle(fontSize: 16)),
+          ),
+          Expanded(
+            child: Card(
+              elevation: 2,
+              child: _peers.isEmpty
+                  ? const Center(child: Text('見つかりません'))
+                  : ListView.separated(
+                      itemCount: _peers.length,
+                      separatorBuilder: (_, __) => const Divider(height: 1),
+                      itemBuilder: (context, index) {
+                        final p = _peers[index];
+                        return ListTile(
+                          title: Text(p.name),
+                          subtitle: Text(p.addressText()),
+                          trailing: Text(p.id, style: const TextStyle(fontSize: 10)),
+                        );
+                      },
+                    ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
