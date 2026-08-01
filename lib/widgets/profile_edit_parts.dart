@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../constants/app_text_styles.dart';
 import '../constants/app_colors.dart';
 
-//白い枠以外の入力スペース
 //SNS
 class ProfileEditableText extends StatefulWidget {
   final double? width;
@@ -30,7 +29,6 @@ class _ProfileEditableTextState extends State<ProfileEditableText> {
     controller = TextEditingController(text: widget.value);
   }
 
-  //データの更新
   @override
   void didUpdateWidget(covariant ProfileEditableText oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -87,7 +85,6 @@ class _ProfileEditableTextState extends State<ProfileEditableText> {
   }
 }
 
-//ハート形の入力スペース
 class ProfileInputHeart extends StatefulWidget {
   final String value;
   final ValueChanged<String> onChanged;
@@ -150,7 +147,6 @@ class _ProfileInputHeartState extends State<ProfileInputHeart> {
   }
 }
 
-//もしもコーナーの楕円入力スペース（入力スペース自体は透明）
 class ProfileEllipseInput extends StatefulWidget {
   final String value;
   final ValueChanged<String> onChanged;
@@ -219,7 +215,6 @@ class _ProfileEllipseInputState extends State<ProfileEllipseInput> {
   }
 }
 
-//フリースペース部分
 class ProfileFreeSpaceInput extends StatefulWidget {
   final String value;
   final ValueChanged<String> onChanged;

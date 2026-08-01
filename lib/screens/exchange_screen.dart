@@ -1,24 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:hakocha/constants/app_colors.dart';
+import 'package:hakocha/models/exchange.dart';
+import 'package:hakocha/providers/exchange_provider.dart';
+import 'package:hakocha/screens/exchange/exchange_completed_screen.dart';
+import 'package:hakocha/screens/exchange/exchange_free_space_screen.dart';
+import 'package:hakocha/screens/exchange/exchange_matched_screen.dart';
+import 'package:hakocha/screens/exchange/exchange_start_screen.dart';
 
 class ExchangeScreen extends StatelessWidget {
   const ExchangeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: const [
-            Text(
-              '交換画面',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 16),
-            Text('交換の内容や候補をここに表示します。'),
-          ],
-        ),
+    return Container(
+      color: AppColors.backgroundPink,
+      child: Consumer<ExchangeProvider>(
+        builder: (context, provider, child) {
+          switch (provider.currentStep) {
+            case ExchangeStep.idle:
+              return const ExchangeStartScreen();
+            case ExchangeStep.matched:
+              return const ExchangeMatchedScreen();
+            case ExchangeStep.writing:
+              return const ExchangeFreeSpaceScreen();
+            case ExchangeStep.completed:
+              return const ExchangeCompletedScreen();
+          }
+        },
       ),
     );
   }

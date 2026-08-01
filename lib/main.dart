@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:hakocha/constants/app_strings.dart';
 import 'package:hakocha/models/app_tab.dart';
+import 'package:hakocha/providers/exchange_provider.dart';
 import 'package:hakocha/screens/exchange_screen.dart';
 import 'package:hakocha/screens/profile_screen.dart';
 import 'package:hakocha/screens/splash_screen.dart';
@@ -16,14 +18,17 @@ class HakochaApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: AppStrings.appTitle,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return ChangeNotifierProvider(
+      create: (_) => ExchangeProvider(),
+      child: MaterialApp(
+        title: AppStrings.appTitle,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        home: const SplashScreen(),
+        routes: {'/home': (context) => const _HomeScreen()},
       ),
-      home: const SplashScreen(),
-      routes: {'/home': (context) => const _HomeScreen()},
     );
   }
 }
@@ -54,7 +59,7 @@ class _HomeScreenState extends State<_HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(_selectedTab.label)),
+      appBar: null,
       body: _screens[_selectedTab.index],
       bottomNavigationBar: AppBottomNavigationBar(
         currentIndex: _selectedTab.index,

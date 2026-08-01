@@ -63,16 +63,6 @@ class _ProfileCardLeftState extends State<ProfileCardLeft> {
               ),
               const ProfileLoveTalk(),
 
-              // Love Talk見出し
-              Padding(
-                padding: const EdgeInsets.only(top: 490, left: 170),
-                child: OutlinedText(
-                  text: "LoveTalk",
-                  style: AppTextStyles.profileTitle,
-                  outlineColor: AppColors.pink4,
-                ),
-              ),
-
               // Love Talk小ハート
               Positioned(
                 right: 0,
