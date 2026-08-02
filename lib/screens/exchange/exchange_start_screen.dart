@@ -65,7 +65,7 @@ class _ExchangeStartScreenState extends State<ExchangeStartScreen>
   }
 
   void _setupNearbyExchange() {
-    final name = Platform.localHostname;
+    final name = 'hakocha_user_002';
 
     debugPrint('🚀 [ExchangeStartScreen] initState: displayName=$name');
 

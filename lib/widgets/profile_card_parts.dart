@@ -10,7 +10,6 @@ import 'package:iconify_flutter/icons/ant_design.dart';
 import 'package:iconify_flutter/icons/bxl.dart';
 
 import 'package:hakocha/widgets/profile_edit_parts.dart';
-import '../dummy/dummy_profile.dart';
 import 'image_picker_sheet.dart';
 import '../constants/profile_theme.dart';
 

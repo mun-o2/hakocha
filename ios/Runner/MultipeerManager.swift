@@ -15,16 +15,17 @@ class MultipeerManager: NSObject {
     // 一旦ダミー
     // 実機A/Bでここを変えてテストしてOK
     // A
-    
+    /*
     private var localUserInfo: [String: Any] = [
         "userId": "user_001",
         "name": "みう",
         "exchangeCode": "ABCD1234"
     ]
+    */
     
 
     // B
-    /*
+    
     private var localUserInfo: [String: Any] = [
     "userId": "user_002",
     "name": "あかり",
@@ -32,7 +33,7 @@ class MultipeerManager: NSObject {
     
 ]
 
-*/
+
     func start(withDisplayName name: String) {
         stop()
 
@@ -157,41 +158,26 @@ extension MultipeerManager: MCNearbyServiceAdvertiserDelegate {
 
 // MARK: - Browser
 extension MultipeerManager: MCNearbyServiceBrowserDelegate {
+
     func browser(
-        _ browser: MCNearbyServiceBrowser,
-        foundPeer peerID: MCPeerID,
-        withDiscoveryInfo info: [String: String]?
-    ) {
-        print("✅ [Multipeer] Peer発見！")
-        print("   displayName: \(peerID.displayName)")
+    _ browser: MCNearbyServiceBrowser,
+    foundPeer peerID: MCPeerID,
+    withDiscoveryInfo info: [String: String]?
+) {
+    print("✅ [Multipeer] Peer発見！")
+    print("   自分: \(self.peerID.displayName)")
+    print("   相手: \(peerID.displayName)")
 
-        onEvent?([
-            "action": "found",
-            "peerId": peerID.displayName,
-            "displayName": peerID.displayName,
-            "connectionState": "notConnected"
-        ])
+    onEvent?([
+        "action": "found",
+        "peerId": peerID.displayName,
+        "displayName": peerID.displayName,
+        "connectionState": "notConnected"
+    ])
 
-        guard let session = session else {
-            print("❌ [Multipeer] Peer発見したが session がありません")
-            return
-        }
-
-        // 同じPeerに何度もinviteしない
-        if session.connectedPeers.contains(peerID) {
-            print("ℹ️ [Multipeer] すでに接続済み: \(peerID.displayName)")
-            return
-        }
-
-        print("📨 [Multipeer] Invite送信: \(peerID.displayName)")
-
-        browser.invitePeer(
-            peerID,
-            to: session,
-            withContext: nil,
-            timeout: 10
-        )
-    }
+    // B側はInviteを送らず、A側からのInviteを待つ
+    print("⏳ [Multipeer] 相手からのInviteを待ちます")
+}
 
     func browser(
         _ browser: MCNearbyServiceBrowser,

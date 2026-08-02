@@ -9,11 +9,8 @@ import '../dummy/dummy_profile.dart';
 import 'outlined_text.dart';
 import 'profile_card_parts.dart';
 import 'profile_edit_parts.dart';
-import '../constants/profile_theme.dart';
 
 //ダミーデータの読み込み
-import '../dummy/dummy_profile.dart';
-import '../dummy/dummy_profile2.dart';
 import '../models/profile_data.dart';
 
 class ProfileCardLeft extends StatefulWidget {
