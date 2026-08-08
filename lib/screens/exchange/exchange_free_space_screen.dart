@@ -4,7 +4,7 @@ import 'package:hakocha/constants/app_text_styles.dart';
 import 'package:hakocha/dummy/dummy_profile.dart';
 import 'package:hakocha/models/user_profile.dart';
 import 'package:hakocha/providers/exchange_provider.dart';
-import 'package:hakocha/widgets/outlined_text.dart';
+import 'package:hakocha/widgets/profile/common/outlined_text.dart';
 import 'package:provider/provider.dart';
 
 class ExchangeFreeSpaceScreen extends StatefulWidget {
