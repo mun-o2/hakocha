@@ -41,11 +41,49 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return SafeArea(
       child: PageView(
         children: [
-          // 最初に表示されるページ
-          ProfileCardLeft(editable: true, theme: theme),
+          // 1繝壹�ｼ繧ｸ逶ｮ
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final scale = constraints.maxWidth / 360;
 
-          // 2ページ目
-          ProfileCardRight(editable: true, theme: theme),
+              return SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                  child: SizedBox(
+                    width: constraints.maxWidth,
+                    child: Center(
+                      child: Transform.scale(
+                        scale: scale < 1 ? scale : 1,
+                        child: ProfileCardLeft(editable: true, theme: theme),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+
+          // 2繝壹�ｼ繧ｸ逶ｮ
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final scale = constraints.maxWidth / 360;
+
+              return SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                  child: SizedBox(
+                    width: constraints.maxWidth,
+                    child: Center(
+                      child: Transform.scale(
+                        scale: scale < 1 ? scale : 1,
+                        child: ProfileCardRight(editable: true, theme: theme),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
         ],
       ),
     );

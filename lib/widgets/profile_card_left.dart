@@ -2,10 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:hakocha/dummy/dummy_profile2.dart';
 import '../constants/app_text_styles.dart';
 import '../constants/app_colors.dart';
-import 'outlined_text.dart';
-import 'profile_card_parts.dart';
-import 'profile_edit_parts.dart';
+import 'profile/common/outlined_text.dart';
+import 'profile/common/profile_card_base.dart';
 import '../constants/profile_theme.dart';
+
+import 'profile/decorations/white_square.dart';
+import '../widgets/profile/common/profile_container.dart';
+
+import '../widgets/profile/sections/profile_main_description.dart';
+import '../widgets/profile/sections/profile_detail.dart';
+import '../widgets/profile/sections/profile_header.dart';
+import '../widgets/profile/sections/profile_love_talk.dart';
 
 //ダミーデータの読み込み
 import '../dummy/dummy_profile.dart';
@@ -33,8 +40,8 @@ class _ProfileCardLeftState extends State<ProfileCardLeft> {
 
     return Center(
       child: SizedBox(
-        width: 400,
-        height: 740,
+        width: 360,
+        height: 666,
         child: ProfileCardBody(
           isLeft: true,
           theme: widget.theme,
@@ -44,7 +51,12 @@ class _ProfileCardLeftState extends State<ProfileCardLeft> {
               Positioned(
                 left: 27,
                 top: 43,
-                child: const ProfileWhiteSquare(width: 310, height: 155),
+                child: ProfileContainer(
+                  width: 270,
+                  height: 134,
+                  background: const ProfileWhiteSquare(),
+                  child: const SizedBox(),
+                ),
               ),
 
               // My Profile見出し
@@ -71,54 +83,17 @@ class _ProfileCardLeftState extends State<ProfileCardLeft> {
                 theme: widget.theme,
               ),
               // 左下詳細プロフィール
-              ProfileCardDetail(
+              ProfileDetail(
                 editable: widget.editable,
                 theme: widget.theme,
                 profile: profileData,
               ),
-              // Love Talk大ハート
-              Positioned(
-                left: 110,
-                bottom: -20,
-                child: LoveTalkHeart(isPink: true, theme: widget.theme),
-              ),
+              // Love Talk
               ProfileLoveTalk(
                 editable: widget.editable,
                 theme: widget.theme,
                 profile: profileData,
               ),
-
-              // Love Talk小ハート
-              Positioned(
-                right: 0,
-                bottom: 0,
-                child: LoveTalkHeart(isPink: false, theme: widget.theme),
-              ),
-              Positioned(
-                right: 0,
-                bottom: 80,
-                child: OutlinedText(
-                  text: "理想のタイプは？",
-                  style: AppTextStyles.profileFormatSmall,
-                  outlineColor: AppColors.white,
-                  strokeWidth: 2.5,
-                  mainColor: AppColors.purple4,
-                ),
-              ),
-              Positioned(
-                right: -8,
-                bottom: 30,
-                child: ProfileInputHeart(
-                  value: profileData.idealType,
-                  editable: widget.editable,
-                  theme: widget.theme,
-                  onChanged: (text) {
-                    profileData.idealType = text;
-                  },
-                ),
-              ),
-
-              // 文字入力部分の追加必要
             ],
           ),
         ),

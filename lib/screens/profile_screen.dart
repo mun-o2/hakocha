@@ -30,11 +30,54 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return PageView(
-      children: [
-        ProfileCardLeft(editable: false, theme: theme),
-        ProfileCardRight(editable: false, theme: theme),
-      ],
+    return SafeArea(
+      child: PageView(
+        children: [
+          // 1ページ目
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final scale = constraints.maxWidth / 360;
+
+              return SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                  child: SizedBox(
+                    width: constraints.maxWidth,
+                    child: Center(
+                      child: Transform.scale(
+                        scale: scale < 1 ? scale : 1,
+                        child: ProfileCardLeft(editable: false, theme: theme),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+
+          // 2ページ目
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final scale = constraints.maxWidth / 360;
+
+              return SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                  child: SizedBox(
+                    width: constraints.maxWidth,
+                    child: Center(
+                      child: Transform.scale(
+                        scale: scale < 1 ? scale : 1,
+                        child: ProfileCardRight(editable: false, theme: theme),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 }
