@@ -79,9 +79,8 @@ class SettingsScreen extends StatelessWidget {
               const SizedBox(height: 48),
 
               // ロゴとバージョン
-              // ※画像のパスはプロジェクトに合わせて変更してください
               Image.asset(
-                'lib/assets/images/shareme_logo.png',// ロゴ画像のパス
+                'lib/assets/images/shareme_logo.png',
                 height: 100,
                 errorBuilder: (context, error, stackTrace) => Container(
                   height: 100,
@@ -108,6 +107,8 @@ class SettingsScreen extends StatelessWidget {
           ),
         ),
       ),
+      // ボトムナビゲーションバー（画像のレイアウトに合わせるための仮配置）
+      bottomNavigationBar: _buildBottomNavigationBar(),
     );
   }
 
@@ -195,8 +196,41 @@ class SettingsScreen extends StatelessWidget {
       ),
     );
   }
-}
 
+  // 画像にあるボトムナビゲーション（モック）
+  Widget _buildBottomNavigationBar() {
+    return Container(
+      decoration: const BoxDecoration(
+        color: AppColors.navBackground,
+        border: Border(top: BorderSide(color: Color(0xFFEAEAEA), width: 1)),
+      ),
+      child: BottomNavigationBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        selectedItemColor: AppColors.navSelectedText,
+        unselectedItemColor: AppColors.navUnselectedText,
+        selectedFontSize: 10,
+        unselectedFontSize: 10,
+        type: BottomNavigationBarType.fixed,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_outlined),
+            activeIcon: Icon(Icons.home),
+            label: 'ホーム',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.wifi_tethering),
+            label: '交換',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.menu_book),
+            label: 'プロフィール帳',
+          ),
+        ],
+      ),
+    );
+  }
+}
 
 // ---------------------------------------------------------
 // 2枚目の画像（遷移先のメールアドレス詳細画面）
