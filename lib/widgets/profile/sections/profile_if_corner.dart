@@ -23,108 +23,107 @@ class ProfileIfCorner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return (Column(
-      children: [
-        Row(
-          children: [
-            // if...見出し
-            Padding(
-              padding: const EdgeInsets.only(top: 22, left: 25),
-              child: OutlinedText(
+    return Positioned(
+      top: 20,
+      left: 30,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              // if...見出し
+              OutlinedText(
                 text: "if...",
                 style: AppTextStyles.profileTitle,
                 outlineColor: theme.mainColor,
                 mainColor: AppColors.white,
               ),
-            ),
-            const SizedBox(width: 20),
 
-            Padding(
-              padding: const EdgeInsets.only(top: 25),
-              child: OutlinedText(
+              const SizedBox(width: 10),
+
+              OutlinedText(
                 text: "もしもコーナー",
                 style: AppTextStyles.profileFormatSmall,
                 outlineColor: AppColors.white,
                 mainColor: theme.mainColor,
                 strokeWidth: 2,
               ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 10),
+            ],
+          ),
 
-        Row(
-          children: [
-            const SizedBox(width: 30),
+          const SizedBox(height: 5),
 
-            ProfileContainer(
-              width: 145,
-              height: 110,
+          Row(
+            children: [
+              ProfileContainer(
+                width: 122,
+                height: 98,
+                background: const WhiteEllipse(),
 
-              background: const WhiteEllipse(),
-
-              title: Positioned(
-                left: 15,
-                top: 5,
-                child: OutlinedText(
-                  text: "魔法がつかえたら…",
-                  style: AppTextStyles.profileFormatSmall,
-                  outlineColor: AppColors.white,
-                  mainColor: theme.mainColor,
+                title: Align(
+                  alignment: Alignment.topCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 5),
+                    child: OutlinedText(
+                      text: "魔法がつかえたら…",
+                      style: AppTextStyles.profileFormatSmall,
+                      outlineColor: AppColors.white,
+                      mainColor: theme.mainColor,
+                    ),
+                  ),
                 ),
-              ),
 
-              child: Padding(
-                padding: const EdgeInsets.only(top: 18),
-                child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 22, bottom: 10),
                   child: ProfileEllipseInput(
                     value: profile.ifMagicWish,
                     editable: editable,
                     theme: theme,
+                    height: 66,
+                    width: 110,
                     onChanged: (text) {
                       profile.ifMagicWish = text;
                     },
                   ),
                 ),
               ),
-            ),
+              const SizedBox(width: 30),
 
-            const SizedBox(width: 30),
-
-            ProfileContainer(
-              width: 145,
-              height: 110,
-
-              background: const WhiteEllipse(),
-
-              title: Positioned(
-                left: 15,
-                top: 5,
-                child: OutlinedText(
-                  text: "生まれ変わるなら…",
-                  style: AppTextStyles.profileFormatSmall,
-                  outlineColor: AppColors.white,
-                  mainColor: theme.mainColor,
+              ProfileContainer(
+                width: 122,
+                height: 98,
+                background: const WhiteEllipse(),
+                title: Align(
+                  alignment: Alignment.topCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 5),
+                    child: OutlinedText(
+                      text: "生まれ変わるなら…",
+                      style: AppTextStyles.profileFormatSmall,
+                      outlineColor: AppColors.white,
+                      mainColor: theme.mainColor,
+                    ),
+                  ),
                 ),
-              ),
 
-              child: Padding(
-                padding: const EdgeInsets.only(top: 18),
-                child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 22, bottom: 10),
                   child: ProfileEllipseInput(
                     value: profile.ifNextLife,
                     editable: editable,
                     theme: theme,
+                    height: 66,
+                    width: 110,
                     onChanged: (text) {
                       profile.ifNextLife = text;
                     },
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
-      ],
-    ));
+            ],
+          ),
+        ],
+      ),
+    );
   }
 }

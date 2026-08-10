@@ -33,7 +33,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return SafeArea(
       child: PageView(
         children: [
-          // 1ページ目
+          // 1繝壹�ｼ繧ｸ逶ｮ
           LayoutBuilder(
             builder: (context, constraints) {
               final scale = constraints.maxWidth / 360;
@@ -55,7 +55,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             },
           ),
 
-          // 2ページ目
+          // 2繝壹�ｼ繧ｸ逶ｮ
           LayoutBuilder(
             builder: (context, constraints) {
               final scale = constraints.maxWidth / 360;

@@ -50,9 +50,9 @@ class _ProfileCardLeftState extends State<ProfileCardLeft> {
               // 白い四角
               Positioned(
                 left: 27,
-                top: 43,
+                top: 38,
                 child: ProfileContainer(
-                  width: 270,
+                  width: 280,
                   height: 134,
                   background: const ProfileWhiteSquare(),
                   child: const SizedBox(),
@@ -61,7 +61,7 @@ class _ProfileCardLeftState extends State<ProfileCardLeft> {
 
               // My Profile見出し
               Padding(
-                padding: const EdgeInsets.only(top: 22, left: 25),
+                padding: const EdgeInsets.only(top: 17, left: 25),
                 child: OutlinedText(
                   text: "My Profile",
                   style: AppTextStyles.profileTitle,

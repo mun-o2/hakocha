@@ -8,6 +8,8 @@ class ProfileEllipseInput extends StatefulWidget {
 
   final bool editable;
   final ProfileCardThemeColor theme;
+  final double height;
+  final double width;
 
   const ProfileEllipseInput({
     super.key,
@@ -15,6 +17,8 @@ class ProfileEllipseInput extends StatefulWidget {
     required this.onChanged,
     required this.editable,
     required this.theme,
+    required this.height,
+    required this.width,
   });
 
   @override
@@ -47,15 +51,17 @@ class _ProfileEllipseInputState extends State<ProfileEllipseInput> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: SizedBox(
-        width: 120,
+    return SizedBox(
+      width: widget.width,
+      height: widget.height,
+      child: Center(
         child: widget.editable
             ? TextField(
                 controller: controller,
                 maxLines: 2,
+                minLines: 1,
+                textInputAction: TextInputAction.done,
                 textAlign: TextAlign.center,
-                textAlignVertical: TextAlignVertical.center,
                 style: AppTextStyles.profileText.copyWith(
                   color: widget.theme.mainColor,
                 ),
@@ -75,6 +81,7 @@ class _ProfileEllipseInputState extends State<ProfileEllipseInput> {
                 maxLines: 2,
                 style: AppTextStyles.profileText.copyWith(
                   color: widget.theme.mainColor,
+                  height: 1.0,
                 ),
               ),
       ),

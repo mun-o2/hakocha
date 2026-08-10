@@ -8,10 +8,10 @@ class WhiteEllipse extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: AppColors.white.withValues(alpha: 0.9),
-        borderRadius: BorderRadius.circular(100),
-        boxShadow: [
+        shape: const OvalBorder(),
+        shadows: [
           BoxShadow(
             color: AppColors.white.withValues(alpha: 0.8),
             blurRadius: 8,

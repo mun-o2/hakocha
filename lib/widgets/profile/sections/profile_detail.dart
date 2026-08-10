@@ -27,7 +27,7 @@ class ProfileDetail extends StatelessWidget {
       children: [
         Positioned(
           left: 20,
-          bottom: 5,
+          top: 455,
           child: Column(
             children: [
               ProfileDetailItem(
@@ -108,7 +108,7 @@ class ProfileDetailItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 160,
-      height: 53,
+      height: 47,
       child: Stack(
         clipBehavior: Clip.none,
         children: [
@@ -116,8 +116,8 @@ class ProfileDetailItem extends StatelessWidget {
             left: boxLeft,
             top: 20,
             child: ProfileContainer(
-              width: 100,
-              height: 25,
+              width: 80,
+              height: 20,
 
               background: const ProfileWhiteSquare(),
 
@@ -132,12 +132,12 @@ class ProfileDetailItem extends StatelessWidget {
 
           Positioned(
             left: 0,
-            top: 0,
+            top: 7,
             child: OutlinedText(
               text: title,
               style: AppTextStyles.profileFormatSmall,
-              mainColor: theme.mainColor,
-              outlineColor: AppColors.white,
+              mainColor: AppColors.white,
+              outlineColor: theme.mainColor,
             ),
           ),
         ],
