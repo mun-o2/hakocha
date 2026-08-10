@@ -85,18 +85,40 @@ class _TopScreenState extends State<TopScreen> {
               children: [
                 const SizedBox(height: 18),
 
-                // 設定
                 Align(
-                  alignment: Alignment.centerLeft,
+                  alignment: Alignment.centerRight,
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 21),
+                    padding: const EdgeInsets.only(right: 21),
                     child: IconButton(
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),
-                      icon: const Icon(
-                        Icons.settings_outlined,
-                        size: 42,
-                        color: AppColors.textSecondary,
+                      icon: SizedBox(
+                        width: 42,
+                        height: 42,
+                        child: Stack(
+                          alignment: Alignment.bottomRight,
+                          children: [
+                            const Align(
+                              alignment: Alignment.topLeft,
+                              child: Icon(
+                                Icons.settings,
+                                size: 36,
+                                color: AppColors.textSecondary,
+                              ),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: AppColors.backgroundPink,
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              child: const Icon(
+                                Icons.account_box_rounded,
+                                size: 22,
+                                color: AppColors.textSecondary,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                       onPressed: () {
                         Navigator.push(
@@ -114,24 +136,24 @@ class _TopScreenState extends State<TopScreen> {
 
                 _buildProfileCard(),
 
-                const SizedBox(height: 72),
+                const SizedBox(height: 32),
 
                 _buildStatsCard(),
 
-                const SizedBox(height: 18),
+                const SizedBox(height: 48),
 
                 const SizedBox(
                   width: 295,
-                  child: Text('お知らせ', style: AppTextStyles.titleLarge),
+                  child: Text(
+                    'お知らせ',
+                    style: AppTextStyles.titleLarge,
+                    textAlign: TextAlign.center,
+                  ),
                 ),
 
-                const SizedBox(height: 18),
+                const SizedBox(height: 24),
 
                 _buildNotificationCard(dummyHomeData.notification1),
-
-                const SizedBox(height: 16),
-
-                _buildNotificationCard(dummyHomeData.notification2),
 
                 const SizedBox(height: 40),
               ],
@@ -146,73 +168,66 @@ class _TopScreenState extends State<TopScreen> {
     return Container(
       width: 295,
       height: 163,
-      decoration: _cardDecoration(),
-      child: Stack(
+      decoration: _cardDecoration(borderWidth: 2.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Positioned(
-            left: 40,
-            top: 16,
-            child: CircleAvatar(
-              radius: 39.5,
-              backgroundColor: Color(0xFFD9D9D9),
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const CircleAvatar(
+                radius: 39.5,
+                backgroundColor: Color(0xFFD9D9D9),
+              ),
+              const SizedBox(width: 36),
+              Text(dummyHomeData.userName, style: AppTextStyles.userName),
+            ],
           ),
+          const SizedBox(height: 16),
+          SizedBox(
+            width: 170,
+            height: 29,
+            child: OutlinedButton(
+              onPressed: () async {
+                setState(() {
+                  isLoadingProfile = true;
+                });
 
-          Positioned(
-            left: 155,
-            top: 39,
-            child: Text(dummyHomeData.userName, style: AppTextStyles.userName),
-          ),
+                await Future.delayed(const Duration(milliseconds: 1200));
 
-          Positioned(
-            left: 60,
-            bottom: 12,
-            child: SizedBox(
-              width: 170,
-              height: 29,
-              child: OutlinedButton(
-                onPressed: () async {
-                  setState(() {
-                    isLoadingProfile = true;
-                  });
+                if (!mounted) return;
 
-                  await Future.delayed(const Duration(milliseconds: 1200));
-
-                  if (!mounted) return;
-
-                  setState(() {
-                    isLoadingProfile = false;
-                    isEditing = true;
-                  });
-                },
-                style: ButtonStyle(
-                  padding: WidgetStateProperty.all(EdgeInsets.zero),
-                  backgroundColor: WidgetStateProperty.resolveWith<Color?>((
-                    states,
-                  ) {
-                    if (states.contains(WidgetState.pressed)) {
-                      return AppColors.purple4.withValues(alpha: 0.12);
-                    }
-
-                    return Colors.white;
-                  }),
-                  overlayColor: WidgetStateProperty.all(
-                    AppColors.purple4.withValues(alpha: 0.10),
-                  ),
-                  side: WidgetStateProperty.all(
-                    const BorderSide(color: AppColors.purple4, width: 2),
-                  ),
-                  shape: WidgetStateProperty.all(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(32),
-                    ),
+                setState(() {
+                  isLoadingProfile = false;
+                  isEditing = true;
+                });
+              },
+              style: ButtonStyle(
+                padding: WidgetStateProperty.all(EdgeInsets.zero),
+                backgroundColor: WidgetStateProperty.resolveWith<Color?>((
+                  states,
+                ) {
+                  if (states.contains(WidgetState.pressed)) {
+                    return AppColors.purple4.withValues(alpha: 0.12);
+                  }
+                  return Colors.white;
+                }),
+                overlayColor: WidgetStateProperty.all(
+                  AppColors.purple4.withValues(alpha: 0.10),
+                ),
+                side: WidgetStateProperty.all(
+                  const BorderSide(color: AppColors.purple4, width: 1.5),
+                ),
+                shape: WidgetStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(32),
                   ),
                 ),
-                child: Text(
-                  'プロフィール編集',
-                  textAlign: TextAlign.center,
-                  style: AppTextStyles.actionText.copyWith(height: 1),
-                ),
+              ),
+              child: Text(
+                'プロフィール編集',
+                textAlign: TextAlign.center,
+                style: AppTextStyles.actionText.copyWith(height: 1),
               ),
             ),
           ),
@@ -225,7 +240,7 @@ class _TopScreenState extends State<TopScreen> {
     return Container(
       width: 295,
       height: 107,
-      decoration: _cardDecoration(),
+      decoration: _cardDecoration(borderWidth: 2.0),
       child: Row(
         children: [
           Expanded(
@@ -233,18 +248,18 @@ class _TopScreenState extends State<TopScreen> {
               '交換した人数',
               dummyHomeData.exchangeCount,
               '人',
-              88,
             ),
           ),
-
-          Container(width: 1, height: 83, color: theme.mainColor),
-
+          Container(
+            width: 1, 
+            height: 70, 
+            color: theme.mainColor.withValues(alpha: 0.5)
+          ),
           Expanded(
             child: _buildStatItem(
               'プロフィール帳',
               dummyHomeData.profilePageCount,
               'ページ',
-              114,
             ),
           ),
         ],
@@ -256,15 +271,12 @@ class _TopScreenState extends State<TopScreen> {
     String title,
     String number,
     String unit,
-    double underlineWidth,
   ) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(title, style: AppTextStyles.bodyMedium),
-
         const SizedBox(height: 4),
-
         Text.rich(
           TextSpan(
             children: [
@@ -273,8 +285,6 @@ class _TopScreenState extends State<TopScreen> {
             ],
           ),
         ),
-
-        Container(width: underlineWidth, height: 3, color: theme.mainColor),
       ],
     );
   }
@@ -282,21 +292,39 @@ class _TopScreenState extends State<TopScreen> {
   Widget _buildNotificationCard(String notification) {
     return Container(
       width: 295,
-      height: 128,
+      height: 56,
       alignment: Alignment.center,
-      decoration: _cardDecoration(),
-      child: Text(
-        notification,
-        textAlign: TextAlign.center,
-        style: AppTextStyles.bodyText,
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      decoration: _cardDecoration(borderWidth: 1.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(
+            Icons.notifications_none_rounded,
+            color: Colors.orange,
+            size: 24,
+          ),
+          const SizedBox(width: 12),
+          // 修正ポイント：FittedBoxを使って、はみ出る場合のみ自動で縮小させる
+          Flexible(
+            child: FittedBox(
+              fit: BoxFit.scaleDown, // 枠に収まるように縮小
+              child: Text(
+                notification,
+                textAlign: TextAlign.center,
+                style: AppTextStyles.bodyText,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  BoxDecoration _cardDecoration() {
+  BoxDecoration _cardDecoration({required double borderWidth}) {
     return BoxDecoration(
       color: Colors.white,
-      border: Border.all(color: theme.mainColor, width: 3),
+      border: Border.all(color: theme.mainColor, width: borderWidth),
       borderRadius: BorderRadius.circular(12),
     );
   }
@@ -359,9 +387,7 @@ class _ProfileLoadingScreenState extends State<_ProfileLoadingScreen>
                   size: 54,
                   color: AppColors.pink4,
                 ),
-
                 const SizedBox(height: 18),
-
                 Text('プロフィール帳をひらいています...', style: AppTextStyles.subtitle),
               ],
             ),
