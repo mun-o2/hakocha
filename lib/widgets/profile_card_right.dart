@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'profile/common/profile_card_base.dart';
+import 'profile_card_parts.dart';
 import '../dummy/dummy_profile.dart';
 import '../constants/profile_theme.dart';
-import '../widgets/profile/sections/profile_if_corner.dart';
-import '../widgets/profile/sections/profile_free_space.dart';
-import '../widgets/profile/sections/profile_which_one.dart';
 
 import '../dummy/dummy_profile2.dart';
 import '../models/profile_data.dart';
@@ -33,8 +30,8 @@ class _ProfileCardRightState extends State<ProfileCardRight> {
         : dummyProfile2;
     return Center(
       child: SizedBox(
-        width: 360,
-        height: 666,
+        width: 400,
+        height: 740,
         child: ProfileCardBody(
           isLeft: false,
           theme: widget.theme,

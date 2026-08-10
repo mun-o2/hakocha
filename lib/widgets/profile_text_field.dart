@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
-import '../../../constants/app_text_styles.dart';
-import '../../../constants/profile_theme.dart';
+import '../constants/app_text_styles.dart';
+import '../constants/app_colors.dart';
+import '../constants/profile_theme.dart';
 
-class ProfileInputHeart extends StatefulWidget {
+//白い四角い枠の入力スペース
+class ProfileInputBox extends StatefulWidget {
+  final double width;
+  final double height;
   final String value;
   final ValueChanged<String> onChanged;
   final bool editable;
   final ProfileCardThemeColor theme;
 
-  const ProfileInputHeart({
+  const ProfileInputBox({
     super.key,
+    required this.width,
+    required this.height,
     required this.value,
     required this.onChanged,
     required this.editable,
@@ -17,10 +23,10 @@ class ProfileInputHeart extends StatefulWidget {
   });
 
   @override
-  State<ProfileInputHeart> createState() => _ProfileInputHeartState();
+  State<ProfileInputBox> createState() => _ProfileInputBoxState();
 }
 
-class _ProfileInputHeartState extends State<ProfileInputHeart> {
+class _ProfileInputBoxState extends State<ProfileInputBox> {
   late final TextEditingController controller;
 
   @override
@@ -30,7 +36,7 @@ class _ProfileInputHeartState extends State<ProfileInputHeart> {
   }
 
   @override
-  void didUpdateWidget(covariant ProfileInputHeart oldWidget) {
+  void didUpdateWidget(covariant ProfileInputBox oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     if (oldWidget.value != widget.value) {
@@ -46,14 +52,24 @@ class _ProfileInputHeartState extends State<ProfileInputHeart> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 125,
+    return Container(
+      width: widget.width,
+      height: widget.height,
+      decoration: BoxDecoration(
+        color: AppColors.white.withValues(alpha: 0.7),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.white.withValues(alpha: 0.8),
+            blurRadius: 10,
+            spreadRadius: 2,
+          ),
+        ],
+      ),
+
       child: widget.editable
           ? TextField(
               controller: controller,
-              maxLines: 2,
               textAlign: TextAlign.center,
-              textAlignVertical: TextAlignVertical.center,
               style: AppTextStyles.profileText.copyWith(
                 color: widget.theme.mainColor,
               ),
