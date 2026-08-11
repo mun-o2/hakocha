@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hakocha/constants/app_colors.dart';
+import 'package:hakocha/main.dart';
 import 'package:hakocha/screens/onboarding/pages/collect_onboarding_page.dart';
 import 'package:hakocha/screens/onboarding/pages/color_onboarding_page.dart';
 import 'package:hakocha/screens/onboarding/pages/exchange_onboarding_page.dart';
@@ -7,6 +8,8 @@ import 'package:hakocha/screens/onboarding/pages/welcome_onboarding_page.dart';
 import 'package:hakocha/screens/onboarding/pages/yours_onboarding_page.dart';
 import 'package:hakocha/widgets/onboarding/account_register_buttons.dart';
 import 'package:hakocha/widgets/onboarding/onboarding_dots.dart';
+import 'package:hakocha/services/auth_service.dart';
+import 'package:hakocha/screens/top_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -17,6 +20,7 @@ class OnboardingScreen extends StatefulWidget {
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _controller = PageController();
+  final AuthService _authService = AuthService();
   bool _hasReachedLastPage = false;
   String _selectedColor = 'pink';
 
@@ -74,11 +78,38 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
             AccountRegisterButtons(
               canRegister: canRegister,
-              onApplePressed: () {
-                // TODO: Apple Sign In
+              // appleの登録
+              onApplePressed: () async {
+                try {
+                  final credential = await _authService.signInWithApple();
+
+                  final user = credential.user;
+
+                  if (user == null) return;
+
+                  // TODO: 選択したカラーやユーザー情報をFirestoreへ保存
+
+                  if (!mounted) return;
+                  Navigator.of(context).pushReplacementNamed('/home');
+                } catch (e) {
+                  debugPrint('Apple Sign In error: $e');
+                }
               },
-              onGooglePressed: () {
-                // TODO: Google Sign In
+
+              // googleの登録
+              onGooglePressed: () async {
+                try {
+                  final credential = await _authService.signInWithGoogle();
+
+                  final user = credential.user;
+
+                  if (user == null) return;
+                  if (!mounted) return;
+
+                  Navigator.of(context).pushReplacementNamed('/home');
+                } catch (e) {
+                  debugPrint('Google Sign In error: $e');
+                }
               },
               onLoginPressed: () {
                 // TODO: ログイン画面へ
