@@ -84,7 +84,7 @@ class _ExchangeCompletedScreenState extends State<ExchangeCompletedScreen>
                       child: ScaleTransition(
                         scale: _scaleAnimation,
                         child: Image.asset(
-                          'lib/assets/images/sharematched_letter.png',
+                          'lib/assets/images/letter.png',
                           width: 260,
                           fit: BoxFit.contain,
                         ),
