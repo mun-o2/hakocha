@@ -17,6 +17,7 @@ class OnboardingScreen extends StatefulWidget {
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _controller = PageController();
+  bool _hasReachedLastPage = false;
   String _selectedColor = 'pink';
 
   int _page = 0;
@@ -44,6 +45,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final bool canRegister = _hasReachedLastPage;
+
     return Scaffold(
       backgroundColor: AppColors.backgroundPink,
       body: SafeArea(
@@ -55,6 +58,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 onPageChanged: (index) {
                   setState(() {
                     _page = index;
+
+                    if (index == pages.length - 1) {
+                      _hasReachedLastPage = true;
+                    }
                   });
                 },
                 children: pages,
@@ -66,6 +73,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             const SizedBox(height: 70),
 
             AccountRegisterButtons(
+              canRegister: canRegister,
               onApplePressed: () {
                 // TODO: Apple Sign In
               },

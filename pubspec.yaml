@@ -71,7 +71,8 @@ flutter:
     - lib/assets/images/sharematched_flag.png
     - lib/assets/images/letter.png
     - lib/assets/images/profilebook_pink.png
-    - lib/assets/images/profilebook_blue.png
+    - lib/assets/images/onboarding/profilebook_blue.png
+    - lib/assets/images/onboarding/profilebook_pink.png
 
     - 'lib/assets/sounds/exchange_success.mp3'
     - 'lib/assets/images/onboarding/heart.png'

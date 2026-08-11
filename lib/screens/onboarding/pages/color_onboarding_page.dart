@@ -25,7 +25,7 @@ class ColorOnboardingPage extends StatelessWidget {
         children: [
           _ColorChoice(
             label: 'ピンク',
-            imageAsset: 'lib/assets/images/profilebook_pink.png',
+            imageAsset: 'lib/assets/images/onboarding/profilebook_pink.png',
             value: 'pink',
             selected: selectedColor == 'pink',
             selectedColor: AppColors.pink4,
@@ -36,7 +36,7 @@ class ColorOnboardingPage extends StatelessWidget {
 
           _ColorChoice(
             label: 'ブルー',
-            imageAsset: 'lib/assets/images/profilebook_blue.png',
+            imageAsset: 'lib/assets/images/onboarding/profilebook_blue.png',
             value: 'blue',
             selected: selectedColor == 'blue',
             selectedColor: AppColors.blue4,
