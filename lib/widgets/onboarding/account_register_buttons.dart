@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hakocha/constants/app_colors.dart';
 
 class AccountRegisterButtons extends StatelessWidget {
   final VoidCallback onApplePressed;
@@ -72,7 +73,7 @@ class _AuthButton extends StatelessWidget {
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           elevation: 0,
-          backgroundColor: const Color(0xFF9173F4),
+          backgroundColor: AppColors.purple4,
           foregroundColor: Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),

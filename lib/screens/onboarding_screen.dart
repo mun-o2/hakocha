@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hakocha/constants/app_colors.dart';
-import 'package:hakocha/main.dart';
-import 'package:hakocha/screens/onboarding/pages/collect_onboarding_page.dart';
-import 'package:hakocha/screens/onboarding/pages/color_onboarding_page.dart';
 import 'package:hakocha/screens/onboarding/pages/exchange_onboarding_page.dart';
 import 'package:hakocha/screens/onboarding/pages/welcome_onboarding_page.dart';
 import 'package:hakocha/screens/onboarding/pages/yours_onboarding_page.dart';
+import 'package:hakocha/screens/onboarding/profile_setup_onboarding_screen.dart';
 import 'package:hakocha/widgets/onboarding/account_register_buttons.dart';
 import 'package:hakocha/widgets/onboarding/onboarding_dots.dart';
 import 'package:hakocha/services/auth_service.dart';
-import 'package:hakocha/screens/top_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -21,8 +18,6 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _controller = PageController();
   final AuthService _authService = AuthService();
-  bool _hasReachedLastPage = false;
-  String _selectedColor = 'pink';
 
   int _page = 0;
 
@@ -30,15 +25,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     const WelcomeOnboardingPage(),
     const ExchangeOnboardingPage(),
     const YoursOnboardingPage(),
-    ColorOnboardingPage(
-      selectedColor: _selectedColor,
-      onColorChanged: (color) {
-        setState(() {
-          _selectedColor = color;
-        });
-      },
-    ),
-    const CollectOnboardingPage(),
   ];
 
   @override
@@ -49,8 +35,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final bool canRegister = _hasReachedLastPage;
-
     return Scaffold(
       backgroundColor: AppColors.backgroundPink,
       body: SafeArea(
@@ -62,10 +46,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 onPageChanged: (index) {
                   setState(() {
                     _page = index;
-
-                    if (index == pages.length - 1) {
-                      _hasReachedLastPage = true;
-                    }
                   });
                 },
                 children: pages,
@@ -77,7 +57,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             const SizedBox(height: 70),
 
             AccountRegisterButtons(
-              canRegister: canRegister,
+              canRegister: true,
               // appleの登録
               onApplePressed: () async {
                 try {
@@ -90,7 +70,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   // TODO: 選択したカラーやユーザー情報をFirestoreへ保存
 
                   if (!mounted) return;
-                  Navigator.of(context).pushReplacementNamed('/home');
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (_) => const ProfileSetupOnboardingScreen(),
+                    ),
+                  );
                 } catch (e) {
                   debugPrint('Apple Sign In error: $e');
                 }
@@ -106,7 +90,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   if (user == null) return;
                   if (!mounted) return;
 
-                  Navigator.of(context).pushReplacementNamed('/home');
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (_) => const ProfileSetupOnboardingScreen(),
+                    ),
+                  );
                 } catch (e) {
                   debugPrint('Google Sign In error: $e');
                 }
