@@ -124,11 +124,13 @@ class _ProfileLoveTalkState extends State<ProfileLoveTalk> {
               ),
 
               child: Padding(
-                padding: const EdgeInsets.only(top: 30),
+                padding: const EdgeInsets.only(top: 4, bottom: 15),
                 child: ProfileHeartInput(
                   value: widget.profile.idealType,
                   editable: widget.editable,
                   theme: widget.theme,
+                  height: 60,
+                  width: 102,
                   onChanged: (text) {
                     widget.profile.idealType = text;
                   },
