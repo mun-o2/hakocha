@@ -54,7 +54,7 @@ class ProfileMainDescription extends StatelessWidget {
                       editable: editable,
                       theme: theme,
                       onChanged: (text) {
-                        profile.mbti = text;
+                        profile.name = text;
                       },
                     ),
                   ),
@@ -85,7 +85,7 @@ class ProfileMainDescription extends StatelessWidget {
                       editable: editable,
                       theme: theme,
                       onChanged: (text) {
-                        profile.mbti = text;
+                        profile.birthYear = text;
                       },
                     ),
                   ),
@@ -109,7 +109,7 @@ class ProfileMainDescription extends StatelessWidget {
                       editable: editable,
                       theme: theme,
                       onChanged: (text) {
-                        profile.mbti = text;
+                        profile.birthMonth = text;
                       },
                     ),
                   ),
@@ -130,7 +130,7 @@ class ProfileMainDescription extends StatelessWidget {
                       editable: editable,
                       theme: theme,
                       onChanged: (text) {
-                        profile.mbti = text;
+                        profile.birthDay = text;
                       },
                     ),
                   ),
@@ -159,7 +159,7 @@ class ProfileMainDescription extends StatelessWidget {
                       editable: editable,
                       theme: theme,
                       onChanged: (text) {
-                        profile.mbti = text;
+                        profile.zodiacSign = text;
                       },
                     ),
                   ),
@@ -191,7 +191,7 @@ class ProfileMainDescription extends StatelessWidget {
                       editable: editable,
                       theme: theme,
                       onChanged: (text) {
-                        profile.mbti = text;
+                        profile.bloodType = text;
                       },
                     ),
                   ),
@@ -270,7 +270,7 @@ class ProfileMainDescription extends StatelessWidget {
                       editable: editable,
                       theme: theme,
                       onChanged: (text) {
-                        profile.mbti = text;
+                        profile.nickname = text;
                       },
                     ),
                   ),
@@ -310,7 +310,7 @@ class ProfileMainDescription extends StatelessWidget {
                       editable: editable,
                       theme: theme,
                       onChanged: (text) {
-                        profile.mbti = text;
+                        profile.personality = text;
                       },
                     ),
                   ),
@@ -359,7 +359,7 @@ class ProfileMainDescription extends StatelessWidget {
                       editable: editable,
                       theme: theme,
                       onChanged: (text) {
-                        profile.mbti = text;
+                        profile.holidayLife = text;
                       },
                     ),
                   ),
