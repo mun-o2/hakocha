@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hakocha/constants/app_colors.dart';
+import 'package:hakocha/models/app_tab.dart';
+import 'package:hakocha/widgets/app_bottom_navigation_bar.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -33,7 +35,7 @@ class SettingsScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 24),
+              const SizedBox(height: 30),
               // 個人情報セクション
               _buildSectionTitle('個人情報'),
               const SizedBox(height: 12),
@@ -51,7 +53,7 @@ class SettingsScreen extends StatelessWidget {
                   );
                 },
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 30),
 
               // アプリ情報セクション
               _buildSectionTitle('アプリ情報'),
@@ -62,26 +64,28 @@ class SettingsScreen extends StatelessWidget {
                   // 遷移先の画面は未作成
                 },
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 16),
               _buildOutlinedButton(
                 title: '利用規約',
                 onTap: () {
                   // 遷移先の画面は未作成
                 },
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 16),
               _buildOutlinedButton(
                 title: 'お問い合わせ',
                 onTap: () {
                   // 遷移先の画面は未作成
                 },
               ),
-              const SizedBox(height: 48),
+              const SizedBox(height: 16),
 
               // ロゴとバージョン
               Image.asset(
                 'lib/assets/images/shareme_logo.png',
-                height: 100,
+                // heightの指定を削除し、widthを指定してサイズを調整します
+                width: 250, // 目標画像に近いサイズ（250〜280あたりでお好みで微調整してください）
+                fit: BoxFit.contain, // 縦横比を維持したまま指定サイズに収めます
                 errorBuilder: (context, error, stackTrace) => Container(
                   height: 100,
                   width: 200,
@@ -90,7 +94,6 @@ class SettingsScreen extends StatelessWidget {
                   child: const Text('ロゴ画像'),
                 ),
               ),
-              const SizedBox(height: 16),
               const Text(
                 'バージョン1.0.1',
                 style: TextStyle(
@@ -98,17 +101,46 @@ class SettingsScreen extends StatelessWidget {
                   color: AppColors.textSecondary,
                 ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 12),
 
               // ログアウトボタン
               _buildLogoutButton(context),
-              const SizedBox(height: 40),
+              // const SizedBox(height: 24),
             ],
           ),
         ),
       ),
-      // ボトムナビゲーションバー（画像のレイアウトに合わせるための仮配置）
-      bottomNavigationBar: _buildBottomNavigationBar(),
+
+      bottomNavigationBar: AppBottomNavigationBar(
+        currentIndex: 0, // プロフィール画面から来ている想定なので2
+        onTap: (index) {
+          final selectedTab = AppTab.values[index];
+
+          if (selectedTab == AppTab.profile) {
+            // ① プロフィールタブが押された場合：
+            // 今いる設定画面を閉じるだけで、元のプロフィール画面（バーあり）に戻ります
+            Navigator.pop(context);
+          } else if (selectedTab == AppTab.home) {
+            // ② ホームタブが押された場合：
+            // main.dart の routes に定義されている '/home' を使って、
+            // ナビゲーションバーを持った土台ごと新しく開き直します（初期表示がホームなので完璧に動きます）
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              '/home',
+              (route) => false,
+            );
+          } else if (selectedTab == AppTab.exchange) {
+            // ③ 交換タブが押された場合：
+            // 【注意】main.dartを書き換えない限り、バー付きで交換タブを直接開けません。
+            // 妥協案として、一旦 '/home' に遷移させ、ユーザーに手動で交換タブを押してもらう挙動にします。
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              '/home',
+              (route) => false,
+            );
+          }
+        },
+      ),
     );
   }
 
@@ -180,7 +212,7 @@ class SettingsScreen extends StatelessWidget {
         width: 160,
         padding: const EdgeInsets.symmetric(vertical: 12),
         decoration: BoxDecoration(
-          color: const Color(0xFF8E8D9B), // 画像に近いグレー
+          color: const Color(0xFF8E8D9B), 
           borderRadius: BorderRadius.circular(25),
         ),
         child: const Center(
@@ -193,40 +225,6 @@ class SettingsScreen extends StatelessWidget {
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  // 画像にあるボトムナビゲーション（モック）
-  Widget _buildBottomNavigationBar() {
-    return Container(
-      decoration: const BoxDecoration(
-        color: AppColors.navBackground,
-        border: Border(top: BorderSide(color: Color(0xFFEAEAEA), width: 1)),
-      ),
-      child: BottomNavigationBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        selectedItemColor: AppColors.navSelectedText,
-        unselectedItemColor: AppColors.navUnselectedText,
-        selectedFontSize: 10,
-        unselectedFontSize: 10,
-        type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            activeIcon: Icon(Icons.home),
-            label: 'ホーム',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.wifi_tethering),
-            label: '交換',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.menu_book),
-            label: 'プロフィール帳',
-          ),
-        ],
       ),
     );
   }
