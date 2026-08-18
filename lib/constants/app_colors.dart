@@ -76,4 +76,13 @@ class AppColors {
 
   /// ブルー5（ブルー背景）
   static const Color profileCardBackgroundBlue = Color(0xFFEAF8FF);
+
+  /// 個人情報入力画面の背景
+  static const Color personalInfoScreen = Color.fromARGB(255, 235, 218, 228);
+
+  /// アカウント削除ボタン
+  static const Color deleteAccountButton = Color(0xFFE55D70);
+
+  /// ログアウトボタン
+  static const Color logoutButton = Color(0xFF8E8D9B);
 }
