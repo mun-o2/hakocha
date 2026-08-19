@@ -98,16 +98,9 @@ class SettingsScreen extends StatelessWidget {
               // ロゴとバージョン
               Image.asset(
                 'lib/assets/images/shareme_logo.png',
-                // heightの指定を削除し、widthを指定してサイズを調整します
-                width: 240, // 目標画像に近いサイズ（250〜280あたりでお好みで微調整してください）
-                fit: BoxFit.contain, // 縦横比を維持したまま指定サイズに収めます
-                // errorBuilder: (context, error, stackTrace) => Container(
-                //   height: 100,
-                //   width: 200,
-                //   color: Colors.pink.withOpacity(0.2),
-                //   alignment: Alignment.center,
-                //   child: const Text('ロゴ画像'),
-                // ),
+                // heightの指定を削除し、widthを指定してサイズを調整
+                width: 240,
+                fit: BoxFit.contain, // 縦横比を維持したまま指定サイズに収める
               ),
               const Text(
                 'バージョン1.0.1',
@@ -126,18 +119,18 @@ class SettingsScreen extends StatelessWidget {
       ),
 
       bottomNavigationBar: AppBottomNavigationBar(
-        currentIndex: 0, // プロフィール画面から来ている想定なので2
+        currentIndex: 0,
         onTap: (index) {
           final selectedTab = AppTab.values[index];
 
           if (selectedTab == AppTab.profile) {
             // ① プロフィールタブが押された場合：
-            // 今いる設定画面を閉じるだけで、元のプロフィール画面（バーあり）に戻ります
+            // 今いる設定画面を閉じるだけで、元のプロフィール画面（バーあり）に戻る
             Navigator.pop(context);
           } else if (selectedTab == AppTab.home) {
             // ② ホームタブが押された場合：
             // main.dart の routes に定義されている '/home' を使って、
-            // ナビゲーションバーを持った土台ごと新しく開き直します（初期表示がホームなので完璧に動きます）
+            // ナビゲーションバーを持った土台ごと新しく開き直す
             Navigator.pushNamedAndRemoveUntil(
               context,
               '/home',
@@ -145,8 +138,8 @@ class SettingsScreen extends StatelessWidget {
             );
           } else if (selectedTab == AppTab.exchange) {
             // ③ 交換タブが押された場合：
-            // 【注意】main.dartを書き換えない限り、バー付きで交換タブを直接開けません。
-            // 妥協案として、一旦 '/home' に遷移させ、ユーザーに手動で交換タブを押してもらう挙動にします。
+            // 【注意】main.dartを書き換えない限り、バー付きで交換タブを直接開けない。
+            // 妥協案として、一旦 '/home' に遷移させ、ユーザーに手動で交換タブを押してもらう挙動にする。
             Navigator.pushNamedAndRemoveUntil(
               context,
               '/home',
@@ -245,7 +238,7 @@ class SettingsScreen extends StatelessWidget {
 }
 
 // ---------------------------------------------------------
-// 2枚目の画像（遷移先のメールアドレス詳細画面）
+// 遷移先のメールアドレス詳細画面
 // ---------------------------------------------------------
 class PersonalInfoScreen extends StatelessWidget {
   const PersonalInfoScreen({super.key});
@@ -253,7 +246,7 @@ class PersonalInfoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.personalInfoScreen, // 1枚目画像のピンク背景色
+      backgroundColor: AppColors.personalInfoScreen,
       // ▼ 設定画面と全く同じ見た目の AppBar を配置 ▼
       appBar: AppBar(
         toolbarHeight: 100.0,

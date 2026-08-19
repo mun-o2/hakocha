@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hakocha/constants/app_colors.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 class ServiceScreen extends StatelessWidget {
   const ServiceScreen({super.key});
@@ -7,8 +8,9 @@ class ServiceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundPink, // 設定画面と背景色を合わせます
+      backgroundColor: AppColors.backgroundPink,
       appBar: AppBar(
+        toolbarHeight: 100.0,
         backgroundColor: AppColors.backgroundPink,
         elevation: 0,
         centerTitle: true,
@@ -16,7 +18,7 @@ class ServiceScreen extends StatelessWidget {
           '利用規約',
           style: TextStyle(
             color: AppColors.textPrimary,
-            fontSize: 18,
+            fontSize: 21,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -28,19 +30,18 @@ class ServiceScreen extends StatelessWidget {
           },
         ),
       ),
-      // 文章が画面に収まらない場合にスクロールできるようにします
+      // 文章が画面に収まらない場合にスクロールできるようにする
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(24.0),
-          child: const Text(
-            '''
-
+          child: MarkdownBody(
+            data: '''
 本アプリをご利用いただく前に、本規約をご確認ください。
 
-第1条（利用について）
+## 第1条（利用について）
 利用者は、本規約に同意した上で本アプリを利用するものとします。
 
-第2条（禁止事項）
+## 第2条（禁止事項）
 以下の行為を禁止します。
 
 - 他者になりすます行為
@@ -48,15 +49,27 @@ class ServiceScreen extends StatelessWidget {
 - 法令または公序良俗に反する行為
 - 本アプリの運営を妨害する行為
 
-第3条（免責事項）
+## 第3条（免責事項）
 本アプリの利用により生じた損害について、運営者は故意または重大な過失がある場合を除き責任を負いません。
 
-第4条（サービス内容）
-本アプリは予告なく機能の変更・停止を行う場合があります。''',
-            style: TextStyle(
-              fontSize: 14,
-              color: AppColors.textPrimary,
-              height: 1.6, // 行間を少し広げると文章が読みやすくなります
+## 第4条（サービス内容）
+本アプリは予告なく機能の変更・停止を行う場合があります。
+''',
+            styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
+              p: const TextStyle(
+                fontSize: 14,
+                color: AppColors.textPrimary,
+                height: 1.6,
+              ),
+              h2: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: AppColors.textPrimary,
+                height: 1.6,
+              ),
+              listBullet: const TextStyle(
+                color: AppColors.textPrimary,
+              ),
             ),
           ),
         ),
