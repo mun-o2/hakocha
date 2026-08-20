@@ -29,7 +29,7 @@ class ProfileContainer extends StatelessWidget {
         children: [
           Positioned.fill(child: background),
 
-          if (title != null) title!,
+          ?title,
 
           Positioned.fill(child: child),
         ],

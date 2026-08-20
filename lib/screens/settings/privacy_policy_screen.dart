@@ -63,22 +63,21 @@ class PrivacyPolicyScreen extends StatelessWidget {
 ## 4. お問い合わせ
 ご質問やご不明点がございましたら、お問い合わせよりご連絡ください。
 ''',
-            styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
-              p: const TextStyle(
-                fontSize: 14,
-                color: AppColors.textPrimary,
-                height: 1.6,
-              ),
-              h2: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: AppColors.textPrimary,
-                height: 1.6,
-              ),
-              listBullet: const TextStyle(
-                color: AppColors.textPrimary,
-              ),
-            ),
+            styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context))
+                .copyWith(
+                  p: const TextStyle(
+                    fontSize: 14,
+                    color: AppColors.textPrimary,
+                    height: 1.6,
+                  ),
+                  h2: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.textPrimary,
+                    height: 1.6,
+                  ),
+                  listBullet: const TextStyle(color: AppColors.textPrimary),
+                ),
           ),
         ),
       ),

@@ -48,27 +48,17 @@ class _ProfileCardRightState extends State<ProfileCardRight> {
               ),
 
               // WhichOne?コーナー
-              Positioned(
-                top: 200,
-                left: 0,
-                right: 0,
-                child: ProfileWhichOne(
-                  editable: widget.editable,
-                  theme: widget.theme,
-                  profile: profileData,
-                ),
+              ProfileWhichOne(
+                editable: widget.editable,
+                theme: widget.theme,
+                profile: profileData,
               ),
 
               // Free Spaceコーナー
-              Positioned(
-                top: 510,
-                left: 30,
-                right: 0,
-                child: ProfileFreeSpace(
-                  profile: profileData,
-                  editable: widget.editable,
-                  theme: widget.theme,
-                ),
+              ProfileFreeSpace(
+                profile: profileData,
+                editable: widget.editable,
+                theme: widget.theme,
               ),
             ],
           ),

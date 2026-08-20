@@ -55,22 +55,21 @@ class ServiceScreen extends StatelessWidget {
 ## 第4条（サービス内容）
 本アプリは予告なく機能の変更・停止を行う場合があります。
 ''',
-            styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
-              p: const TextStyle(
-                fontSize: 14,
-                color: AppColors.textPrimary,
-                height: 1.6,
-              ),
-              h2: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: AppColors.textPrimary,
-                height: 1.6,
-              ),
-              listBullet: const TextStyle(
-                color: AppColors.textPrimary,
-              ),
-            ),
+            styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context))
+                .copyWith(
+                  p: const TextStyle(
+                    fontSize: 14,
+                    color: AppColors.textPrimary,
+                    height: 1.6,
+                  ),
+                  h2: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.textPrimary,
+                    height: 1.6,
+                  ),
+                  listBullet: const TextStyle(color: AppColors.textPrimary),
+                ),
           ),
         ),
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hakocha/constants/app_colors.dart';
 import 'package:hakocha/models/app_tab.dart';
 import 'package:hakocha/widgets/app_bottom_navigation_bar.dart';
@@ -6,7 +7,12 @@ import 'package:hakocha/screens/settings/service_screen.dart';
 import 'package:hakocha/screens/settings/privacy_policy_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({super.key});
+  final String? email;
+
+  const SettingsScreen({super.key, this.email});
+
+  String get _email =>
+      email ?? FirebaseAuth.instance.currentUser?.email ?? '未登録';
 
   @override
   Widget build(BuildContext context) {
@@ -44,16 +50,21 @@ class SettingsScreen extends StatelessWidget {
               const SizedBox(height: 6),
               _buildOutlinedButton(
                 title: 'メールアドレス',
-                trailingText: 'ochanoma046@gmail.com',
+                trailingText: _email,
                 onTap: () {
                   // メールアドレスボタンのみ遷移処理を実装
                   Navigator.push(
                     context,
                     PageRouteBuilder(
-                      pageBuilder: (context, animation, secondaryAnimation) => const PersonalInfoScreen(),
-                      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                        return FadeTransition(opacity: animation, child: child);
-                      },
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          PersonalInfoScreen(email: _email),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                            return FadeTransition(
+                              opacity: animation,
+                              child: child,
+                            );
+                          },
                     ),
                   );
                 },
@@ -104,10 +115,7 @@ class SettingsScreen extends StatelessWidget {
               ),
               const Text(
                 'バージョン1.0.1',
-                style: TextStyle(
-                  fontSize: 12,
-                  color: AppColors.textSecondary,
-                ),
+                style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
               ),
               const SizedBox(height: 12),
 
@@ -122,30 +130,12 @@ class SettingsScreen extends StatelessWidget {
         currentIndex: 0,
         onTap: (index) {
           final selectedTab = AppTab.values[index];
-
-          if (selectedTab == AppTab.profile) {
-            // ① プロフィールタブが押された場合：
-            // 今いる設定画面を閉じるだけで、元のプロフィール画面（バーあり）に戻る
-            Navigator.pop(context);
-          } else if (selectedTab == AppTab.home) {
-            // ② ホームタブが押された場合：
-            // main.dart の routes に定義されている '/home' を使って、
-            // ナビゲーションバーを持った土台ごと新しく開き直す
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              '/home',
-              (route) => false,
-            );
-          } else if (selectedTab == AppTab.exchange) {
-            // ③ 交換タブが押された場合：
-            // 【注意】main.dartを書き換えない限り、バー付きで交換タブを直接開けない。
-            // 妥協案として、一旦 '/home' に遷移させ、ユーザーに手動で交換タブを押してもらう挙動にする。
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              '/home',
-              (route) => false,
-            );
-          }
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            '/home',
+            (route) => false,
+            arguments: selectedTab,
+          );
         },
       ),
     );
@@ -194,14 +184,21 @@ class SettingsScreen extends StatelessWidget {
                 color: AppColors.textPrimary,
               ),
             ),
-            if (trailingText != null)
-              Text(
-                trailingText,
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: AppColors.textSecondary,
+            if (trailingText != null) ...[
+              const SizedBox(width: 12),
+              Flexible(
+                child: Text(
+                  trailingText,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.right,
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: AppColors.textSecondary,
+                  ),
                 ),
               ),
+            ],
           ],
         ),
       ),
@@ -219,7 +216,7 @@ class SettingsScreen extends StatelessWidget {
         width: 160,
         padding: const EdgeInsets.symmetric(vertical: 12),
         decoration: BoxDecoration(
-          color: AppColors.logoutButton, 
+          color: AppColors.logoutButton,
           borderRadius: BorderRadius.circular(25),
         ),
         child: const Center(
@@ -241,7 +238,9 @@ class SettingsScreen extends StatelessWidget {
 // 遷移先のメールアドレス詳細画面
 // ---------------------------------------------------------
 class PersonalInfoScreen extends StatelessWidget {
-  const PersonalInfoScreen({super.key});
+  final String email;
+
+  const PersonalInfoScreen({super.key, required this.email});
 
   @override
   Widget build(BuildContext context) {
@@ -264,12 +263,7 @@ class PersonalInfoScreen extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: AppColors.textPrimary),
           onPressed: () {
-            // 【条件1】＜をクリックするとホーム画面に戻る
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              '/home',
-              (route) => false,
-            );
+            Navigator.pop(context);
           },
         ),
       ),
@@ -283,7 +277,11 @@ class PersonalInfoScreen extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(right: 16.0, top: 16.0),
                 child: IconButton(
-                  icon: const Icon(Icons.close, color: AppColors.textPrimary, size: 28),
+                  icon: const Icon(
+                    Icons.close,
+                    color: AppColors.textPrimary,
+                    size: 28,
+                  ),
                   onPressed: () {
                     // 【条件2】×をクリックするとひとつ前の設定画面に戻る
                     Navigator.pop(context);
@@ -301,7 +299,7 @@ class PersonalInfoScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 60),
-            const Padding(
+            Padding(
               padding: EdgeInsets.symmetric(horizontal: 40.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -314,11 +312,17 @@ class PersonalInfoScreen extends StatelessWidget {
                       color: AppColors.textPrimary,
                     ),
                   ),
-                  Text(
-                    'ochanoma046@gmail.com',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: AppColors.textSecondary,
+                  const SizedBox(width: 12),
+                  Flexible(
+                    child: Text(
+                      email,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.right,
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: AppColors.textSecondary,
+                      ),
                     ),
                   ),
                 ],

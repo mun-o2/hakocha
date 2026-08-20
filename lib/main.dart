@@ -37,7 +37,12 @@ class HakochaApp extends StatelessWidget {
         home: const SplashScreen(),
         routes: {
           '/onboarding': (context) => const OnboardingScreen(),
-          '/home': (context) => const _HomeScreen(),
+          '/home': (context) {
+            final argument = ModalRoute.of(context)?.settings.arguments;
+            return _HomeScreen(
+              initialTab: argument is AppTab ? argument : AppTab.home,
+            );
+          },
         },
       ),
     );
@@ -46,17 +51,25 @@ class HakochaApp extends StatelessWidget {
 
 /// ホーム画面
 class _HomeScreen extends StatefulWidget {
-  const _HomeScreen();
+  final AppTab initialTab;
+
+  const _HomeScreen({this.initialTab = AppTab.home});
 
   @override
   State<_HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<_HomeScreen> {
-  AppTab _selectedTab = AppTab.home;
+  late AppTab _selectedTab;
 
   Key _topScreenKey = UniqueKey();
   Key _profileScreenKey = UniqueKey();
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedTab = widget.initialTab;
+  }
 
   List<Widget> get _screens => <Widget>[
     TopScreen(key: _topScreenKey),

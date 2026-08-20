@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:hakocha/dummy/dummy_profile2.dart';
 import '../constants/app_text_styles.dart';
 import '../constants/app_colors.dart';
@@ -17,7 +16,6 @@ import '../widgets/profile/sections/profile_love_talk.dart';
 
 //ダミーデータの読み込み
 import '../dummy/dummy_profile.dart';
-import '../dummy/dummy_profile2.dart';
 import '../models/profile_data.dart';
 
 class ProfileCardLeft extends StatefulWidget {
@@ -51,9 +49,9 @@ class _ProfileCardLeftState extends State<ProfileCardLeft> {
               // 白い四角
               Positioned(
                 left: 27,
-                top: 43,
+                top: 38,
                 child: ProfileContainer(
-                  width: 270,
+                  width: 280,
                   height: 134,
                   background: const ProfileWhiteSquare(),
                   child: const SizedBox(),
@@ -62,7 +60,7 @@ class _ProfileCardLeftState extends State<ProfileCardLeft> {
 
               // My Profile見出し
               Padding(
-                padding: const EdgeInsets.only(top: 22, left: 25),
+                padding: const EdgeInsets.only(top: 17, left: 25),
                 child: OutlinedText(
                   text: "My Profile",
                   style: AppTextStyles.profileTitle,

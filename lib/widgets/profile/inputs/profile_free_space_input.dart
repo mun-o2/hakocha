@@ -50,9 +50,10 @@ class _ProfileFreeSpaceInputState extends State<ProfileFreeSpaceInput> {
         ? TextField(
             controller: controller,
 
-            expands: true,
             maxLines: null,
-            minLines: null,
+            minLines: 4,
+
+            textInputAction: TextInputAction.done,
 
             textAlign: TextAlign.left,
             textAlignVertical: TextAlignVertical.top,

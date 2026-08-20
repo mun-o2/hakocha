@@ -30,7 +30,7 @@ class ProfileCardBody extends StatelessWidget {
             top: 0,
             child: Container(
               width: 70,
-              height: 450,
+              height: 429,
               decoration: BoxDecoration(
                 color: theme.mainColor,
                 borderRadius: BorderRadius.circular(20),
@@ -47,10 +47,10 @@ class ProfileCardBody extends StatelessWidget {
               children: List.generate(
                 6,
                 (index) => Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 25),
+                  padding: const EdgeInsets.symmetric(vertical: 24),
                   child: Container(
-                    width: 16,
-                    height: 16,
+                    width: 15,
+                    height: 15,
                     decoration: const BoxDecoration(
                       color: AppColors.white,
                       shape: BoxShape.circle,
@@ -81,7 +81,7 @@ class ProfileCardBody extends StatelessWidget {
             top: 0,
             child: Container(
               width: 70,
-              height: 450,
+              height: 429,
               decoration: BoxDecoration(
                 color: theme.mainColor,
                 borderRadius: BorderRadius.circular(30),
@@ -98,10 +98,10 @@ class ProfileCardBody extends StatelessWidget {
               children: List.generate(
                 6,
                 (index) => Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 25),
+                  padding: const EdgeInsets.symmetric(vertical: 24),
                   child: Container(
-                    width: 16,
-                    height: 16,
+                    width: 15,
+                    height: 15,
                     decoration: const BoxDecoration(
                       color: AppColors.white,
                       shape: BoxShape.circle,

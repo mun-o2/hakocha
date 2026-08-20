@@ -77,7 +77,13 @@ class AppColors {
   /// ブルー5（ブルー背景）
   static const Color profileCardBackgroundBlue = Color(0xFFEAF8FF);
 
-  /// 個人情報入力画面の背景
+  /// プロフィールカードSNSアイコン（ピンク）
+  static const Color profileCardSNSIconPink = Color(0xFFFFA9D1);
+
+  /// プロフィールカードSNSアイコン（ブルー）
+  static const Color profileCardSNSIconBlue = Color(0xFF7DD3FC);
+
+  /// 個人情報画面の背景
   static const Color personalInfoScreen = Color.fromARGB(255, 235, 218, 228);
 
   /// アカウント削除ボタン

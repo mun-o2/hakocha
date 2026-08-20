@@ -63,7 +63,7 @@ class _ProfileSnsInputState extends State<ProfileSnsInput> {
           width: widget.width,
           child: Text(
             controller.text,
-            textAlign: TextAlign.center,
+            textAlign: TextAlign.start,
             maxLines: 2,
             overflow: TextOverflow.visible,
             style: AppTextStyles.profileText.copyWith(

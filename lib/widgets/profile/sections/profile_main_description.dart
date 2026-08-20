@@ -23,11 +23,12 @@ class ProfileMainDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double space = 12; //行間のスペース用
     return (Stack(
       children: [
         Positioned(
           left: 20,
-          top: 210,
+          top: 185,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -42,23 +43,23 @@ class ProfileMainDescription extends StatelessWidget {
                     outlineColor: AppColors.white,
                   ),
 
-                  const SizedBox(width: 20),
+                  const SizedBox(width: 15),
 
                   ProfileContainer(
                     width: 100,
-                    height: 25,
+                    height: 21,
                     background: const ProfileWhiteSquare(),
                     child: ProfileInputBox(
                       value: profile.name,
                       editable: editable,
                       theme: theme,
                       onChanged: (text) {
-                        profile.mbti = text;
+                        profile.name = text;
                       },
                     ),
                   ),
 
-                  const SizedBox(width: 20),
+                  const SizedBox(width: 15),
 
                   OutlinedText(
                     text: "で、",
@@ -69,22 +70,22 @@ class ProfileMainDescription extends StatelessWidget {
                 ],
               ),
 
-              const SizedBox(height: 11),
+              SizedBox(height: space),
 
               //2行目
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   ProfileContainer(
-                    width: 80,
-                    height: 25,
+                    width: 70,
+                    height: 21,
                     background: const ProfileWhiteSquare(),
                     child: ProfileInputBox(
                       value: profile.birthYear,
                       editable: editable,
                       theme: theme,
                       onChanged: (text) {
-                        profile.mbti = text;
+                        profile.birthYear = text;
                       },
                     ),
                   ),
@@ -100,15 +101,15 @@ class ProfileMainDescription extends StatelessWidget {
 
                   const SizedBox(width: 4),
                   ProfileContainer(
-                    width: 50,
-                    height: 25,
+                    width: 45,
+                    height: 21,
                     background: const ProfileWhiteSquare(),
                     child: ProfileInputBox(
                       value: profile.birthMonth,
                       editable: editable,
                       theme: theme,
                       onChanged: (text) {
-                        profile.mbti = text;
+                        profile.birthMonth = text;
                       },
                     ),
                   ),
@@ -121,15 +122,15 @@ class ProfileMainDescription extends StatelessWidget {
 
                   const SizedBox(width: 4),
                   ProfileContainer(
-                    width: 50,
-                    height: 25,
+                    width: 45,
+                    height: 21,
                     background: const ProfileWhiteSquare(),
                     child: ProfileInputBox(
                       value: profile.birthDay,
                       editable: editable,
                       theme: theme,
                       onChanged: (text) {
-                        profile.mbti = text;
+                        profile.birthDay = text;
                       },
                     ),
                   ),
@@ -143,7 +144,7 @@ class ProfileMainDescription extends StatelessWidget {
                 ],
               ),
 
-              const SizedBox(height: 11),
+              SizedBox(height: space),
 
               //3行目
               Row(
@@ -151,14 +152,14 @@ class ProfileMainDescription extends StatelessWidget {
                 children: [
                   ProfileContainer(
                     width: 70,
-                    height: 25,
+                    height: 21,
                     background: const ProfileWhiteSquare(),
                     child: ProfileInputBox(
                       value: profile.zodiacSign,
                       editable: editable,
                       theme: theme,
                       onChanged: (text) {
-                        profile.mbti = text;
+                        profile.zodiacSign = text;
                       },
                     ),
                   ),
@@ -171,7 +172,7 @@ class ProfileMainDescription extends StatelessWidget {
                     outlineColor: AppColors.white,
                   ),
 
-                  const SizedBox(width: 11),
+                  SizedBox(width: space),
 
                   OutlinedText(
                     text: "血液型は",
@@ -183,14 +184,14 @@ class ProfileMainDescription extends StatelessWidget {
                   const SizedBox(width: 4),
                   ProfileContainer(
                     width: 50,
-                    height: 25,
+                    height: 21,
                     background: const ProfileWhiteSquare(),
                     child: ProfileInputBox(
                       value: profile.bloodType,
                       editable: editable,
                       theme: theme,
                       onChanged: (text) {
-                        profile.mbti = text;
+                        profile.bloodType = text;
                       },
                     ),
                   ),
@@ -205,7 +206,7 @@ class ProfileMainDescription extends StatelessWidget {
                 ],
               ),
 
-              const SizedBox(height: 11),
+              SizedBox(height: space),
 
               //4行目
               Row(
@@ -222,7 +223,7 @@ class ProfileMainDescription extends StatelessWidget {
 
                   ProfileContainer(
                     width: 70,
-                    height: 25,
+                    height: 21,
                     background: const ProfileWhiteSquare(),
                     child: ProfileInputBox(
                       value: profile.mbti,
@@ -245,7 +246,7 @@ class ProfileMainDescription extends StatelessWidget {
                 ],
               ),
 
-              const SizedBox(height: 11),
+              SizedBox(height: space),
 
               //5行目
               Row(
@@ -262,14 +263,14 @@ class ProfileMainDescription extends StatelessWidget {
 
                   ProfileContainer(
                     width: 80,
-                    height: 25,
+                    height: 21,
                     background: const ProfileWhiteSquare(),
                     child: ProfileInputBox(
                       value: profile.nickname,
                       editable: editable,
                       theme: theme,
                       onChanged: (text) {
-                        profile.mbti = text;
+                        profile.nickname = text;
                       },
                     ),
                   ),
@@ -285,7 +286,7 @@ class ProfileMainDescription extends StatelessWidget {
                 ],
               ),
 
-              const SizedBox(height: 11),
+              SizedBox(height: space),
 
               //6行目
               Row(
@@ -302,14 +303,14 @@ class ProfileMainDescription extends StatelessWidget {
 
                   ProfileContainer(
                     width: 150,
-                    height: 25,
+                    height: 21,
                     background: const ProfileWhiteSquare(),
                     child: ProfileInputBox(
                       value: profile.personality,
                       editable: editable,
                       theme: theme,
                       onChanged: (text) {
-                        profile.mbti = text;
+                        profile.personality = text;
                       },
                     ),
                   ),
@@ -325,7 +326,7 @@ class ProfileMainDescription extends StatelessWidget {
                 ],
               ),
 
-              const SizedBox(height: 11),
+              SizedBox(height: space),
 
               //7行目
               Row(
@@ -351,20 +352,20 @@ class ProfileMainDescription extends StatelessWidget {
 
                   ProfileContainer(
                     width: 150,
-                    height: 25,
+                    height: 21,
                     background: const ProfileWhiteSquare(),
                     child: ProfileInputBox(
                       value: profile.holidayLife,
                       editable: editable,
                       theme: theme,
                       onChanged: (text) {
-                        profile.mbti = text;
+                        profile.holidayLife = text;
                       },
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 11),
+              SizedBox(height: space),
 
               //8行目
               Row(
