@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hakocha/constants/app_colors.dart';
 import 'package:hakocha/screens/onboarding/pages/color_onboarding_page.dart';
 import 'package:hakocha/screens/onboarding/pages/collect_onboarding_page.dart';
+import 'package:hakocha/services/app_service.dart';
 import 'package:hakocha/widgets/onboarding/onboarding_dots.dart';
 
 class ProfileSetupOnboardingScreen extends StatefulWidget {
@@ -32,7 +33,9 @@ class _ProfileSetupOnboardingScreenState
   ];
 
   Future<void> _confirmColor() async {
-    // TODO: Firebaseに_selectedColorを保存
+    await const AppService().setProfileColor(_selectedColor);
+
+    if (!mounted) return;
 
     // Collectページへ
     await _controller.nextPage(

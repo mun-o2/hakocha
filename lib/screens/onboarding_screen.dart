@@ -58,6 +58,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
             AccountRegisterButtons(
               canRegister: true,
+              // Developer側のSign in with Apple capability設定完了後に有効化する。
+              canUseApple: false,
               // appleの登録
               onApplePressed: () async {
                 try {
@@ -69,7 +71,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
                   // TODO: 選択したカラーやユーザー情報をFirestoreへ保存
 
-                  if (!mounted) return;
+                  if (!context.mounted) return;
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (_) => const ProfileSetupOnboardingScreen(),
@@ -88,7 +90,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   final user = credential.user;
 
                   if (user == null) return;
-                  if (!mounted) return;
+                  if (!context.mounted) return;
 
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(

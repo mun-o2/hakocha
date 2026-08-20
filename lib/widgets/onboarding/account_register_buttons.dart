@@ -6,6 +6,7 @@ class AccountRegisterButtons extends StatelessWidget {
   final VoidCallback onGooglePressed;
   final VoidCallback onLoginPressed;
   final bool canRegister;
+  final bool canUseApple;
 
   const AccountRegisterButtons({
     super.key,
@@ -13,6 +14,7 @@ class AccountRegisterButtons extends StatelessWidget {
     required this.onGooglePressed,
     required this.onLoginPressed,
     this.canRegister = true,
+    this.canUseApple = true,
   });
 
   @override
@@ -22,7 +24,7 @@ class AccountRegisterButtons extends StatelessWidget {
         _AuthButton(
           icon: Icons.apple,
           text: 'Appleで続ける',
-          onPressed: canRegister ? onApplePressed : null,
+          onPressed: canRegister && canUseApple ? onApplePressed : null,
         ),
 
         const SizedBox(height: 14),
