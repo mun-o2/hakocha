@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hakocha/constants/app_colors.dart';
-import 'package:hakocha/models/app_tab.dart';
-import 'package:hakocha/widgets/app_bottom_navigation_bar.dart';
 import 'package:hakocha/screens/settings/service_screen.dart';
 import 'package:hakocha/screens/settings/privacy_policy_screen.dart';
 import 'package:hakocha/services/auth_service.dart';
@@ -129,19 +127,6 @@ class SettingsScreen extends StatelessWidget {
           ),
         ),
       ),
-
-      bottomNavigationBar: AppBottomNavigationBar(
-        currentIndex: 0,
-        onTap: (index) {
-          final selectedTab = AppTab.values[index];
-          Navigator.pushNamedAndRemoveUntil(
-            context,
-            '/home',
-            (route) => false,
-            arguments: selectedTab,
-          );
-        },
-      ),
     );
   }
 
@@ -234,11 +219,10 @@ class SettingsScreen extends StatelessWidget {
         try {
           await (onSignOut?.call() ?? AuthService().signOut());
           if (!context.mounted) return;
-          Navigator.pushNamedAndRemoveUntil(
+          Navigator.of(
             context,
-            '/onboarding',
-            (route) => false,
-          );
+            rootNavigator: true,
+          ).pushNamedAndRemoveUntil('/onboarding', (route) => false);
         } catch (error) {
           if (!context.mounted) return;
           ScaffoldMessenger.of(context).showSnackBar(

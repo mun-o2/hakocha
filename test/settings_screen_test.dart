@@ -49,6 +49,7 @@ void main() {
       ),
     );
 
+    await tester.ensureVisible(find.text('ログアウト'));
     await tester.tap(find.text('ログアウト'));
     await tester.pumpAndSettle();
     expect(find.text('ログアウトしますか？'), findsOneWidget);

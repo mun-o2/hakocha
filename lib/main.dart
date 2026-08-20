@@ -5,6 +5,7 @@ import 'package:hakocha/models/app_tab.dart';
 import 'package:hakocha/providers/exchange_provider.dart';
 import 'package:hakocha/screens/exchange_screen.dart';
 import 'package:hakocha/screens/profile_screen.dart';
+import 'package:hakocha/screens/settings_screen.dart';
 import 'package:hakocha/screens/splash_screen.dart';
 import 'package:hakocha/screens/onboarding_screen.dart';
 import 'package:hakocha/screens/top_screen.dart';
@@ -63,6 +64,7 @@ class _HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<_HomeScreen> {
   late AppTab _selectedTab;
+  int _transitionDirection = 1;
 
   Key _topScreenKey = UniqueKey();
   Key _profileScreenKey = UniqueKey();
@@ -74,7 +76,7 @@ class _HomeScreenState extends State<_HomeScreen> {
   }
 
   List<Widget> get _screens => <Widget>[
-    TopScreen(key: _topScreenKey),
+    _HomeTabNavigator(key: _topScreenKey),
 
     ExchangeScreen(
       onOpenProfile: () {
@@ -90,8 +92,10 @@ class _HomeScreenState extends State<_HomeScreen> {
 
   void _onTabSelected(int index) {
     final selectedTab = AppTab.values[index];
+    if (selectedTab == _selectedTab) return;
 
     setState(() {
+      _transitionDirection = index > _selectedTab.index ? 1 : -1;
       if (selectedTab == AppTab.home) {
         _topScreenKey = UniqueKey();
       }
@@ -112,8 +116,12 @@ class _HomeScreenState extends State<_HomeScreen> {
         switchInCurve: Curves.easeOut,
         switchOutCurve: Curves.easeIn,
         transitionBuilder: (child, animation) {
+          final isIncoming = child.key == ValueKey(_selectedTab);
+          final direction = isIncoming
+              ? _transitionDirection.toDouble()
+              : -_transitionDirection.toDouble();
           final offset = Tween<Offset>(
-            begin: const Offset(0.035, 0),
+            begin: Offset(0.08 * direction, 0),
             end: Offset.zero,
           ).animate(animation);
           return FadeTransition(
@@ -129,6 +137,43 @@ class _HomeScreenState extends State<_HomeScreen> {
       bottomNavigationBar: AppBottomNavigationBar(
         currentIndex: _selectedTab.index,
         onTap: _onTabSelected,
+      ),
+    );
+  }
+}
+
+class _HomeTabNavigator extends StatefulWidget {
+  const _HomeTabNavigator({super.key});
+
+  @override
+  State<_HomeTabNavigator> createState() => _HomeTabNavigatorState();
+}
+
+class _HomeTabNavigatorState extends State<_HomeTabNavigator> {
+  final _navigatorKey = GlobalKey<NavigatorState>();
+
+  void _openSettings() {
+    _navigatorKey.currentState?.push(
+      PageRouteBuilder<void>(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            const SettingsScreen(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(
+            opacity: CurvedAnimation(parent: animation, curve: Curves.easeOut),
+            child: child,
+          );
+        },
+        transitionDuration: const Duration(milliseconds: 220),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Navigator(
+      key: _navigatorKey,
+      onGenerateRoute: (_) => MaterialPageRoute<void>(
+        builder: (_) => TopScreen(onOpenSettings: _openSettings),
       ),
     );
   }

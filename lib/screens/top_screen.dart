@@ -4,11 +4,12 @@ import 'package:hakocha/constants/app_text_styles.dart';
 import 'package:hakocha/constants/dummy_home_data.dart';
 import 'package:hakocha/constants/profile_theme.dart';
 import 'package:hakocha/screens/edit_profile_screen.dart';
-import 'package:hakocha/screens/settings_screen.dart';
 import 'package:hakocha/services/app_service.dart';
 
 class TopScreen extends StatefulWidget {
-  const TopScreen({super.key});
+  final VoidCallback onOpenSettings;
+
+  const TopScreen({super.key, required this.onOpenSettings});
 
   @override
   State<TopScreen> createState() => _TopScreenState();
@@ -120,14 +121,7 @@ class _TopScreenState extends State<TopScreen> {
                           ],
                         ),
                       ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => const SettingsScreen(),
-                          ),
-                        );
-                      },
+                      onPressed: widget.onOpenSettings,
                     ),
                   ),
                 ),
@@ -244,16 +238,12 @@ class _TopScreenState extends State<TopScreen> {
       child: Row(
         children: [
           Expanded(
-            child: _buildStatItem(
-              '交換した人数',
-              dummyHomeData.exchangeCount,
-              '人',
-            ),
+            child: _buildStatItem('交換した人数', dummyHomeData.exchangeCount, '人'),
           ),
           Container(
-            width: 1, 
-            height: 70, 
-            color: theme.mainColor.withValues(alpha: 0.5)
+            width: 1,
+            height: 70,
+            color: theme.mainColor.withValues(alpha: 0.5),
           ),
           Expanded(
             child: _buildStatItem(
@@ -267,11 +257,7 @@ class _TopScreenState extends State<TopScreen> {
     );
   }
 
-  Widget _buildStatItem(
-    String title,
-    String number,
-    String unit,
-  ) {
+  Widget _buildStatItem(String title, String number, String unit) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
