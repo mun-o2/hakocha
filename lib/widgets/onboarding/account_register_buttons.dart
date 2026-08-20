@@ -7,7 +7,8 @@ class AccountRegisterButtons extends StatelessWidget {
   final VoidCallback onLoginPressed;
   final bool canRegister;
   final bool canUseApple;
-  final bool isLoading;
+  final bool isAppleLoading;
+  final bool isGoogleLoading;
 
   const AccountRegisterButtons({
     super.key,
@@ -16,7 +17,8 @@ class AccountRegisterButtons extends StatelessWidget {
     required this.onLoginPressed,
     this.canRegister = true,
     this.canUseApple = true,
-    this.isLoading = false,
+    this.isAppleLoading = false,
+    this.isGoogleLoading = false,
   });
 
   @override
@@ -27,6 +29,7 @@ class AccountRegisterButtons extends StatelessWidget {
           icon: Icons.apple,
           text: 'Appleで続ける',
           onPressed: canRegister && canUseApple ? onApplePressed : null,
+          isLoading: isAppleLoading,
         ),
 
         const SizedBox(height: 14),
@@ -35,7 +38,7 @@ class AccountRegisterButtons extends StatelessWidget {
           icon: Icons.g_mobiledata,
           text: 'Googleで続ける',
           onPressed: canRegister ? onGooglePressed : null,
-          isLoading: isLoading,
+          isLoading: isGoogleLoading,
         ),
 
         const SizedBox(height: 24),

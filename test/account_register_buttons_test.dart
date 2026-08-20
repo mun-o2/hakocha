@@ -8,12 +8,13 @@ void main() {
   ) async {
     var googleCalls = 0;
     var loginCalls = 0;
+    var appleCalls = 0;
 
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
           body: AccountRegisterButtons(
-            onApplePressed: () {},
+            onApplePressed: () => appleCalls++,
             onGooglePressed: () => googleCalls++,
             onLoginPressed: () => loginCalls++,
           ),
@@ -21,9 +22,11 @@ void main() {
       ),
     );
 
+    await tester.tap(find.text('Appleで続ける'));
     await tester.tap(find.text('Googleで続ける'));
     await tester.tap(find.text('ご利用中の方はこちら'));
 
+    expect(appleCalls, 1);
     expect(googleCalls, 1);
     expect(loginCalls, 1);
   });
@@ -38,7 +41,7 @@ void main() {
         home: Scaffold(
           body: AccountRegisterButtons(
             canRegister: false,
-            isLoading: true,
+            isGoogleLoading: true,
             onApplePressed: () => calls++,
             onGooglePressed: () => calls++,
             onLoginPressed: () => calls++,
