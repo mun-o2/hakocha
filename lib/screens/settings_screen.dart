@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hakocha/constants/app_colors.dart';
-import 'package:hakocha/models/app_tab.dart';
-import 'package:hakocha/widgets/app_bottom_navigation_bar.dart';
 import 'package:hakocha/screens/settings/service_screen.dart';
 import 'package:hakocha/screens/settings/privacy_policy_screen.dart';
+import 'package:hakocha/services/auth_service.dart';
+
+typedef SignOutCallback = Future<void> Function();
 
 class SettingsScreen extends StatelessWidget {
   final String? email;
+  final SignOutCallback? onSignOut;
 
-  const SettingsScreen({super.key, this.email});
+  const SettingsScreen({super.key, this.email, this.onSignOut});
 
   String get _email =>
       email ?? FirebaseAuth.instance.currentUser?.email ?? '未登録';
@@ -101,7 +103,9 @@ class SettingsScreen extends StatelessWidget {
               _buildOutlinedButton(
                 title: 'お問い合わせ',
                 onTap: () {
-                  // 遷移先の画面は未作成
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('お問い合わせ機能は現在準備中です。')),
+                  );
                 },
               ),
               const SizedBox(height: 10),
@@ -114,7 +118,7 @@ class SettingsScreen extends StatelessWidget {
                 fit: BoxFit.contain, // 縦横比を維持したまま指定サイズに収める
               ),
               const Text(
-                'バージョン1.0.1',
+                'バージョン1.0.0',
                 style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
               ),
               const SizedBox(height: 12),
@@ -124,19 +128,6 @@ class SettingsScreen extends StatelessWidget {
             ],
           ),
         ),
-      ),
-
-      bottomNavigationBar: AppBottomNavigationBar(
-        currentIndex: 0,
-        onTap: (index) {
-          final selectedTab = AppTab.values[index];
-          Navigator.pushNamedAndRemoveUntil(
-            context,
-            '/home',
-            (route) => false,
-            arguments: selectedTab,
-          );
-        },
       ),
     );
   }
@@ -208,8 +199,39 @@ class SettingsScreen extends StatelessWidget {
   // ログアウトボタン
   Widget _buildLogoutButton(BuildContext context) {
     return InkWell(
-      onTap: () {
-        // ログアウト処理
+      onTap: () async {
+        final confirmed = await showDialog<bool>(
+          context: context,
+          builder: (dialogContext) => AlertDialog(
+            title: const Text('ログアウトしますか？'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(dialogContext, false),
+                child: const Text('キャンセル'),
+              ),
+              TextButton(
+                onPressed: () => Navigator.pop(dialogContext, true),
+                child: const Text('ログアウト'),
+              ),
+            ],
+          ),
+        );
+        if (confirmed != true || !context.mounted) return;
+
+        try {
+          await (onSignOut?.call() ?? AuthService().signOut());
+          if (!context.mounted) return;
+          Navigator.of(
+            context,
+            rootNavigator: true,
+          ).pushNamedAndRemoveUntil('/onboarding', (route) => false);
+        } catch (error) {
+          if (!context.mounted) return;
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('ログアウトできませんでした。もう一度お試しください。')),
+          );
+          debugPrint('Sign out error: $error');
+        }
       },
       borderRadius: BorderRadius.circular(25),
       child: Container(
@@ -331,11 +353,9 @@ class PersonalInfoScreen extends StatelessWidget {
             const Spacer(),
             // アカウント削除ボタン
             TextButton(
-              onPressed: () {
-                // アカウント削除処理
-              },
+              onPressed: null,
               child: const Text(
-                'アカウント削除',
+                'アカウント削除（準備中）',
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,

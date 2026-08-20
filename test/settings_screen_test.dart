@@ -18,6 +18,14 @@ void main() {
     );
 
     expect(find.text('test@example.com'), findsOneWidget);
+    expect(find.text('バージョン1.0.0'), findsOneWidget);
+
+    await tester.tap(find.text('メールアドレス'));
+    await tester.pumpAndSettle();
+    expect(find.text('アカウント削除（準備中）'), findsOneWidget);
+
+    await tester.tap(find.byIcon(Icons.arrow_back_ios));
+    await tester.pumpAndSettle();
 
     await tester.tap(find.text('プライバシーポリシー'));
     await tester.pumpAndSettle();
@@ -28,5 +36,49 @@ void main() {
     await tester.tap(find.text('利用規約'));
     await tester.pumpAndSettle();
     expect(find.byType(ServiceScreen), findsOneWidget);
+  });
+
+  testWidgets('inquiry shows that the feature is being prepared', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      const MaterialApp(home: SettingsScreen(email: 'test@example.com')),
+    );
+
+    await tester.tap(find.text('お問い合わせ'));
+    await tester.pump();
+
+    expect(find.text('お問い合わせ機能は現在準備中です。'), findsOneWidget);
+  });
+
+  testWidgets('logout signs out and clears the navigation history', (
+    tester,
+  ) async {
+    var signedOut = false;
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: SettingsScreen(
+          email: 'test@example.com',
+          onSignOut: () async {
+            signedOut = true;
+          },
+        ),
+        routes: {
+          '/onboarding': (_) => const Scaffold(body: Text('onboarding')),
+        },
+      ),
+    );
+
+    await tester.ensureVisible(find.text('ログアウト'));
+    await tester.tap(find.text('ログアウト'));
+    await tester.pumpAndSettle();
+    expect(find.text('ログアウトしますか？'), findsOneWidget);
+
+    await tester.tap(find.widgetWithText(TextButton, 'ログアウト'));
+    await tester.pumpAndSettle();
+
+    expect(signedOut, isTrue);
+    expect(find.text('onboarding'), findsOneWidget);
   });
 }

@@ -5,7 +5,7 @@ import 'package:hakocha/screens/splash_screen.dart';
 
 void main() {
   testWidgets('app starts with the splash screen', (tester) async {
-    await tester.pumpWidget(const HakochaApp());
+    await tester.pumpWidget(HakochaApp(resolveSignedIn: () async => false));
 
     expect(find.byType(SplashScreen), findsOneWidget);
     expect(find.byType(FadeTransition), findsWidgets);

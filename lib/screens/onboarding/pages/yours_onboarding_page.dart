@@ -12,13 +12,22 @@ class YoursOnboardingPage extends StatelessWidget {
       subtitle: '基本情報だけでなく、\n自分だけの質問ができます',
       illustrationSpacing: 60,
       illustration: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset('lib/assets/images/onboarding/tape_pink.png', width: 158),
+          Expanded(
+            child: Image.asset(
+              'lib/assets/images/onboarding/tape_pink.png',
+              fit: BoxFit.contain,
+            ),
+          ),
 
           const SizedBox(width: 10),
 
-          Image.asset('lib/assets/images/onboarding/tape_blue.png', width: 158),
+          Expanded(
+            child: Image.asset(
+              'lib/assets/images/onboarding/tape_blue.png',
+              fit: BoxFit.contain,
+            ),
+          ),
         ],
       ),
     );

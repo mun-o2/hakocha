@@ -5,6 +5,7 @@ import 'package:hakocha/models/app_tab.dart';
 import 'package:hakocha/providers/exchange_provider.dart';
 import 'package:hakocha/screens/exchange_screen.dart';
 import 'package:hakocha/screens/profile_screen.dart';
+import 'package:hakocha/screens/settings_screen.dart';
 import 'package:hakocha/screens/splash_screen.dart';
 import 'package:hakocha/screens/onboarding_screen.dart';
 import 'package:hakocha/screens/top_screen.dart';
@@ -21,7 +22,9 @@ Future<void> main() async {
 }
 
 class HakochaApp extends StatelessWidget {
-  const HakochaApp({super.key});
+  final SignedInResolver? resolveSignedIn;
+
+  const HakochaApp({super.key, this.resolveSignedIn});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +37,7 @@ class HakochaApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const SplashScreen(),
+        home: SplashScreen(resolveSignedIn: resolveSignedIn),
         routes: {
           '/onboarding': (context) => const OnboardingScreen(),
           '/home': (context) {
@@ -61,8 +64,9 @@ class _HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<_HomeScreen> {
   late AppTab _selectedTab;
+  int _transitionDirection = 1;
 
-  Key _topScreenKey = UniqueKey();
+  final _homeNavigatorKey = GlobalKey<_HomeTabNavigatorState>();
   Key _profileScreenKey = UniqueKey();
 
   @override
@@ -72,7 +76,7 @@ class _HomeScreenState extends State<_HomeScreen> {
   }
 
   List<Widget> get _screens => <Widget>[
-    TopScreen(key: _topScreenKey),
+    _HomeTabNavigator(key: _homeNavigatorKey),
 
     ExchangeScreen(
       onOpenProfile: () {
@@ -88,11 +92,13 @@ class _HomeScreenState extends State<_HomeScreen> {
 
   void _onTabSelected(int index) {
     final selectedTab = AppTab.values[index];
+    if (selectedTab == AppTab.home) {
+      _homeNavigatorKey.currentState?.popToRoot();
+    }
+    if (selectedTab == _selectedTab) return;
 
     setState(() {
-      if (selectedTab == AppTab.home) {
-        _topScreenKey = UniqueKey();
-      }
+      _transitionDirection = index > _selectedTab.index ? 1 : -1;
 
       if (selectedTab == AppTab.profile) {
         _profileScreenKey = UniqueKey();
@@ -105,10 +111,82 @@ class _HomeScreenState extends State<_HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _screens[_selectedTab.index],
+      body: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 280),
+        switchInCurve: Curves.easeOut,
+        switchOutCurve: Curves.easeIn,
+        transitionBuilder: (child, animation) {
+          final isIncoming = child.key == ValueKey(_selectedTab);
+          final direction = isIncoming
+              ? _transitionDirection.toDouble()
+              : -_transitionDirection.toDouble();
+          final offset = Tween<Offset>(
+            begin: Offset(0.08 * direction, 0),
+            end: Offset.zero,
+          ).animate(animation);
+          return FadeTransition(
+            opacity: animation,
+            child: SlideTransition(position: offset, child: child),
+          );
+        },
+        child: KeyedSubtree(
+          key: ValueKey(_selectedTab),
+          child: _screens[_selectedTab.index],
+        ),
+      ),
       bottomNavigationBar: AppBottomNavigationBar(
         currentIndex: _selectedTab.index,
         onTap: _onTabSelected,
+      ),
+    );
+  }
+}
+
+class _HomeTabNavigator extends StatefulWidget {
+  const _HomeTabNavigator({super.key});
+
+  @override
+  State<_HomeTabNavigator> createState() => _HomeTabNavigatorState();
+}
+
+class _HomeTabNavigatorState extends State<_HomeTabNavigator> {
+  final _navigatorKey = GlobalKey<NavigatorState>();
+
+  void _openSettings() {
+    _navigatorKey.currentState?.push(
+      PageRouteBuilder<void>(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            const SettingsScreen(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          final curvedAnimation = CurvedAnimation(
+            parent: animation,
+            curve: Curves.easeOutCubic,
+            reverseCurve: Curves.easeInCubic,
+          );
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(1, 0),
+              end: Offset.zero,
+            ).animate(curvedAnimation),
+            child: FadeTransition(opacity: curvedAnimation, child: child),
+          );
+        },
+        transitionDuration: const Duration(milliseconds: 280),
+        reverseTransitionDuration: const Duration(milliseconds: 240),
+      ),
+    );
+  }
+
+  void popToRoot() {
+    _navigatorKey.currentState?.popUntil((route) => route.isFirst);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Navigator(
+      key: _navigatorKey,
+      onGenerateRoute: (_) => MaterialPageRoute<void>(
+        builder: (_) => TopScreen(onOpenSettings: _openSettings),
       ),
     );
   }

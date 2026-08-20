@@ -82,101 +82,96 @@ class ProfileWhichOneContents extends StatefulWidget {
 class _ProfileWhichOneContentsState extends State<ProfileWhichOneContents> {
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      top: 170,
-      left: 20,
-      right: 0,
-      child: SizedBox(
-        width: 230,
-        child: Padding(
-          padding: const EdgeInsets.only(left: 10, top: 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ProfileWhichOneSelector(
-                prefix: "自分は【",
-                leftLabel: "   犬   ",
-                rightLabel: "   猫   ",
-                suffix: "】派",
-                theme: widget.theme,
-                value: widget.profile.dogOrCat,
-                editable: widget.editable,
-                onChanged: (v) {
-                  setState(() {
-                    widget.profile.dogOrCat = v;
-                  });
-                },
-              ),
+    return SizedBox(
+      width: 230,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 10, top: 10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ProfileWhichOneSelector(
+              prefix: "自分は【",
+              leftLabel: "   犬   ",
+              rightLabel: "   猫   ",
+              suffix: "】派",
+              theme: widget.theme,
+              value: widget.profile.dogOrCat,
+              editable: widget.editable,
+              onChanged: (v) {
+                setState(() {
+                  widget.profile.dogOrCat = v;
+                });
+              },
+            ),
 
-              const SizedBox(height: 10),
+            const SizedBox(height: 10),
 
-              ProfileWhichOneSelector(
-                prefix: "休日は【",
-                leftLabel: "   インドア   ",
-                rightLabel: "   アウトドア   ",
-                suffix: "】派",
-                theme: widget.theme,
-                value: widget.profile.indoorOrOutdoor,
-                editable: widget.editable,
-                onChanged: (v) {
-                  setState(() {
-                    widget.profile.indoorOrOutdoor = v;
-                  });
-                },
-              ),
+            ProfileWhichOneSelector(
+              prefix: "休日は【",
+              leftLabel: "   インドア   ",
+              rightLabel: "   アウトドア   ",
+              suffix: "】派",
+              theme: widget.theme,
+              value: widget.profile.indoorOrOutdoor,
+              editable: widget.editable,
+              onChanged: (v) {
+                setState(() {
+                  widget.profile.indoorOrOutdoor = v;
+                });
+              },
+            ),
 
-              const SizedBox(height: 10),
+            const SizedBox(height: 10),
 
-              ProfileWhichOneSelector(
-                prefix: "絶叫系は【",
-                leftLabel: "   乗れる   ",
-                rightLabel: "   乗れない   ",
-                suffix: "】",
-                theme: widget.theme,
-                value: widget.profile.thrill,
-                editable: widget.editable,
-                onChanged: (v) {
-                  setState(() {
-                    widget.profile.thrill = v;
-                  });
-                },
-              ),
+            ProfileWhichOneSelector(
+              prefix: "絶叫系は【",
+              leftLabel: "   乗れる   ",
+              rightLabel: "   乗れない   ",
+              suffix: "】",
+              theme: widget.theme,
+              value: widget.profile.thrill,
+              editable: widget.editable,
+              onChanged: (v) {
+                setState(() {
+                  widget.profile.thrill = v;
+                });
+              },
+            ),
 
-              const SizedBox(height: 10),
+            const SizedBox(height: 10),
 
-              ProfileWhichOneSelector(
-                prefix: "【",
-                leftLabel: "   きのこの山   ",
-                rightLabel: "   たけのこの里   ",
-                suffix: "】派",
-                theme: widget.theme,
-                value: widget.profile.kinokoOrTakenoko,
-                editable: widget.editable,
-                onChanged: (v) {
-                  setState(() {
-                    widget.profile.kinokoOrTakenoko = v;
-                  });
-                },
-              ),
+            ProfileWhichOneSelector(
+              prefix: "【",
+              leftLabel: "   きのこの山   ",
+              rightLabel: "   たけのこの里   ",
+              suffix: "】派",
+              theme: widget.theme,
+              value: widget.profile.kinokoOrTakenoko,
+              editable: widget.editable,
+              onChanged: (v) {
+                setState(() {
+                  widget.profile.kinokoOrTakenoko = v;
+                });
+              },
+            ),
 
-              const SizedBox(height: 10),
+            const SizedBox(height: 10),
 
-              ProfileWhichOneSelector(
-                prefix: "返信は【",
-                leftLabel: "   すぐ返信する   ",
-                rightLabel: "   溜めがち   ",
-                suffix: "】",
-                theme: widget.theme,
-                value: widget.profile.reply,
-                editable: widget.editable,
-                onChanged: (v) {
-                  setState(() {
-                    widget.profile.reply = v;
-                  });
-                },
-              ),
-            ],
-          ),
+            ProfileWhichOneSelector(
+              prefix: "返信は【",
+              leftLabel: "   すぐ返信する   ",
+              rightLabel: "   溜めがち   ",
+              suffix: "】",
+              theme: widget.theme,
+              value: widget.profile.reply,
+              editable: widget.editable,
+              onChanged: (v) {
+                setState(() {
+                  widget.profile.reply = v;
+                });
+              },
+            ),
+          ],
         ),
       ),
     );

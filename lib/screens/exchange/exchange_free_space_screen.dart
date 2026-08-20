@@ -169,7 +169,16 @@ class _ExchangeFreeSpaceScreenState extends State<ExchangeFreeSpaceScreen> {
 
                   const Spacer(),
 
-                  // 既存の完了ボタンはそのまま
+                  const Text(
+                    'テスト版：入力内容はまだ保存・送信されません',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: AppColors.textSecondary,
+                      fontSize: 12,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.pink4,

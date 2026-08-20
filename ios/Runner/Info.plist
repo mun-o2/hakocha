@@ -3,7 +3,7 @@
 <plist version="1.0">
 	<dict>
 		<key>GIDClientID</key>
-		<string>609000800598-2isqlf7e68liu2l8ehhbvamkso1b62f2.apps.googleusercontent.com</string>
+		<string>609000800598-o18e6pcd9snaq252nmhsu2a4acdqr3rd.apps.googleusercontent.com</string>
 		<key>CFBundleURLTypes</key>
 		<array>
 			<dict>
@@ -11,7 +11,7 @@
 				<string>Editor</string>
 				<key>CFBundleURLSchemes</key>
 				<array>
-					<string>com.googleusercontent.apps.609000800598-2isqlf7e68liu2l8ehhbvamkso1b62f2</string>
+					<string>com.googleusercontent.apps.609000800598-o18e6pcd9snaq252nmhsu2a4acdqr3rd</string>
 				</array>
 			</dict>
 		</array>
@@ -20,7 +20,7 @@
 		<key>CFBundleDevelopmentRegion</key>
 		<string>$(DEVELOPMENT_LANGUAGE)</string>
 		<key>CFBundleDisplayName</key>
-		<string>Hakocha</string>
+		<string>しぇあme</string>
 		<key>CFBundleExecutable</key>
 		<string>$(EXECUTABLE_NAME)</string>
 		<key>CFBundleIdentifier</key>
@@ -28,7 +28,7 @@
 		<key>CFBundleInfoDictionaryVersion</key>
 		<string>6.0</string>
 		<key>CFBundleName</key>
-		<string>hakocha</string>
+		<string>しぇあme</string>
 		<key>CFBundlePackageType</key>
 		<string>APPL</string>
 		<key>CFBundleShortVersionString</key>
@@ -84,7 +84,7 @@
 		
 		<!-- Multipeer / Local Network permissions for discovery -->
 		<key>NSLocalNetworkUsageDescription</key>
-		<string>近くのhakocha端末を検出するためにローカルネットワークへのアクセスを使用します。</string>
+		<string>近くのしぇあme端末を検出するためにローカルネットワークへのアクセスを使用します。</string>
 		<key>NSBonjourServices</key>
 		<array>
 			<string>_hakochaex._tcp</string>
