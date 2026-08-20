@@ -82,4 +82,13 @@ class AppColors {
 
   /// プロフィールカードSNSアイコン（ブルー）
   static const Color profileCardSNSIconBlue = Color(0xFF7DD3FC);
+
+  /// 個人情報画面の背景
+  static const Color personalInfoScreen = Color.fromARGB(255, 235, 218, 228);
+
+  /// アカウント削除ボタン
+  static const Color deleteAccountButton = Color(0xFFE55D70);
+
+  /// ログアウトボタン
+  static const Color logoutButton = Color(0xFF8E8D9B);
 }

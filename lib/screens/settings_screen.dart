@@ -1,14 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hakocha/constants/app_colors.dart';
+import 'package:hakocha/models/app_tab.dart';
+import 'package:hakocha/widgets/app_bottom_navigation_bar.dart';
+import 'package:hakocha/screens/settings/service_screen.dart';
+import 'package:hakocha/screens/settings/privacy_policy_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({super.key});
+  final String? email;
+
+  const SettingsScreen({super.key, this.email});
+
+  String get _email =>
+      email ?? FirebaseAuth.instance.currentUser?.email ?? '未登録';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundPink,
       appBar: AppBar(
+        toolbarHeight: 100.0,
         backgroundColor: AppColors.backgroundPink,
         elevation: 0,
         centerTitle: true,
@@ -16,7 +27,7 @@ class SettingsScreen extends StatelessWidget {
           '設定',
           style: TextStyle(
             color: AppColors.textPrimary,
-            fontSize: 18,
+            fontSize: 21,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -33,82 +44,100 @@ class SettingsScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 24),
+              const SizedBox(height: 18),
               // 個人情報セクション
               _buildSectionTitle('個人情報'),
-              const SizedBox(height: 12),
+              const SizedBox(height: 6),
               _buildOutlinedButton(
                 title: 'メールアドレス',
-                trailingText: 'ochanoma046@gmail.com',
+                trailingText: _email,
                 onTap: () {
                   // メールアドレスボタンのみ遷移処理を実装
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => const PersonalInfoScreen(),
-                      fullscreenDialog: true, // 下からスライドしてくるダイアログ風
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          PersonalInfoScreen(email: _email),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                            return FadeTransition(
+                              opacity: animation,
+                              child: child,
+                            );
+                          },
                     ),
                   );
                 },
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 25),
 
               // アプリ情報セクション
               _buildSectionTitle('アプリ情報'),
-              const SizedBox(height: 12),
+              const SizedBox(height: 6),
               _buildOutlinedButton(
                 title: 'プライバシーポリシー',
                 onTap: () {
-                  // 遷移先の画面は未作成
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const PrivacyPolicyScreen(),
+                    ),
+                  );
                 },
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 16),
               _buildOutlinedButton(
                 title: '利用規約',
                 onTap: () {
-                  // 遷移先の画面は未作成
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ServiceScreen(),
+                    ),
+                  );
                 },
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 16),
               _buildOutlinedButton(
                 title: 'お問い合わせ',
                 onTap: () {
                   // 遷移先の画面は未作成
                 },
               ),
-              const SizedBox(height: 48),
+              const SizedBox(height: 10),
 
               // ロゴとバージョン
               Image.asset(
                 'lib/assets/images/shareme_logo.png',
-                height: 100,
-                errorBuilder: (context, error, stackTrace) => Container(
-                  height: 100,
-                  width: 200,
-                  color: Colors.pink.withOpacity(0.2),
-                  alignment: Alignment.center,
-                  child: const Text('ロゴ画像'),
-                ),
+                // heightの指定を削除し、widthを指定してサイズを調整
+                width: 240,
+                fit: BoxFit.contain, // 縦横比を維持したまま指定サイズに収める
               ),
-              const SizedBox(height: 16),
               const Text(
                 'バージョン1.0.1',
-                style: TextStyle(
-                  fontSize: 12,
-                  color: AppColors.textSecondary,
-                ),
+                style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 12),
 
               // ログアウトボタン
               _buildLogoutButton(context),
-              const SizedBox(height: 40),
             ],
           ),
         ),
       ),
-      // ボトムナビゲーションバー（画像のレイアウトに合わせるための仮配置）
-      bottomNavigationBar: _buildBottomNavigationBar(),
+
+      bottomNavigationBar: AppBottomNavigationBar(
+        currentIndex: 0,
+        onTap: (index) {
+          final selectedTab = AppTab.values[index];
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            '/home',
+            (route) => false,
+            arguments: selectedTab,
+          );
+        },
+      ),
     );
   }
 
@@ -155,14 +184,21 @@ class SettingsScreen extends StatelessWidget {
                 color: AppColors.textPrimary,
               ),
             ),
-            if (trailingText != null)
-              Text(
-                trailingText,
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: AppColors.textSecondary,
+            if (trailingText != null) ...[
+              const SizedBox(width: 12),
+              Flexible(
+                child: Text(
+                  trailingText,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.right,
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: AppColors.textSecondary,
+                  ),
                 ),
               ),
+            ],
           ],
         ),
       ),
@@ -180,7 +216,7 @@ class SettingsScreen extends StatelessWidget {
         width: 160,
         padding: const EdgeInsets.symmetric(vertical: 12),
         decoration: BoxDecoration(
-          color: const Color(0xFF8E8D9B), // 画像に近いグレー
+          color: AppColors.logoutButton,
           borderRadius: BorderRadius.circular(25),
         ),
         child: const Center(
@@ -196,80 +232,74 @@ class SettingsScreen extends StatelessWidget {
       ),
     );
   }
-
-  // 画像にあるボトムナビゲーション（モック）
-  Widget _buildBottomNavigationBar() {
-    return Container(
-      decoration: const BoxDecoration(
-        color: AppColors.navBackground,
-        border: Border(top: BorderSide(color: Color(0xFFEAEAEA), width: 1)),
-      ),
-      child: BottomNavigationBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        selectedItemColor: AppColors.navSelectedText,
-        unselectedItemColor: AppColors.navUnselectedText,
-        selectedFontSize: 10,
-        unselectedFontSize: 10,
-        type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            activeIcon: Icon(Icons.home),
-            label: 'ホーム',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.wifi_tethering),
-            label: '交換',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.menu_book),
-            label: 'プロフィール帳',
-          ),
-        ],
-      ),
-    );
-  }
 }
 
 // ---------------------------------------------------------
-// 2枚目の画像（遷移先のメールアドレス詳細画面）
+// 遷移先のメールアドレス詳細画面
 // ---------------------------------------------------------
 class PersonalInfoScreen extends StatelessWidget {
-  const PersonalInfoScreen({super.key});
+  final String email;
+
+  const PersonalInfoScreen({super.key, required this.email});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.imapePickerBottomSheetSub,
+      backgroundColor: AppColors.personalInfoScreen,
+      // ▼ 設定画面と全く同じ見た目の AppBar を配置 ▼
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        toolbarHeight: 100.0,
+        backgroundColor: AppColors.backgroundPink,
         elevation: 0,
-        automaticallyImplyLeading: false, // 戻るボタンを非表示
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.close, color: AppColors.textPrimary, size: 28),
-            onPressed: () {
-              Navigator.pop(context);
-            },
+        centerTitle: true,
+        title: const Text(
+          '設定',
+          style: TextStyle(
+            color: AppColors.textPrimary,
+            fontSize: 21,
+            fontWeight: FontWeight.bold,
           ),
-          const SizedBox(width: 8),
-        ],
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios, color: AppColors.textPrimary),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
+      // ▼ 本文エリア（ピンク色の領域） ▼
       body: SafeArea(
         child: Column(
           children: [
-            const SizedBox(height: 40),
+            // ×ボタンを画面右上に配置
+            Align(
+              alignment: Alignment.centerRight,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 16.0, top: 16.0),
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.close,
+                    color: AppColors.textPrimary,
+                    size: 28,
+                  ),
+                  onPressed: () {
+                    // 【条件2】×をクリックするとひとつ前の設定画面に戻る
+                    Navigator.pop(context);
+                  },
+                ),
+              ),
+            ),
+            const SizedBox(height: 8), // ×ボタンとタイトルの余白調整
             const Text(
               '個人情報',
               style: TextStyle(
-                fontSize: 20,
+                fontSize: 22,
                 fontWeight: FontWeight.bold,
                 color: AppColors.textPrimary,
               ),
             ),
             const SizedBox(height: 60),
-            const Padding(
+            Padding(
               padding: EdgeInsets.symmetric(horizontal: 40.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -282,11 +312,17 @@ class PersonalInfoScreen extends StatelessWidget {
                       color: AppColors.textPrimary,
                     ),
                   ),
-                  Text(
-                    'ochanoma046@gmail.com',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: AppColors.textSecondary,
+                  const SizedBox(width: 12),
+                  Flexible(
+                    child: Text(
+                      email,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.right,
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: AppColors.textSecondary,
+                      ),
                     ),
                   ),
                 ],
@@ -303,7 +339,7 @@ class PersonalInfoScreen extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFFE55D70), // 赤系の文字色
+                  color: AppColors.deleteAccountButton,
                 ),
               ),
             ),
