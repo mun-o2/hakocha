@@ -5,11 +5,15 @@ import 'package:hakocha/models/app_tab.dart';
 import 'package:hakocha/widgets/app_bottom_navigation_bar.dart';
 import 'package:hakocha/screens/settings/service_screen.dart';
 import 'package:hakocha/screens/settings/privacy_policy_screen.dart';
+import 'package:hakocha/services/auth_service.dart';
+
+typedef SignOutCallback = Future<void> Function();
 
 class SettingsScreen extends StatelessWidget {
   final String? email;
+  final SignOutCallback? onSignOut;
 
-  const SettingsScreen({super.key, this.email});
+  const SettingsScreen({super.key, this.email, this.onSignOut});
 
   String get _email =>
       email ?? FirebaseAuth.instance.currentUser?.email ?? '未登録';
@@ -208,8 +212,40 @@ class SettingsScreen extends StatelessWidget {
   // ログアウトボタン
   Widget _buildLogoutButton(BuildContext context) {
     return InkWell(
-      onTap: () {
-        // ログアウト処理
+      onTap: () async {
+        final confirmed = await showDialog<bool>(
+          context: context,
+          builder: (dialogContext) => AlertDialog(
+            title: const Text('ログアウトしますか？'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(dialogContext, false),
+                child: const Text('キャンセル'),
+              ),
+              TextButton(
+                onPressed: () => Navigator.pop(dialogContext, true),
+                child: const Text('ログアウト'),
+              ),
+            ],
+          ),
+        );
+        if (confirmed != true || !context.mounted) return;
+
+        try {
+          await (onSignOut?.call() ?? AuthService().signOut());
+          if (!context.mounted) return;
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            '/onboarding',
+            (route) => false,
+          );
+        } catch (error) {
+          if (!context.mounted) return;
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('ログアウトできませんでした。もう一度お試しください。')),
+          );
+          debugPrint('Sign out error: $error');
+        }
       },
       borderRadius: BorderRadius.circular(25),
       child: Container(

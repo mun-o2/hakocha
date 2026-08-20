@@ -29,4 +29,34 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byType(ServiceScreen), findsOneWidget);
   });
+
+  testWidgets('logout signs out and clears the navigation history', (
+    tester,
+  ) async {
+    var signedOut = false;
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: SettingsScreen(
+          email: 'test@example.com',
+          onSignOut: () async {
+            signedOut = true;
+          },
+        ),
+        routes: {
+          '/onboarding': (_) => const Scaffold(body: Text('onboarding')),
+        },
+      ),
+    );
+
+    await tester.tap(find.text('ログアウト'));
+    await tester.pumpAndSettle();
+    expect(find.text('ログアウトしますか？'), findsOneWidget);
+
+    await tester.tap(find.widgetWithText(TextButton, 'ログアウト'));
+    await tester.pumpAndSettle();
+
+    expect(signedOut, isTrue);
+    expect(find.text('onboarding'), findsOneWidget);
+  });
 }

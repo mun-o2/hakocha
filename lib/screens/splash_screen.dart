@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hakocha/constants/app_colors.dart';
+
+typedef SignedInResolver = Future<bool> Function();
 
 /// アプリケーションのスプラッシュスクリーン
 ///
 /// 起動時に表示され、約1.5〜2秒後にフェードアニメーションで
 /// ホーム画面へ遷移します。
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+  final SignedInResolver? resolveSignedIn;
+
+  const SplashScreen({super.key, this.resolveSignedIn});
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -31,17 +36,26 @@ class _SplashScreenState extends State<SplashScreen>
       CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
     );
 
-    // 1.5秒後にアニメーション開始
-    Future.delayed(const Duration(milliseconds: 1500), () {
-      if (mounted) {
-    _animationController.forward().then((_) {
-      if (mounted) {
-        // オンボーディングへ遷移
-        Navigator.of(context).pushReplacementNamed('/onboarding');
-      }
-    });
-      }
-    });
+    _completeSplash();
+  }
+
+  Future<void> _completeSplash() async {
+    final signedInFuture =
+        widget.resolveSignedIn?.call() ??
+        Future<bool>.value(FirebaseAuth.instance.currentUser != null);
+
+    await Future<void>.delayed(const Duration(milliseconds: 1500));
+    if (!mounted) return;
+
+    await _animationController.forward();
+    if (!mounted) return;
+
+    final signedIn = await signedInFuture;
+    if (!mounted) return;
+
+    Navigator.of(
+      context,
+    ).pushReplacementNamed(signedIn ? '/home' : '/onboarding');
   }
 
   @override

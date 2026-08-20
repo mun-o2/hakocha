@@ -21,7 +21,9 @@ Future<void> main() async {
 }
 
 class HakochaApp extends StatelessWidget {
-  const HakochaApp({super.key});
+  final SignedInResolver? resolveSignedIn;
+
+  const HakochaApp({super.key, this.resolveSignedIn});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,7 @@ class HakochaApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const SplashScreen(),
+        home: SplashScreen(resolveSignedIn: resolveSignedIn),
         routes: {
           '/onboarding': (context) => const OnboardingScreen(),
           '/home': (context) {
@@ -105,7 +107,25 @@ class _HomeScreenState extends State<_HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _screens[_selectedTab.index],
+      body: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 280),
+        switchInCurve: Curves.easeOut,
+        switchOutCurve: Curves.easeIn,
+        transitionBuilder: (child, animation) {
+          final offset = Tween<Offset>(
+            begin: const Offset(0.035, 0),
+            end: Offset.zero,
+          ).animate(animation);
+          return FadeTransition(
+            opacity: animation,
+            child: SlideTransition(position: offset, child: child),
+          );
+        },
+        child: KeyedSubtree(
+          key: ValueKey(_selectedTab),
+          child: _screens[_selectedTab.index],
+        ),
+      ),
       bottomNavigationBar: AppBottomNavigationBar(
         currentIndex: _selectedTab.index,
         onTap: _onTabSelected,
