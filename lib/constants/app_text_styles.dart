@@ -108,7 +108,6 @@ class AppTextStyles {
   static TextStyle get profileTitle =>
       GoogleFonts.moul(fontSize: 30, color: AppColors.white);
 
-  //テキストスタイル系リファクタリング完了しました
   //プロフィール帳のカードに特化して作っているので、他のパーツでは使わないことを推奨します
   static final TextStyle profileFormatLarge = GoogleFonts.zenMaruGothic(
     fontSize: 15,

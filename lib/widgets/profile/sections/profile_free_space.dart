@@ -22,63 +22,68 @@ class ProfileFreeSpace extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return (SizedBox(
-      width: 300,
-      height: 180,
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          // Free Space
-          Positioned(
-            left: 0,
-            top: 0,
-            child: OutlinedText(
-              text: "Free Space",
-              style: AppTextStyles.profileTitle,
-              outlineColor: theme.mainColor,
-              mainColor: AppColors.white,
-            ),
-          ),
-          Positioned(
-            left: 160,
-            top: 40,
-            child: Align(
-              alignment: Alignment.centerRight,
+    return Positioned(
+      top: 462,
+      left: 30,
+      right: 0,
+      child: SizedBox(
+        width: 300,
+        height: 180,
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            // Free Space
+            Positioned(
+              left: 0,
+              top: 0,
               child: OutlinedText(
-                text: "ここは自由に記入してね",
-                style: AppTextStyles.profileFormatSmall,
-                outlineColor: AppColors.white,
-                mainColor: theme.mainColor,
-                strokeWidth: 2,
+                text: "Free Space",
+                style: AppTextStyles.profileTitle,
+                outlineColor: theme.mainColor,
+                mainColor: AppColors.white,
               ),
             ),
-          ),
-
-          // 入力欄
-          Positioned(
-            left: 0,
-            top: 65,
-            child: ProfileContainer(
-              width: 310,
-              height: 130,
-
-              background: const ProfileWhiteSquare(),
-
-              child: Padding(
-                padding: const EdgeInsets.all(5),
-                child: ProfileFreeSpaceInput(
-                  value: profile.freeSpace,
-                  editable: editable,
-                  theme: theme,
-                  onChanged: (text) {
-                    profile.freeSpace = text;
-                  },
+            Positioned(
+              left: 147,
+              top: 35,
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: OutlinedText(
+                  text: "ここは自由に記入してね",
+                  style: AppTextStyles.profileFormatSmall,
+                  outlineColor: AppColors.white,
+                  mainColor: theme.mainColor,
+                  strokeWidth: 2,
                 ),
               ),
             ),
-          ),
-        ],
+
+            // 入力欄
+            Positioned(
+              left: 0,
+              top: 55,
+              child: ProfileContainer(
+                width: 270,
+                height: 121,
+
+                background: const ProfileWhiteSquare(),
+
+                child: Padding(
+                  padding: const EdgeInsets.all(5),
+                  child: ProfileFreeSpaceInput(
+                    value: profile.freeSpace,
+                    editable: editable,
+                    theme: theme,
+                    onChanged: (text) {
+                      profile.freeSpace = text;
+                    },
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
-    ));
+    );
   }
 }

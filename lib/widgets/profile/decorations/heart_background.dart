@@ -1,53 +1,56 @@
 import 'package:flutter/material.dart';
-import '../../../constants/app_colors.dart';
 import '../../../constants/profile_theme.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'dart:ui';
 
 //【背景】LoveTalkのハート
 class LoveTalkHeart extends StatelessWidget {
-  final bool isPink;
+  final bool isPurple;
   final ProfileCardThemeColor theme;
+  final double? width;
+  final double? height;
 
-  const LoveTalkHeart({super.key, required this.isPink, required this.theme});
+  const LoveTalkHeart({
+    super.key,
+    required this.isPurple,
+    required this.theme,
+    this.width,
+    this.height,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Transform.scale(
-      scaleX: (isPink ? 0.88 : 1.0),
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          // テーマカラーのふちどり
-          Icon(
-            Icons.favorite,
-            size: (isPink ? 300 : 120),
-            color: (isPink ? theme.mainColor : AppColors.purple4).withValues(
-              alpha: 0.3,
-            ),
-            shadows: [
-              Shadow(
-                color: (isPink ? theme.mainColor : AppColors.purple4)
-                    .withValues(alpha: 0.3),
-                blurRadius: 7,
-              ),
-            ],
-          ),
+    // 白いハート
+    final whitePath = isPurple
+        ? 'lib/assets/images/profile/small_heart_background.svg'
+        : 'lib/assets/images/profile/big_heart_background.svg';
 
-          // 白ふちどり
-          Icon(
-            Icons.favorite,
-            size: (isPink ? 282 : 107),
-            color: AppColors.white.withValues(alpha: 0.3),
-            shadows: [Shadow(color: AppColors.white, blurRadius: 5)],
-          ),
+    final String outlinePath;
 
-          // 白中身
-          Icon(
-            Icons.favorite,
-            size: (isPink ? 240 : 102),
-            color: AppColors.white,
-          ),
-        ],
-      ),
+    // 縁取り
+    if (isPurple) {
+      outlinePath = 'lib/assets/images/profile/heart_outline_purple.svg';
+    } else if (theme == pinkProfileCardTheme) {
+      outlinePath = 'lib/assets/images/profile/heart_outline_pink.svg';
+    } else {
+      outlinePath = 'lib/assets/images/profile/heart_outline_blue.svg';
+    }
+
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        // 白いハート
+        ImageFiltered(
+          imageFilter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+          child: SvgPicture.asset(whitePath),
+        ),
+
+        // ぼかした縁取り
+        ImageFiltered(
+          imageFilter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+          child: SvgPicture.asset(outlinePath),
+        ),
+      ],
     );
   }
 }

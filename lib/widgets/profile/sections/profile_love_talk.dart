@@ -7,6 +7,7 @@ import '../../../constants/profile_theme.dart';
 import '../inputs/profile_yes_no.dart';
 import '../decorations/heart_background.dart';
 import '../inputs/profile_heart_input.dart';
+import '../common/profile_container.dart';
 
 // LoveTalk
 class ProfileLoveTalk extends StatefulWidget {
@@ -29,29 +30,25 @@ class _ProfileLoveTalkState extends State<ProfileLoveTalk> {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      left: 155,
-      right: 10,
-      bottom: 105,
-      child: SizedBox(
-        width: 250,
-        height: 300,
-        child: Stack(
-          children: [
-            // 大きなハート
-            Positioned(
-              left: -45,
-              bottom: -120,
-              child: LoveTalkHeart(isPink: true, theme: widget.theme),
-            ),
+      top: 420,
+      left: 126,
+      right: 0,
+      child: Stack(
+        alignment: Alignment.center,
+        clipBehavior: Clip.none,
+        children: [
+          //大きいハート
+          ProfileContainer(
+            width: 211,
+            height: 233,
+            background: LoveTalkHeart(isPurple: false, theme: widget.theme),
 
-            // LoveTalk
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 10),
               child: Column(
-                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  // LoveTalk
                   OutlinedText(
                     text: "LoveTalk",
                     style: AppTextStyles.profileTitle,
@@ -59,7 +56,7 @@ class _ProfileLoveTalkState extends State<ProfileLoveTalk> {
                     mainColor: AppColors.white,
                   ),
 
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 3),
 
                   ProfileYesNoSelector(
                     question: "告白したことある？",
@@ -103,42 +100,45 @@ class _ProfileLoveTalkState extends State<ProfileLoveTalk> {
                 ],
               ),
             ),
+          ),
 
-            // 小さなハート
-            Positioned(
-              right: 0,
-              bottom: 0,
-              child: LoveTalkHeart(isPink: false, theme: widget.theme),
-            ),
+          Positioned(
+            left: 92,
+            top: 138,
+            child: ProfileContainer(
+              width: 107,
+              height: 97,
+              background: LoveTalkHeart(isPurple: true, theme: widget.theme),
 
-            // 理想のタイプ
-            Positioned(
-              right: 0,
-              bottom: 80,
-              child: OutlinedText(
-                text: "理想のタイプは？",
-                style: AppTextStyles.profileFormatSmall,
-                outlineColor: AppColors.white,
-                strokeWidth: 2.5,
-                mainColor: AppColors.purple4,
+              title: Align(
+                alignment: Alignment.topCenter,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 4),
+                  child: OutlinedText(
+                    text: "理想のタイプは？",
+                    style: AppTextStyles.profileFormatSmall,
+                    outlineColor: AppColors.white,
+                    mainColor: AppColors.purple4,
+                  ),
+                ),
+              ),
+
+              child: Padding(
+                padding: const EdgeInsets.only(top: 4, bottom: 15),
+                child: ProfileHeartInput(
+                  value: widget.profile.idealType,
+                  editable: widget.editable,
+                  theme: widget.theme,
+                  height: 60,
+                  width: 102,
+                  onChanged: (text) {
+                    widget.profile.idealType = text;
+                  },
+                ),
               ),
             ),
-
-            // 理想のタイプ入力
-            Positioned(
-              right: -8,
-              bottom: 30,
-              child: ProfileInputHeart(
-                value: widget.profile.idealType,
-                editable: widget.editable,
-                theme: widget.theme,
-                onChanged: (text) {
-                  widget.profile.idealType = text;
-                },
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -4,6 +4,7 @@ import '../../../constants/app_text_styles.dart';
 import '../../../constants/app_colors.dart';
 import '../common/outlined_text.dart';
 import '../../../constants/profile_theme.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 //YES・NO質問のフォーマット
 class ProfileYesNoSelector extends StatelessWidget {
@@ -28,7 +29,7 @@ class ProfileYesNoSelector extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox(
-          width: 150,
+          width: 120,
           child: Align(
             alignment: Alignment.centerRight,
             child: OutlinedText(
@@ -52,7 +53,7 @@ class ProfileYesNoSelector extends StatelessWidget {
           theme: theme,
         ),
 
-        const SizedBox(width: 8),
+        const SizedBox(width: 4),
 
         YesNoButton(
           label: "NO",
@@ -117,10 +118,10 @@ class YesNoButton extends StatelessWidget {
               strokeWidth: 2.5,
             ),
             selected
-                ? const Icon(
-                    Icons.circle_outlined,
-                    size: 22,
-                    color: AppColors.circleOutlined,
+                ? SvgPicture.asset(
+                    'lib/assets/images/profile/doodle_circle.svg',
+                    width: 22,
+                    height: 22,
                   )
                 : const SizedBox(),
           ],

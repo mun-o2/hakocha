@@ -30,9 +30,9 @@ class ProfileHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Positioned(
       left: 45,
-      top: 65,
+      top: 62,
       child: SizedBox(
-        width: 270,
+        width: 280,
         height: 120,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,33 +77,36 @@ class ProfileHeader extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(width: 55),
+            const SizedBox(width: 40),
 
             // SNS
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Center(
-                    child: OutlinedText(
-                      text: "SNS",
-                      style: AppTextStyles.profileSNSLabel,
-                      outlineColor: theme.mainColor,
-                      mainColor: AppColors.white,
-                      strokeWidth: 2.5,
+                  Padding(
+                    padding: const EdgeInsets.only(top: 5, right: 60),
+                    child: Align(
+                      child: OutlinedText(
+                        text: "SNS",
+                        style: AppTextStyles.profileSNSLabel,
+                        outlineColor: theme.mainColor,
+                        mainColor: AppColors.white,
+                        strokeWidth: 2.5,
+                      ),
                     ),
                   ),
 
-                  const SizedBox(height: 15),
+                  const SizedBox(height: 10),
 
                   Row(
                     children: [
                       Iconify(
                         AntDesign.instagram_outlined,
-                        color: theme.mainColor,
+                        color: theme.snsIconColor,
                         size: 22,
                       ),
-                      const SizedBox(width: 10),
+                      const SizedBox(width: 25),
                       Expanded(
                         child: editable
                             ? ProfileSnsInput(
@@ -128,8 +131,8 @@ class ProfileHeader extends StatelessWidget {
 
                   Row(
                     children: [
-                      Iconify(Bxl.twitter, color: theme.mainColor, size: 22),
-                      const SizedBox(width: 10),
+                      Iconify(Bxl.twitter, color: theme.snsIconColor, size: 22),
+                      const SizedBox(width: 25),
                       Expanded(
                         child: editable
                             ? ProfileSnsInput(

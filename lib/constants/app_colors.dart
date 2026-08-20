@@ -76,4 +76,10 @@ class AppColors {
 
   /// ブルー5（ブルー背景）
   static const Color profileCardBackgroundBlue = Color(0xFFEAF8FF);
+
+  /// プロフィールカードSNSアイコン（ピンク）
+  static const Color profileCardSNSIconPink = Color(0xFFFFA9D1);
+
+  /// プロフィールカードSNSアイコン（ブルー）
+  static const Color profileCardSNSIconBlue = Color(0xFF7DD3FC);
 }
