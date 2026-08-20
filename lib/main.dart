@@ -66,7 +66,7 @@ class _HomeScreenState extends State<_HomeScreen> {
   late AppTab _selectedTab;
   int _transitionDirection = 1;
 
-  Key _topScreenKey = UniqueKey();
+  final _homeNavigatorKey = GlobalKey<_HomeTabNavigatorState>();
   Key _profileScreenKey = UniqueKey();
 
   @override
@@ -76,7 +76,7 @@ class _HomeScreenState extends State<_HomeScreen> {
   }
 
   List<Widget> get _screens => <Widget>[
-    _HomeTabNavigator(key: _topScreenKey),
+    _HomeTabNavigator(key: _homeNavigatorKey),
 
     ExchangeScreen(
       onOpenProfile: () {
@@ -92,13 +92,13 @@ class _HomeScreenState extends State<_HomeScreen> {
 
   void _onTabSelected(int index) {
     final selectedTab = AppTab.values[index];
+    if (selectedTab == AppTab.home) {
+      _homeNavigatorKey.currentState?.popToRoot();
+    }
     if (selectedTab == _selectedTab) return;
 
     setState(() {
       _transitionDirection = index > _selectedTab.index ? 1 : -1;
-      if (selectedTab == AppTab.home) {
-        _topScreenKey = UniqueKey();
-      }
 
       if (selectedTab == AppTab.profile) {
         _profileScreenKey = UniqueKey();
@@ -158,14 +158,27 @@ class _HomeTabNavigatorState extends State<_HomeTabNavigator> {
         pageBuilder: (context, animation, secondaryAnimation) =>
             const SettingsScreen(),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          return FadeTransition(
-            opacity: CurvedAnimation(parent: animation, curve: Curves.easeOut),
-            child: child,
+          final curvedAnimation = CurvedAnimation(
+            parent: animation,
+            curve: Curves.easeOutCubic,
+            reverseCurve: Curves.easeInCubic,
+          );
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(1, 0),
+              end: Offset.zero,
+            ).animate(curvedAnimation),
+            child: FadeTransition(opacity: curvedAnimation, child: child),
           );
         },
-        transitionDuration: const Duration(milliseconds: 220),
+        transitionDuration: const Duration(milliseconds: 280),
+        reverseTransitionDuration: const Duration(milliseconds: 240),
       ),
     );
+  }
+
+  void popToRoot() {
+    _navigatorKey.currentState?.popUntil((route) => route.isFirst);
   }
 
   @override
