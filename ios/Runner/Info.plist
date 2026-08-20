@@ -2,6 +2,19 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 	<dict>
+		<key>GIDClientID</key>
+		<string>609000800598-2isqlf7e68liu2l8ehhbvamkso1b62f2.apps.googleusercontent.com</string>
+		<key>CFBundleURLTypes</key>
+		<array>
+			<dict>
+				<key>CFBundleTypeRole</key>
+				<string>Editor</string>
+				<key>CFBundleURLSchemes</key>
+				<array>
+					<string>com.googleusercontent.apps.609000800598-2isqlf7e68liu2l8ehhbvamkso1b62f2</string>
+				</array>
+			</dict>
+		</array>
 		<key>CADisableMinimumFrameDurationOnPhone</key>
 		<true/>
 		<key>CFBundleDevelopmentRegion</key>
@@ -68,5 +81,13 @@
 		</array>
 		<key>UIStatusBarHidden</key>
 		<false/>
+		
+		<!-- Multipeer / Local Network permissions for discovery -->
+		<key>NSLocalNetworkUsageDescription</key>
+		<string>近くのhakocha端末を検出するためにローカルネットワークへのアクセスを使用します。</string>
+		<key>NSBonjourServices</key>
+		<array>
+			<string>_hakochaex._tcp</string>
+		</array>
 	</dict>
 </plist>

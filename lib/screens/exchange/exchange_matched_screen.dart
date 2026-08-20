@@ -89,7 +89,7 @@ class ExchangeMatchedScreen extends StatelessWidget {
               ),
             ),
 
-            const Spacer(),
+            const SizedBox(height: 32),
 
             // 記入するボタン
             SizedBox(
@@ -98,10 +98,10 @@ class ExchangeMatchedScreen extends StatelessWidget {
               child: OutlinedButton(
                 onPressed: provider.startWriting,
                 style: OutlinedButton.styleFrom(
-                  foregroundColor: AppColors.purple5,
+                  foregroundColor: AppColors.purple4,
                   backgroundColor: AppColors.backgroundWhite,
                   padding: EdgeInsets.zero,
-                  side: const BorderSide(color: AppColors.purple5, width: 2),
+                  side: const BorderSide(color: AppColors.purple4, width: 2),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(32),
                   ),
@@ -110,7 +110,7 @@ class ExchangeMatchedScreen extends StatelessWidget {
                   '記入する！',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: AppColors.purple5,
+                    color: AppColors.purple4,
                     fontSize: 20,
                     fontFamily: 'Noto Sans JP',
                     fontWeight: FontWeight.w400,
@@ -143,11 +143,11 @@ class ExchangeMatchedScreen extends StatelessWidget {
       height: 180,
       child: Stack(
         alignment: Alignment.center,
-        clipBehavior: Clip.none, // ← 上にはみ出しても表示する
+        clipBehavior: Clip.none, // 上にはみ出しても表示する
         children: [
           // アイコン周囲のattention装飾
           Transform.translate(
-            offset: const Offset(0, -25), // ← attentionだけ上へ
+            offset: const Offset(0, -25), // attentionだけ上へ
             child: Image.asset(
               'lib/assets/images/sharematched_attention.png',
               width: 300,

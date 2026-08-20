@@ -5,11 +5,11 @@ class DummyNotifications {
 }
 
 final DummyNotifications1 = DummyNotifications(
-  notification1: "さくらさんからプロフ帳が\n返ってきました",
-  notification2: "まどかさんからプロフ帳が\n返ってきました",
+  notification1: "さくらさんから返ってきました",
+  notification2: "まどかさんから返ってきました",
 );
 
 final DummyNotifications2 = DummyNotifications(
-  notification1: "あかりさんからプロフ帳が\n返ってきました",
-  notification2: "しょうたさんからプロフ帳が\n返ってきました",
+  notification1: "あかりさんから返ってきました",
+  notification2: "しょうたさんから返ってきました",
 );

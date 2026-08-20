@@ -103,7 +103,7 @@ class ProfileHeader extends StatelessWidget {
                     children: [
                       Iconify(
                         AntDesign.instagram_outlined,
-                        color: theme.SNSIconColor,
+                        color: theme.snsIconColor,
                         size: 22,
                       ),
                       const SizedBox(width: 25),
@@ -131,7 +131,7 @@ class ProfileHeader extends StatelessWidget {
 
                   Row(
                     children: [
-                      Iconify(Bxl.twitter, color: theme.SNSIconColor, size: 22),
+                      Iconify(Bxl.twitter, color: theme.snsIconColor, size: 22),
                       const SizedBox(width: 25),
                       Expanded(
                         child: editable

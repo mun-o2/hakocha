@@ -16,7 +16,6 @@ import '../widgets/profile/sections/profile_love_talk.dart';
 
 //ダミーデータの読み込み
 import '../dummy/dummy_profile.dart';
-import '../dummy/dummy_profile2.dart';
 import '../models/profile_data.dart';
 
 class ProfileCardLeft extends StatefulWidget {

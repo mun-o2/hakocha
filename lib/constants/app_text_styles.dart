@@ -141,4 +141,47 @@ class AppTextStyles {
     fontFamily: _fontFamilyDefault,
     fontWeight: FontWeight.w700,
   );
+
+  /* オンボーディング */
+  // オンボーディングタイトル
+  static const TextStyle onboardingTitle = TextStyle(
+    color: AppColors.pink4,
+    fontSize: 32,
+    fontFamily: _fontFamilyDefault,
+    fontWeight: FontWeight.w700,
+    height: 1.5,
+  );
+
+  /// オンボーディング説明文
+  static const TextStyle onboardingSubtitle = TextStyle(
+    color: AppColors.textPrimary,
+    fontSize: 16,
+    fontFamily: _fontFamilyDefault,
+    fontWeight: FontWeight.w400,
+    height: 2,
+  );
+
+  /// オンボーディングボタン
+  static const TextStyle onboardingButton = TextStyle(
+    color: Colors.white,
+    fontSize: 14,
+    fontFamily: _fontFamilyDefault,
+    fontWeight: FontWeight.w500,
+  );
+
+  /// 「ご利用中の方は」
+  static const TextStyle onboardingLink = TextStyle(
+    color: AppColors.textPrimary,
+    fontSize: 14,
+    fontFamily: _fontFamilyDefault,
+    fontWeight: FontWeight.w500,
+  );
+
+  /// 「こちら」
+  static const TextStyle onboardingLinkAccent = TextStyle(
+    color: AppColors.purple4,
+    fontSize: 14,
+    fontFamily: _fontFamilyDefault,
+    fontWeight: FontWeight.w500,
+  );
 }

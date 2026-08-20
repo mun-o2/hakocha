@@ -9,7 +9,9 @@ import 'package:hakocha/screens/exchange/exchange_matched_screen.dart';
 import 'package:hakocha/screens/exchange/exchange_start_screen.dart';
 
 class ExchangeScreen extends StatelessWidget {
-  const ExchangeScreen({super.key});
+  const ExchangeScreen({super.key, required this.onOpenProfile});
+
+  final VoidCallback onOpenProfile;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,7 @@ class ExchangeScreen extends StatelessWidget {
             case ExchangeStep.writing:
               return const ExchangeFreeSpaceScreen();
             case ExchangeStep.completed:
-              return const ExchangeCompletedScreen();
+              return ExchangeCompletedScreen(onOpenProfile: onOpenProfile);
           }
         },
       ),
