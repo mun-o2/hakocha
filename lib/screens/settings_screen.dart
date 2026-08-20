@@ -103,7 +103,9 @@ class SettingsScreen extends StatelessWidget {
               _buildOutlinedButton(
                 title: 'お問い合わせ',
                 onTap: () {
-                  // 遷移先の画面は未作成
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('お問い合わせ機能は現在準備中です。')),
+                  );
                 },
               ),
               const SizedBox(height: 10),
@@ -116,7 +118,7 @@ class SettingsScreen extends StatelessWidget {
                 fit: BoxFit.contain, // 縦横比を維持したまま指定サイズに収める
               ),
               const Text(
-                'バージョン1.0.1',
+                'バージョン1.0.0',
                 style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
               ),
               const SizedBox(height: 12),
@@ -351,11 +353,9 @@ class PersonalInfoScreen extends StatelessWidget {
             const Spacer(),
             // アカウント削除ボタン
             TextButton(
-              onPressed: () {
-                // アカウント削除処理
-              },
+              onPressed: null,
               child: const Text(
-                'アカウント削除',
+                'アカウント削除（準備中）',
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,

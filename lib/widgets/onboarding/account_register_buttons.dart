@@ -7,6 +7,7 @@ class AccountRegisterButtons extends StatelessWidget {
   final VoidCallback onLoginPressed;
   final bool canRegister;
   final bool canUseApple;
+  final bool isLoading;
 
   const AccountRegisterButtons({
     super.key,
@@ -15,6 +16,7 @@ class AccountRegisterButtons extends StatelessWidget {
     required this.onLoginPressed,
     this.canRegister = true,
     this.canUseApple = true,
+    this.isLoading = false,
   });
 
   @override
@@ -33,12 +35,13 @@ class AccountRegisterButtons extends StatelessWidget {
           icon: Icons.g_mobiledata,
           text: 'Googleで続ける',
           onPressed: canRegister ? onGooglePressed : null,
+          isLoading: isLoading,
         ),
 
         const SizedBox(height: 24),
 
         TextButton(
-          onPressed: onLoginPressed,
+          onPressed: canRegister ? onLoginPressed : null,
           child: const Text.rich(
             TextSpan(
               children: [
@@ -63,8 +66,14 @@ class _AuthButton extends StatelessWidget {
   final IconData icon;
   final String text;
   final VoidCallback? onPressed;
+  final bool isLoading;
 
-  const _AuthButton({required this.icon, required this.text, this.onPressed});
+  const _AuthButton({
+    required this.icon,
+    required this.text,
+    this.onPressed,
+    this.isLoading = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -81,17 +90,29 @@ class _AuthButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(30),
           ),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, size: 24),
-            const SizedBox(width: 16),
-            Text(
-              text,
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-            ),
-          ],
-        ),
+        child: isLoading
+            ? const SizedBox(
+                width: 22,
+                height: 22,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2.5,
+                  color: Colors.white,
+                ),
+              )
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(icon, size: 24),
+                  const SizedBox(width: 16),
+                  Text(
+                    text,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
       ),
     );
   }

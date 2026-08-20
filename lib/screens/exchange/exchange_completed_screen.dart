@@ -67,7 +67,7 @@ class _ExchangeCompletedScreenState extends State<ExchangeCompletedScreen>
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const Text(
-                      '相手に届いたよ！',
+                      'テスト完了！',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: AppColors.pink4,
@@ -76,7 +76,18 @@ class _ExchangeCompletedScreenState extends State<ExchangeCompletedScreen>
                       ),
                     ),
 
-                    const SizedBox(height: 40),
+                    const SizedBox(height: 12),
+
+                    const Text(
+                      '交換内容はまだ保存・送信されていません',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: AppColors.textSecondary,
+                        fontSize: 13,
+                      ),
+                    ),
+
+                    const SizedBox(height: 28),
 
                     // ふわふわする画像（気に入らなかったら消してね）
                     FadeTransition(
