@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hakocha/constants/app_colors.dart';
 import 'package:hakocha/screens/onboarding/pages/exchange_onboarding_page.dart';
 import 'package:hakocha/screens/onboarding/pages/welcome_onboarding_page.dart';
@@ -21,7 +22,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final AuthService _authService = AuthService();
 
   int _page = 0;
-  bool _isAuthenticating = false;
+  _AuthProvider? _authenticatingProvider;
+
+  bool get _isAuthenticating => _authenticatingProvider != null;
 
   List<Widget> get pages => [
     const WelcomeOnboardingPage(),
@@ -38,7 +41,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Future<void> _signInWithGoogle() async {
     if (_isAuthenticating) return;
 
-    setState(() => _isAuthenticating = true);
+    setState(() => _authenticatingProvider = _AuthProvider.google);
 
     try {
       final credential = await _authService.signInWithGoogle();
@@ -56,14 +59,48 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       _showSignInError();
       debugPrint('Google Sign In error: $error');
     } finally {
-      if (mounted) setState(() => _isAuthenticating = false);
+      if (mounted) setState(() => _authenticatingProvider = null);
     }
   }
 
-  void _showSignInError() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Googleログインに失敗しました。もう一度お試しください。')),
-    );
+  Future<void> _signInWithApple() async {
+    if (_isAuthenticating) return;
+
+    setState(() => _authenticatingProvider = _AuthProvider.apple);
+
+    try {
+      final credential = await _authService.signInWithApple();
+      if (credential.user == null || !mounted) return;
+
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (_) => const ProfileSetupOnboardingScreen()),
+      );
+    } on FirebaseAuthException catch (error) {
+      if (!mounted || _isCancellation(error.code)) return;
+      _showSignInError(provider: _AuthProvider.apple);
+      debugPrint('Apple Sign In error: $error');
+    } catch (error) {
+      if (!mounted) return;
+      _showSignInError(provider: _AuthProvider.apple);
+      debugPrint('Apple Sign In error: $error');
+    } finally {
+      if (mounted) setState(() => _authenticatingProvider = null);
+    }
+  }
+
+  bool _isCancellation(String code) {
+    return code == 'web-context-cancelled' ||
+        code == 'canceled' ||
+        code == 'cancelled';
+  }
+
+  void _showSignInError({_AuthProvider provider = _AuthProvider.google}) {
+    final message = provider == _AuthProvider.apple
+        ? 'Appleログインを利用できません。設定完了後にもう一度お試しください。'
+        : 'Googleログインに失敗しました。もう一度お試しください。';
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
   }
 
   @override
@@ -91,30 +128,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
             AccountRegisterButtons(
               canRegister: !_isAuthenticating,
-              isLoading: _isAuthenticating,
-              // Developer側のSign in with Apple capability設定完了後に有効化する。
-              canUseApple: false,
-              // appleの登録
-              onApplePressed: () async {
-                try {
-                  final credential = await _authService.signInWithApple();
-
-                  final user = credential.user;
-
-                  if (user == null) return;
-
-                  // TODO: 選択したカラーやユーザー情報をFirestoreへ保存
-
-                  if (!context.mounted) return;
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                      builder: (_) => const ProfileSetupOnboardingScreen(),
-                    ),
-                  );
-                } catch (e) {
-                  debugPrint('Apple Sign In error: $e');
-                }
-              },
+              isAppleLoading: _authenticatingProvider == _AuthProvider.apple,
+              isGoogleLoading: _authenticatingProvider == _AuthProvider.google,
+              // Capabilityは設定担当者がXcodeで追加する。コード側は先に有効化しておく。
+              canUseApple: true,
+              onApplePressed: _signInWithApple,
 
               onGooglePressed: _signInWithGoogle,
               onLoginPressed: _signInWithGoogle,
@@ -127,3 +145,5 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 }
+
+enum _AuthProvider { apple, google }

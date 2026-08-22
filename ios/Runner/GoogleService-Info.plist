@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>609000800598-o18e6pcd9snaq252nmhsu2a4acdqr3rd.apps.googleusercontent.com</string>
+	<string>609000800598-cgdrmt1fjtv4mmihc513vr237a1fpi67.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.609000800598-o18e6pcd9snaq252nmhsu2a4acdqr3rd</string>
+	<string>com.googleusercontent.apps.609000800598-cgdrmt1fjtv4mmihc513vr237a1fpi67</string>
 	<key>API_KEY</key>
 	<string>AIzaSyB8bdeurdD24OlCtZNBrzSBndDHq83InEs</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>app.shareme.hakocha</string>
+	<string>app.shareme.hakocha.app</string>
 	<key>PROJECT_ID</key>
 	<string>hakocha-50413</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:609000800598:ios:6067450aef39df6420d6f7</string>
+	<string>1:609000800598:ios:3e2b2e7a6fd6fc6020d6f7</string>
 </dict>
 </plist>
